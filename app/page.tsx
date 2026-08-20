@@ -1,5 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import heroImage from "../public/hero-tehran.jpg";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "رقابت‌نامه | نادر جعفری",
+    description: "حقوق رقابت و تنظیم‌گری در بازارهای ایران",
+    url: "/",
+    siteName: "رقابت‌نامه",
+    locale: "fa_IR",
+    type: "website",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "رقابت‌نامه، حقوق رقابت و تنظیم‌گری ایران" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "رقابت‌نامه | نادر جعفری",
+    description: "حقوق رقابت و تنظیم‌گری در بازارهای ایران",
+    images: ["/og.jpg"],
+  },
+};
 
 const Arrow = () => <span aria-hidden="true">←</span>;
 

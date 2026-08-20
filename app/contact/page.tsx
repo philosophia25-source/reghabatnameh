@@ -1,4 +1,18 @@
-export const metadata = { title: "ارتباط" };
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ارتباط",
+  description: "راه‌های ارتباط با نادر جعفری و نشانی دفتر",
+  alternates: { canonical: "/contact/" },
+  openGraph: {
+    title: "ارتباط با نادر جعفری",
+    description: "راه‌های ارتباط و نشانی دفتر",
+    url: "/contact/",
+    siteName: "رقابت‌نامه",
+    locale: "fa_IR",
+    type: "website",
+  },
+};
 
 const officeMap = "https://maps.app.goo.gl/3XFQqVikcWvp4p9F9";
 
