@@ -7,7 +7,7 @@ export default function ContactPage() {
     <article className="shell prose-page contact-page">
       <p className="kicker">ارتباط</p>
       <h1>راه‌های ارتباطی</h1>
-      <p className="lead">برای مکاتبات حرفه‌ای و هماهنگی مراجعه حضوری می‌توانید از راه‌های زیر استفاده کنید.</p>
+      <p className="lead">برای مکاتبات و هماهنگی مراجعه حضوری می‌توانید از راه‌های زیر استفاده کنید.</p>
 
       <div className="contact-grid">
         <section className="contact-card">

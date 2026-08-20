@@ -1,5 +1,5 @@
 :root {
-  --black:#080d10;
+  --black:#091320;
   --black-soft:#0d1317;
   --panel:#11181d;
   --panel-2:#151c21;
@@ -128,6 +128,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .note { margin-top:45px; padding:22px 25px; color:#d6d9da!important; background:var(--panel); border-right:2px solid var(--gold); }
 
 .contact-page { max-width:1120px; }
+.contact-page h1 { font-size:clamp(40px,5.2vw,72px); }
 .contact-grid { margin-top:56px; display:grid; grid-template-columns:1.45fr .8fr; gap:22px; }
 .contact-card { min-height:235px; padding:34px; background:linear-gradient(145deg,var(--panel-2),var(--panel)); border:1px solid var(--line); }
 .contact-card small { display:block; margin-bottom:12px; color:var(--gold); font-size:10px; }
