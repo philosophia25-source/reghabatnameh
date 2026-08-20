@@ -39,7 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <header className="site-header">
           <Link className="brand" href="/" aria-label="رقابت‌نامه، صفحه اصلی">
-            <span className="brand-seal">ر</span>
+            <span className="brand-seal"><img src="/mark.svg" alt="" /></span>
             <span><strong>رقابت‌نامه</strong><small>حقوق رقابت و تنظیم‌گری ایران</small></span>
           </Link>
           <nav className="main-nav" aria-label="ناوبری اصلی">
@@ -52,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </header>
         <main>{children}</main>
         <footer>
-          <Link className="brand footer-brand" href="/"><span className="brand-seal">ر</span><strong>رقابت‌نامه</strong></Link>
+          <Link className="brand footer-brand" href="/"><span className="brand-seal"><img src="/mark.svg" alt="" /></span><strong>رقابت‌نامه</strong></Link>
           <p>دفتر شخصی نادر جعفری برای حقوق رقابت و تنظیم‌گری</p>
           <span>© ۱۴۰۵ نادر جعفری</span>
         </footer>
