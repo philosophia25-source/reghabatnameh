@@ -1,4 +1,5 @@
 import Link from "next/link";
+import heroImage from "../public/hero-tehran.jpg";
 
 const Arrow = () => <span aria-hidden="true">←</span>;
 
@@ -41,7 +42,7 @@ const topics = [
 export default function HomePage() {
   return (
     <>
-      <section className="hero" id="top">
+      <section className="hero" id="top" style={{ backgroundImage: `url(${heroImage.src})` }}>
         <div className="hero-shade" />
         <div className="hero-content">
           <p className="hero-kicker">دفتر مستقل حقوق رقابت ایران</p>
