@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 
 const nav = [
   ["خانه", "/"],
-  ["تحلیل‌ها", "/articles/"],
-  ["آرای شورای رقابت", "/decisions/"],
-  ["درباره رقابت‌نامه", "/about/"],
+  ["قوانین", "/laws/"],
+  ["شرح مواد", "/laws/article-44/commentary/"],
+  ["آرای مهم", "/decisions/"],
+  ["درباره", "/about/"],
   ["ارتباط", "/contact/"],
 ];
 
@@ -28,12 +29,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <span><strong>رقابت‌نامه</strong><small>حقوق رقابت و تنظیم‌گری ایران</small></span>
           </Link>
           <nav className="main-nav" aria-label="ناوبری اصلی">
-            {nav.map(([label, href], index) => <Link className={index === 0 ? "active" : ""} href={href} key={href}>{label}</Link>)}
+            {nav.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
           </nav>
-          <div className="header-tools">
-            <button type="button" aria-label="باز کردن فهرست"><i /><i /></button>
-            <button className="search-icon" type="button" aria-label="جست‌وجو"><span /></button>
-          </div>
         </header>
         <main>{children}</main>
         <footer>

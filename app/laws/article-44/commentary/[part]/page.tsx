@@ -12,13 +12,14 @@ export async function generateMetadata({ params }: { params: Promise<{ part: str
   const part = commentaryParts.find((item) => item.slug === slug);
   if (!part) return {};
   const canonical = `/laws/article-44/commentary/${part.slug}/`;
+  const title = part.slug === "chapeau" ? part.title : `شرح ${part.shortLabel} ماده ۴۴ | ${part.title}`;
   return {
-    title: part.title,
+    title,
     description: part.description,
     alternates: { canonical },
     robots: part.available ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: part.available ? {
-      title: `${part.title} | رقابت‌نامه`,
+      title: `${title} | رقابت‌نامه`,
       description: part.description,
       url: canonical,
       siteName: "رقابت‌نامه",
