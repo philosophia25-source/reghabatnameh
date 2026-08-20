@@ -1,81 +1,112 @@
 import Link from "next/link";
 
-const featured = [
+const Arrow = () => <span aria-hidden="true">←</span>;
+
+const articles = [
   {
-    eyebrow: "حقوق رقابت",
-    title: "تحلیل مواد قانونی، نه صرفاً بازگویی متن قانون",
-    text: "بررسی ساختار قواعد رقابتی، نسبت مواد با یکدیگر و جایگاه رویه شورای رقابت در تفسیر آنها.",
-    href: "/articles/",
+    tone: "arch-one",
+    category: "تمرکزهای اقتصادی",
+    title: "تمرکزهای اقتصادی در بازار پلتفرم‌های دیجیتال",
+    summary: "تحلیل چارچوب حقوقی تمرکزهای اقتصادی در حوزه پلتفرم‌های دیجیتال و چالش‌های تنظیم‌گری آن",
+    date: "۰۵/۰۳/۱۴۰۵",
+    time: "۱۰ دقیقه مطالعه",
   },
   {
-    eyebrow: "رویه",
-    title: "آرای شورای رقابت در بستر موضوع و بازار",
-    text: "آرای مهم با اطلاعات استاندارد، موضوعات مرتبط و پیوند به تحلیل‌های تفصیلی.",
-    href: "/decisions/",
+    tone: "arch-two",
+    category: "آرای شورای رقابت",
+    title: "بررسی رأی شماره ۶۲۳ شورای رقابت درباره رویه ضدرقابتی",
+    summary: "تحلیل یکی از پرونده‌های مهم مربوط به رویه‌های ضدرقابتی و آثار آن بر ساختار بازار",
+    date: "۱۰/۰۳/۱۴۰۵",
+    time: "۱۲ دقیقه مطالعه",
   },
   {
-    eyebrow: "تنظیم‌گری",
-    title: "از مخابرات تا پلتفرم‌ها و بازارهای تنظیم‌شده",
-    text: "تحلیل حقوقی تنظیم‌گری بخشی و مرز آن با قواعد عمومی رقابت.",
-    href: "/articles/",
+    tone: "arch-three",
+    category: "سیاست رقابتی",
+    title: "سیاست‌های صنعتی و آثار آن بر ساختار رقابتی بازار",
+    summary: "بررسی ارتباط میان سیاست‌های صنعتی دولت و سطح رقابت‌پذیری در بازارهای مختلف ایران",
+    date: "۱۴/۰۳/۱۴۰۵",
+    time: "۸ دقیقه مطالعه",
   },
+];
+
+const topics = [
+  ["قوانین و مقررات", "۱۲"],
+  ["آرای شورای رقابت", "۳۷"],
+  ["سیاست‌های رقابتی", "۱۸"],
+  ["تمرکزهای اقتصادی", "۱۴"],
+  ["صنایع و بخش‌ها", "۲۲"],
+  ["اقتصاد دیجیتال", "۹"],
 ];
 
 export default function HomePage() {
   return (
     <>
-      <section className="hero">
-        <div className="hero-grid shell">
-          <div className="hero-copy">
-            <p className="kicker">حقوق رقابت و تنظیم‌گری ایران</p>
-            <h1>بازار، قانون و رویه<br />در یک نقشه واحد</h1>
-            <p className="hero-lead">
-              رقابت‌نامه پایگاهی تخصصی برای تحلیل حقوق رقابت، آرای شورای رقابت و تنظیم‌گری بازارهاست.
-            </p>
-            <div className="hero-actions">
-              <Link className="button primary" href="/articles/">مطالعه تحلیل‌ها</Link>
-              <Link className="button ghost" href="/decisions/">مرور آرا</Link>
-            </div>
-          </div>
+      <section className="hero" id="top">
+        <div className="hero-shade" />
+        <div className="hero-content">
+          <p className="hero-kicker">دفتر مستقل حقوق رقابت ایران</p>
+          <h1>رقابت‌نامه</h1>
+          <h2>حقوق رقابت و تنظیم‌گری در بازارهای ایران</h2>
+          <p>تحلیل قوانین، رویه‌ها و سیاست‌های مرتبط با رقابت، تمرکزهای اقتصادی و تنظیم‌گری در بخش‌های مختلف اقتصاد ایران</p>
+          <Link href="/about/">درباره رقابت‌نامه <Arrow /></Link>
+        </div>
+        <a className="scroll-cue" href="#analysis"><span>مشاهده مطالب</span><i>⌄</i></a>
+      </section>
 
-          <div className="hero-visual" aria-hidden="true">
-            <div className="orb orb-a" />
-            <div className="orb orb-b" />
-            <div className="mesh-plane plane-one" />
-            <div className="mesh-plane plane-two" />
-            <div className="glass-card card-one"><span>ماده ۴۴</span><b>توافقات ضد رقابتی</b></div>
-            <div className="glass-card card-two"><span>رویه</span><b>شورای رقابت</b></div>
-            <div className="glass-card card-three"><span>تنظیم‌گری</span><b>بازارهای بخشی</b></div>
+      <section className="insights shell" id="analysis">
+        <aside className="topics">
+          <div className="section-title"><span>موضوعات اصلی</span><i /></div>
+          <ul>
+            {topics.map(([name, count]) => (
+              <li key={name}><Link href="/articles/"><span className="topic-icon">□</span><strong>{name}</strong><small>({count})</small></Link></li>
+            ))}
+          </ul>
+          <Link className="all-link" href="/articles/">مشاهده همه موضوعات <Arrow /></Link>
+        </aside>
+
+        <div className="latest">
+          <div className="section-title"><span>آخرین تحلیل‌ها</span><i /></div>
+          <div className="article-grid">
+            {articles.map((article) => (
+              <Link className="article-card" href="/articles/" key={article.title}>
+                <div className={`article-image ${article.tone}`}><span>{article.category}</span></div>
+                <div className="article-copy">
+                  <h3>{article.title}</h3>
+                  <p>{article.summary}</p>
+                  <div className="article-meta"><time>{article.date}</time><span>{article.time}</span></div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="shell section">
-        <div className="section-heading">
-          <p className="kicker">ساختار دانش</p>
-          <h2>از قاعده تا پرونده</h2>
-          <p>هر مطلب قرار است به قانون، رأی، موضوع و بازار مرتبط خودش متصل شود.</p>
-        </div>
-        <div className="feature-grid">
-          {featured.map((item) => (
-            <Link className="feature-card" href={item.href} key={item.title}>
-              <span>{item.eyebrow}</span>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-              <b>مشاهده ←</b>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="shell section split-section">
+      <section className="statement shell">
+        <div className="statement-lines" aria-hidden="true"><i /><i /><i /><i /><i /></div>
+        <div className="quote-mark">”</div>
         <div>
-          <p className="kicker">رویکرد</p>
-          <h2>قانون اصل است، رأی شاهد</h2>
+          <blockquote>رقابت سالم، موتور پیشرفت اقتصاد و تضمین‌کننده رفاه مصرف‌کننده است.</blockquote>
+          <p>تحلیل دقیق قوانین و رویه‌ها، نخستین گام برای ارتقای رقابت‌پذیری اقتصاد ایران است.</p>
         </div>
-        <p className="large-copy">
-          رقابت‌نامه قرار نیست آرشیوی از متن‌های پراکنده باشد. هدف، ساختن یک مجموعه پیوسته است که در آن تحلیل قانونی، رویه تصمیم‌گیری و ساختار واقعی بازار کنار هم خوانده شوند.
-        </p>
+      </section>
+
+      <section className="decision-section shell" id="decisions">
+        <div className="decision-heading">
+          <p>پرونده‌خوانی</p><h2>آرای شورای رقابت، با زمینه و تحلیل</h2>
+          <span>متن رأی به‌تنهایی کافی نیست. هر پرونده با کلیدواژه‌ها، سابقه و یادداشت تحلیلی خوانده می‌شود.</span>
+        </div>
+        <div className="decision-list">
+          <Link href="/decisions/"><small>رأی شماره ۶۳۱</small><strong>بازار نخ تایر و مسئله توافق رقابتی</strong><span>ماده ۴۴ · توافق و تفاهم</span><Arrow /></Link>
+          <Link href="/decisions/"><small>رأی شماره ۴۳۷</small><strong>ایرانسل و حدود رفتار ضدرقابتی</strong><span>ماده ۴۵ · رویه یک‌جانبه</span><Arrow /></Link>
+          <Link href="/decisions/"><small>رأی شماره ۳۵۴</small><strong>مزایده تابلوهای تبلیغاتی شهرداری یزد</strong><span>توافق · اخلال در رقابت</span><Arrow /></Link>
+        </div>
+      </section>
+
+      <section className="research shell">
+        <p>پژوهش جاری</p>
+        <h2>محشی قانون اجرای سیاست‌های کلی اصل چهل‌وچهار</h2>
+        <span>خوانشی ماده‌به‌ماده از حقوق رقابت ایران، با تکیه بر آرای شورای رقابت و رویه قضایی</span>
+        <Link href="/about/">درباره پروژه <Arrow /></Link>
       </section>
     </>
   );
