@@ -97,9 +97,9 @@ export default function HomePage() {
           <span>متن رأی به‌تنهایی کافی نیست. هر پرونده با کلیدواژه‌ها، سابقه و یادداشت تحلیلی خوانده می‌شود.</span>
         </div>
         <div className="decision-list">
-          <Link href="/decisions/"><small>رأی شماره ۶۳۱</small><strong>بازار نخ تایر و مسئله توافق رقابتی</strong><span>ماده ۴۴ · توافق و تفاهم</span><Arrow /></Link>
-          <Link href="/decisions/"><small>رأی شماره ۴۳۷</small><strong>ایرانسل و حدود رفتار ضدرقابتی</strong><span>ماده ۴۵ · رویه یک‌جانبه</span><Arrow /></Link>
-          <Link href="/decisions/"><small>رأی شماره ۳۵۴</small><strong>مزایده تابلوهای تبلیغاتی شهرداری یزد</strong><span>توافق · اخلال در رقابت</span><Arrow /></Link>
+          <Link href="/decisions/631/"><small>رأی شماره ۶۳۱</small><strong>بازار نخ تایر و مسئله توافق رقابتی</strong><span>ماده ۴۴ · توافق و تفاهم</span><Arrow /></Link>
+          <Link href="/decisions/437/"><small>رأی شماره ۴۳۷</small><strong>ایرانسل و حدود رفتار ضدرقابتی</strong><span>ماده ۴۵ · رویه یک‌جانبه</span><Arrow /></Link>
+          <Link href="/decisions/sugar/"><small>آرای ۲۹۶ و ۲۹/۹۶/هـ‌ت</small><strong>بازار شکر و زنجیره بدوی و تجدیدنظر</strong><span>ماده ۴۴ · ماده ۵۲</span><Arrow /></Link>
         </div>
       </section>
 
@@ -107,7 +107,7 @@ export default function HomePage() {
         <p>پژوهش جاری</p>
         <h2>محشی قانون اجرای سیاست‌های کلی اصل چهل‌وچهار</h2>
         <span>خوانشی ماده‌به‌ماده از حقوق رقابت ایران، با تکیه بر آرای شورای رقابت و رویه قضایی</span>
-        <Link href="/about/">درباره پروژه <Arrow /></Link>
+        <Link href="/laws/article-44/">مطالعه ماده ۴۴ <Arrow /></Link>
       </section>
     </>
   );
