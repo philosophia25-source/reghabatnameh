@@ -34,7 +34,7 @@ h1,h2,h3,p { margin-top:0; }
 .search-icon span { width:15px; height:15px; display:block; border:1.5px solid white; border-radius:50%; }
 .search-icon span::after { content:""; position:absolute; width:7px; height:1px; background:white; transform:rotate(45deg); left:3px; bottom:5px; }
 
-.hero { min-height:100svh; position:relative; overflow:hidden; isolation:isolate; background:#111 url("/hero-tehran.jpg") center/cover no-repeat; }
+.hero { min-height:100svh; position:relative; overflow:hidden; isolation:isolate; background-color:#111; background-position:center; background-size:cover; background-repeat:no-repeat; }
 .hero::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(3,7,9,.04) 0%,rgba(3,7,9,.1) 38%,rgba(3,7,9,.66) 67%,rgba(3,7,9,.91) 100%),linear-gradient(0deg,rgba(3,7,9,.65),transparent 35%); }
 .hero-shade { position:absolute; inset:0; z-index:-1; box-shadow:inset 0 0 180px rgba(0,0,0,.32); }
 .hero-content { width:min(660px,48vw); margin-right:clamp(46px,8vw,135px); padding-top:clamp(210px,27vh,310px); position:relative; z-index:2; }
