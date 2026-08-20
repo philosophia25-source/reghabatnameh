@@ -11,7 +11,10 @@ import {
 import { LegalShell } from "@/components/legal-shell";
 import { toFaDigits } from "@/app/text";
 
-const commentary = readFileSync(join(process.cwd(), "content/commentary44.md"), "utf8");
+const commentaryFiles: Record<string, string> = {
+  chapeau: "commentary44.md",
+  "clause-1": "commentary44-clause-1.md",
+};
 
 type Tab = "text" | "commentary" | "decisions";
 
@@ -20,13 +23,6 @@ const tabs: { key: Tab; label: string; href: string; count?: string }[] = [
   { key: "commentary", label: "شرح", href: "/laws/article-44/commentary", count: "۹" },
   { key: "decisions", label: "آرای مرتبط", href: "/laws/article-44/decisions", count: "۱۷" },
 ];
-
-const [commentaryMain, commentaryFootnotes = ""] = commentary.split(/\n---\n/, 2);
-const sections = commentaryMain.split(/\n(?=\*\*\d+\.)/).map((part) => part.trim()).filter(Boolean);
-const footnotes = Array.from(commentaryFootnotes.matchAll(/\[\\?\[(\d+)\\?\]\]\(#_ftnref\d+\)\s*([\s\S]*?)(?=\n\n\[\\?\[\d+|$)/g)).map((match) => ({
-  number: match[1],
-  text: match[2].trim(),
-}));
 
 function clean(text: string) {
   return text
@@ -72,13 +68,24 @@ function PartsNav({ current }: { current?: string }) {
   );
 }
 
-function CommentaryBody() {
+function CommentaryBody({ slug }: { slug: string }) {
+  const part = commentaryParts.find((item) => item.slug === slug);
+  if (!part) return null;
+  const commentary = readFileSync(join(process.cwd(), "content", commentaryFiles[slug]), "utf8");
+  const [commentaryMain, commentaryFootnotes = ""] = commentary.split(/\n---\n/, 2);
+  const sections = commentaryMain.split(/\n(?=\*\*\d+\.)/).map((section) => section.trim()).filter(Boolean);
+  const footnotes = Array.from(commentaryFootnotes.matchAll(/\[\\?\[(\d+)\\?\]\]\(#_ftnref\d+\)\s*([\s\S]*?)(?=\n\n\[\\?\[\d+|$)/g)).map((match) => ({
+    number: match[1],
+    text: match[2].trim(),
+  }));
+  const displayTitle = slug === "chapeau" ? "شرح صدر ماده ۴۴" : `شرح ${part.shortLabel} ماده ۴۴`;
+
   return (
     <article className="commentary-body">
       <div className="commentary-title-row">
         <p className="commentary-kicker">شرح نادر جعفری</p>
-        <h2>شرح صدر ماده ۴۴</h2>
-        <p>قرارداد، توافق و تفاهم میان اشخاص و قابلیت اخلال در رقابت</p>
+        <h2>{displayTitle}</h2>
+        <p>{part.title}، {part.description}</p>
       </div>
       <details className="commentary-on-page">
         <summary>فهرست مطالب این شرح</summary>
@@ -158,7 +165,7 @@ function CommentaryPart({ slug }: { slug: string }) {
       <div className="commentary-layout part-layout">
         <PartsNav current={slug} />
         {part.available ? (
-          <CommentaryBody />
+          <CommentaryBody slug={slug} />
         ) : (
           <article className="empty-commentary">
             <p className="eyebrow">{part.shortLabel}</p>

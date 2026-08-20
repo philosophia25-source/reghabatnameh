@@ -21,7 +21,7 @@ export type CommentaryPart = {
 
 export const commentaryParts: CommentaryPart[] = [
   { slug: "chapeau", shortLabel: "صدر ماده", title: "شرح صدر ماده ۴۴", description: "مفهوم هماهنگی، انواع توافق، قلمرو اشخاص و قابلیت اخلال در رقابت", available: true },
-  { slug: "clause-1", shortLabel: "بند ۱", title: "تعیین قیمت", description: "مشخص‌کردن مستقیم یا غیرمستقیم قیمت خرید یا فروش", available: false },
+  { slug: "clause-1", shortLabel: "بند ۱", title: "تعیین قیمت", description: "مشخص‌کردن مستقیم یا غیرمستقیم قیمت خرید یا فروش", available: true },
   { slug: "clause-2", shortLabel: "بند ۲", title: "محدودکردن تولید، خرید یا فروش", description: "کنترل مقدار کالا یا خدمت در بازار", available: false },
   { slug: "clause-3", shortLabel: "بند ۳", title: "شرایط تبعیض‌آمیز", description: "تحمیل شرایط متفاوت در معاملات همسان", available: false },
   { slug: "clause-4", shortLabel: "بند ۴", title: "الزام به معامله با شخص ثالث", description: "تحمیل طرف قرارداد یا شروط قراردادی به دیگران", available: false },

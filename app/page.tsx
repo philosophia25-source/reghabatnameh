@@ -23,40 +23,46 @@ export const metadata: Metadata = {
 
 const Arrow = () => <span aria-hidden="true">←</span>;
 
+const quickAccess = [
+  { label: "قوانین و مقررات", detail: "متن قوانین", href: "/laws/" },
+  { label: "شرح مواد", detail: "شرح جزءبه‌جزء ماده ۴۴", href: "/laws/article-44/commentary/" },
+  { label: "آرای مهم", detail: "پرونده‌های شورای رقابت", href: "/decisions/" },
+];
+
 const articles = [
   {
     tone: "arch-one",
-    category: "تمرکزهای اقتصادی",
-    title: "تمرکزهای اقتصادی در بازار پلتفرم‌های دیجیتال",
-    summary: "تحلیل چارچوب حقوقی تمرکزهای اقتصادی در حوزه پلتفرم‌های دیجیتال و چالش‌های تنظیم‌گری آن",
-    date: "۰۵/۰۳/۱۴۰۵",
-    time: "۱۰ دقیقه مطالعه",
+    category: "شرح قانون",
+    title: "شرح صدر ماده ۴۴",
+    summary: "قرارداد، توافق و تفاهم میان اشخاص و معیار قابلیت اخلال در رقابت",
+    type: "شرح ماده",
+    status: "منتشر شده",
+    href: "/laws/article-44/commentary/chapeau/",
   },
   {
     tone: "arch-two",
-    category: "آرای شورای رقابت",
-    title: "بررسی رأی شماره ۶۲۳ شورای رقابت درباره رویه ضدرقابتی",
-    summary: "تحلیل یکی از پرونده‌های مهم مربوط به رویه‌های ضدرقابتی و آثار آن بر ساختار بازار",
-    date: "۱۰/۰۳/۱۴۰۵",
-    time: "۱۲ دقیقه مطالعه",
+    category: "شرح بند ۱",
+    title: "توافق بر تعیین قیمت",
+    summary: "تعیین مستقیم و غیرمستقیم قیمت و مرز آن با رفتارهای یک‌جانبه و تنظیم‌گری",
+    type: "شرح ماده",
+    status: "منتشر شده",
+    href: "/laws/article-44/commentary/clause-1/",
   },
   {
     tone: "arch-three",
-    category: "سیاست رقابتی",
-    title: "سیاست‌های صنعتی و آثار آن بر ساختار رقابتی بازار",
-    summary: "بررسی ارتباط میان سیاست‌های صنعتی دولت و سطح رقابت‌پذیری در بازارهای مختلف ایران",
-    date: "۱۴/۰۳/۱۴۰۵",
-    time: "۸ دقیقه مطالعه",
+    category: "پرونده‌خوانی",
+    title: "رأی شماره ۶۳۱ شورای رقابت",
+    summary: "بازار نخ تایر و مسئله توافق رقابتی در زنجیره تولید و تأمین",
+    type: "رأی شورای رقابت",
+    status: "پرونده کامل",
+    href: "/decisions/631/",
   },
 ];
 
 const topics = [
-  ["قوانین و مقررات", "۱۲"],
-  ["آرای شورای رقابت", "۳۷"],
-  ["سیاست‌های رقابتی", "۱۸"],
-  ["تمرکزهای اقتصادی", "۱۴"],
-  ["صنایع و بخش‌ها", "۲۲"],
-  ["اقتصاد دیجیتال", "۹"],
+  ["قوانین و مقررات", "/laws/"],
+  ["شرح ماده ۴۴", "/laws/article-44/commentary/"],
+  ["آرای شورای رقابت", "/decisions/"],
 ];
 
 export default function HomePage() {
@@ -71,6 +77,15 @@ export default function HomePage() {
           <p>تحلیل قوانین، رویه‌ها و سیاست‌های مرتبط با رقابت، تمرکزهای اقتصادی و تنظیم‌گری در بخش‌های مختلف اقتصاد ایران</p>
           <Link href="/about/">درباره رقابت‌نامه <Arrow /></Link>
         </div>
+        <nav className="hero-access" aria-label="دسترسی سریع به محتوای حقوقی">
+          {quickAccess.map((item) => (
+            <Link href={item.href} key={item.href}>
+              <small>{item.detail}</small>
+              <strong>{item.label}</strong>
+              <Arrow />
+            </Link>
+          ))}
+        </nav>
         <a className="scroll-cue" href="#analysis"><span>مشاهده مطالب</span><i>⌄</i></a>
       </section>
 
@@ -78,23 +93,23 @@ export default function HomePage() {
         <aside className="topics">
           <div className="section-title"><span>موضوعات اصلی</span><i /></div>
           <ul>
-            {topics.map(([name, count]) => (
-              <li key={name}><Link href="/articles/"><span className="topic-icon">□</span><strong>{name}</strong><small>({count})</small></Link></li>
+            {topics.map(([name, href]) => (
+              <li key={name}><Link href={href}><span className="topic-icon">□</span><strong>{name}</strong><Arrow /></Link></li>
             ))}
           </ul>
-          <Link className="all-link" href="/articles/">مشاهده همه موضوعات <Arrow /></Link>
+          <Link className="all-link" href="/laws/article-44/">ورود به پایگاه ماده ۴۴ <Arrow /></Link>
         </aside>
 
         <div className="latest">
-          <div className="section-title"><span>آخرین تحلیل‌ها</span><i /></div>
+          <div className="section-title"><span>تازه‌های رقابت‌نامه</span><i /></div>
           <div className="article-grid">
             {articles.map((article) => (
-              <Link className="article-card" href="/articles/" key={article.title}>
+              <Link className="article-card" href={article.href} key={article.title}>
                 <div className={`article-image ${article.tone}`}><span>{article.category}</span></div>
                 <div className="article-copy">
                   <h3>{article.title}</h3>
                   <p>{article.summary}</p>
-                  <div className="article-meta"><time>{article.date}</time><span>{article.time}</span></div>
+                  <div className="article-meta"><span>{article.type}</span><span>{article.status}</span></div>
                 </div>
               </Link>
             ))}
