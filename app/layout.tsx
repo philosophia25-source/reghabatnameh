@@ -52,9 +52,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </header>
         <main>{children}</main>
         <footer>
-          <Link className="brand footer-brand" href="/"><span className="brand-seal"><img src="/mark.svg" alt="" /></span><strong>رقابت‌نامه</strong></Link>
-          <p>دفتر شخصی نادر جعفری برای حقوق رقابت و تنظیم‌گری</p>
-          <span>© ۱۴۰۵ نادر جعفری</span>
+          <div className="footer-identity">
+            <Link className="brand footer-brand" href="/"><span className="brand-seal"><img src="/mark.svg" alt="" /></span><strong>رقابت‌نامه</strong></Link>
+            <p>دفتر شخصی نادر جعفری برای حقوق رقابت و تنظیم‌گری</p>
+          </div>
+          <div className="footer-contact" aria-label="راه‌های ارتباط با نادر جعفری">
+            <a href="mailto:nader.jafari@modares.ac.ir">ایمیل</a>
+            <a href="https://wa.me/989123084826" target="_blank" rel="noreferrer">واتس‌اپ</a>
+          </div>
+          <span className="copyright">© ۱۴۰۵ نادر جعفری</span>
         </footer>
       </body>
     </html>
