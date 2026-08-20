@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import "@fontsource-variable/estedad/wght.css";
+import "@fontsource-variable/vazirmatn/wght.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
