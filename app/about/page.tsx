@@ -1,4 +1,18 @@
-export const metadata = { title: "درباره" };
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "درباره نادر جعفری",
+  description: "معرفی نادر جعفری، وکیل و پژوهشگر حقوق رقابت و تنظیم‌گری و نویسنده رقابت‌نامه",
+  alternates: { canonical: "/about/" },
+  openGraph: {
+    title: "درباره نادر جعفری",
+    description: "وکیل و پژوهشگر حقوق رقابت و تنظیم‌گری و نویسنده رقابت‌نامه",
+    url: "/about/",
+    siteName: "رقابت‌نامه",
+    locale: "fa_IR",
+    type: "profile",
+  },
+};
 
 export default function AboutPage() {
   return (

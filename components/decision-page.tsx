@@ -25,7 +25,7 @@ function parseDecision(raw: string): ParsedDecision {
   return { meta, body: bodyParts.join("\n").replace(/^\s*متن کامل موضوع\s*/m, "").trim() };
 }
 
-const records = {
+export const decisionRecords = {
   "437": {
     title: "امتناع ایرانسل از همکاری",
     relation: "رد تبانی و تفکیک رفتار هماهنگ از استنکاف یک‌جانبه",
@@ -43,8 +43,8 @@ const records = {
   },
 };
 
-export type DecisionSlug = keyof typeof records;
-export const decisionSlugs = Object.keys(records) as DecisionSlug[];
+export type DecisionSlug = keyof typeof decisionRecords;
+export const decisionSlugs = Object.keys(decisionRecords) as DecisionSlug[];
 
 function Stage({ record, index, total }: { record: ParsedDecision; index: number; total: number }) {
   const { meta, body } = record;
@@ -72,7 +72,7 @@ function Stage({ record, index, total }: { record: ParsedDecision; index: number
 }
 
 export function DecisionPage({ slug }: { slug: DecisionSlug }) {
-  const decision = records[slug];
+  const decision = decisionRecords[slug];
   return (
     <LegalShell>
       <section className="decision-hero">

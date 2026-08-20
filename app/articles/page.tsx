@@ -1,6 +1,12 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
-export const metadata = { title: "تحلیل‌ها" };
+export const metadata: Metadata = {
+  title: "تحلیل‌ها",
+  description: "تحلیل‌های حقوقی رقابت‌نامه درباره حقوق رقابت و تنظیم‌گری ایران",
+  alternates: { canonical: "/articles/" },
+  robots: { index: false, follow: true },
+};
 
 const placeholders = [
   ["ماده ۴۴", "عناصر سازنده توافق ضد رقابتی", "حقوق رقابت"],
