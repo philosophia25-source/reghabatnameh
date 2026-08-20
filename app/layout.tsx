@@ -31,6 +31,7 @@ const nav = [
   ["تحلیل‌ها", "/articles/"],
   ["آرای شورای رقابت", "/decisions/"],
   ["درباره رقابت‌نامه", "/about/"],
+  ["ارتباط", "/contact/"],
 ];
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <div className="footer-contact" aria-label="راه‌های ارتباط با نادر جعفری">
             <a href="mailto:nader.jafari@modares.ac.ir">ایمیل</a>
             <a href="https://wa.me/989123084826" target="_blank" rel="noreferrer">واتس‌اپ</a>
+            <Link href="/contact/">نشانی دفتر</Link>
           </div>
           <span className="copyright">© ۱۴۰۵ نادر جعفری</span>
         </footer>
