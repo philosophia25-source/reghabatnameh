@@ -1,5 +1,6 @@
 name: Deploy Next.js site to Pages
 
+# Trigger build verification
 on:
   push:
     branches: ["main"]
