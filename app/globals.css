@@ -252,8 +252,8 @@ footer p,.copyright { margin:0; color:#747c80; font-size:10px; }
 .commentary-kicker { color:var(--gold)!important; font-size:10px!important; }
 .commentary-body h2 { margin:15px 0 25px; color:#f3f5f5; font-size:clamp(24px,3vw,36px); line-height:1.55; letter-spacing:-.035em; }
 .commentary-body p { margin:0 0 20px; color:#bcc7cc; font-size:15px; line-height:2.25; text-align:justify; }
-.inline-decision { padding:1px 3px; color:#e0c183; border-bottom:1px solid rgba(201,164,104,.5); }
-.inline-decision:hover { color:white; background:rgba(201,164,104,.1); }
+.inline-decision,.inline-source { padding:1px 3px; color:#e0c183; border-bottom:1px solid rgba(201,164,104,.5); }
+.inline-decision:hover,.inline-source:hover { color:white; background:rgba(201,164,104,.1); }
 .footnote-ref { margin-inline:3px; vertical-align:super; font-size:.68em; line-height:0; }
 .footnote-ref a { width:18px; height:18px; display:inline-grid; place-items:center; color:#10202a; background:var(--gold-light); border-radius:50%; text-decoration:none; }
 .footnotes { margin-top:38px; padding:31px 30px 12px!important; background:#091a27; border:1px solid rgba(255,255,255,.09)!important; }
