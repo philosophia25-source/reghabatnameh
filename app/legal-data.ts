@@ -22,7 +22,7 @@ export type CommentaryPart = {
 export const commentaryParts: CommentaryPart[] = [
   { slug: "chapeau", shortLabel: "صدر ماده", title: "شرح صدر ماده ۴۴", description: "مفهوم هماهنگی، انواع توافق، قلمرو اشخاص و قابلیت اخلال در رقابت", available: true },
   { slug: "clause-1", shortLabel: "بند ۱", title: "تعیین قیمت", description: "مشخص‌کردن مستقیم یا غیرمستقیم قیمت خرید یا فروش", available: true },
-  { slug: "clause-2", shortLabel: "بند ۲", title: "محدودکردن تولید، خرید یا فروش", description: "کنترل مقدار کالا یا خدمت در بازار", available: false },
+  { slug: "clause-2", shortLabel: "بند ۲", title: "محدودکردن تولید، خرید یا فروش", description: "کنترل مقدار کالا یا خدمت در بازار", available: true },
   { slug: "clause-3", shortLabel: "بند ۳", title: "شرایط تبعیض‌آمیز", description: "تحمیل شرایط متفاوت در معاملات همسان", available: false },
   { slug: "clause-4", shortLabel: "بند ۴", title: "الزام به معامله با شخص ثالث", description: "تحمیل طرف قرارداد یا شروط قراردادی به دیگران", available: false },
   { slug: "clause-5", shortLabel: "بند ۵", title: "تعهدات تکمیلی نامرتبط", description: "موکول‌کردن قرارداد به پذیرش تعهدات خارج از موضوع", available: false },
@@ -42,28 +42,4 @@ export const referencedDecisions: DecisionReference[] = [
   { number: "۴۳۷", title: "امتناع ایرانسل از همکاری", role: "رد تبانی و تفکیک رفتار یک‌جانبه", href: "/decisions/437" },
   { number: "۴۴۵", title: "امحای جوجه یک‌روزه برای کنترل قیمت", role: "تصمیم انجمن به‌عنوان ابزار هماهنگی" },
   { number: "۶۳۱", title: "تفاهم انحصاری در زنجیره نخ تایر", role: "احراز توافق و نقد استقلال درون‌گروهی", href: "/decisions/631" },
-  { number: "۴۷۶", title: "ارجاع کار مهندسی در استان سمنان", role: "هماهنگی ضمنی و نانوشته" },
-  { number: "۶۲۴", title: "سهمیه‌بندی بازار نصب آسانسور", role: "حدود تصمیم سازمان حرفه‌ای" },
-  { number: "۵۸۰", title: "واگذاری واردات نهاده‌های دامی", role: "توافق مرجع عمومی با بنگاه" },
-  { number: "۴۲۱", title: "ظرفیت پذیرش وکالت", role: "تصمیم یک‌جانبه مرجع عمومی" },
-  { number: "۶۰۶", title: "سقف حق‌التحریر دفاتر اسناد رسمی", role: "تفکیک تنظیم‌گری از توافق" },
-  { number: "۵۶۲", title: "سامانه سوئیچ بیمه", role: "فقدان فعالیت رقابتی مشترک" },
-  { number: "۲۹۶ و ۲۹/۹۶/هـ‌ت", title: "بازار شکر و انحصار واردات", role: "تعارض رأی بدوی و تجدیدنظر", href: "/decisions/sugar" },
-  { number: "۵۰۴", title: "تعیین قیمت پوشاک مدارس", role: "انتساب تصمیم اداری به ماده ۴۴" },
-  { number: "۱۶۲/۰۲/هـ‌ت", title: "محدودیت واردات قطعات آسانسور", role: "رأی قطعی و منشأ محدودیت" },
-  { number: "۷۷۶", title: "انحصار تهیه طرح‌های توجیهی بانکی", role: "محدودیت اداری بدون احراز توافق" },
-  { number: "۸۲۱", title: "الزام سایپا به پیمانکار منتخب", role: "لزوم شناسایی شخص دوم" },
-  { number: "۴۶۶", title: "نرم‌افزار LIMS آزمایشگاهی", role: "امکان اعمال ماده بر توافق عمودی" },
-  { number: "۵۹۹", title: "فعالیت تاکسی اینترنتی در کیش", role: "تفکیک ماده ۴۴ از امتیاز دولتی" },
-  { number: "۲۳۲", title: "تعیین قیمت صنفی لوح فشرده", role: "قابلیت اخلال و اجرای توافق" },
 ];
-
-export const decisionRouteByMention: Record<string, string> = {
-  "رأی شماره ۴۳۷": "/decisions/437",
-  "رأی ۴۳۷": "/decisions/437",
-  "رأی شماره ۶۳۱": "/decisions/631",
-  "رأی ۶۳۱": "/decisions/631",
-  "رأی شماره ۲۹۶": "/decisions/sugar",
-  "رأی بدوی شماره ۲۹۶": "/decisions/sugar",
-  "رأی شماره ۲۹/۹۶/هـ‌ت": "/decisions/sugar",
-};
