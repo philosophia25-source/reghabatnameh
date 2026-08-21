@@ -11,10 +11,9 @@ import {
 import { LegalShell } from "@/components/legal-shell";
 import { toFaDigits } from "@/app/text";
 
-const commentaryFiles: Record<string, string> = {
-  chapeau: "commentary44.md",
-  "clause-1": "commentary44-clause-1.md",
-};
+function commentaryFile(slug: string) {
+  return slug === "chapeau" ? "commentary44.md" : `commentary44-${slug}.md`;
+}
 
 type Tab = "text" | "commentary" | "decisions";
 
@@ -71,7 +70,7 @@ function PartsNav({ current }: { current?: string }) {
 function CommentaryBody({ slug }: { slug: string }) {
   const part = commentaryParts.find((item) => item.slug === slug);
   if (!part) return null;
-  const commentary = readFileSync(join(process.cwd(), "content", commentaryFiles[slug]), "utf8");
+  const commentary = readFileSync(join(process.cwd(), "content", commentaryFile(slug)), "utf8");
   const [commentaryMain, commentaryFootnotes = ""] = commentary.split(/\n---\n/, 2);
   const sections = commentaryMain.split(/\n(?=\*\*\d+\.)/).map((section) => section.trim()).filter(Boolean);
   const footnotes = Array.from(commentaryFootnotes.matchAll(/\[\\?\[(\d+)\\?\]\]\(#_ftnref\d+\)\s*([\s\S]*?)(?=\n\n\[\\?\[\d+|$)/g)).map((match) => ({
