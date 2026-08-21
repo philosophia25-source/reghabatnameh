@@ -37,11 +37,16 @@ function plainHeading(text: string) {
 function linkedText(text: string) {
   const mentions = Object.keys(decisionRouteByMention).sort((a, b) => b.length - a.length);
   const normalized = clean(text).replace(/\[\\?\[(\d+)\\?\]\]\(#_ftn\d+\)/g, "[[FN:$1]]");
-  const pattern = new RegExp(`(\\[\\[FN:\\d+\\]\\]|${mentions.join("|")})`, "g");
+  const markdownLink = "\\[[^\\]]+\\]\\(https?:\\/\\/[^\\s)]+\\)";
+  const pattern = new RegExp(`(\\[\\[FN:\\d+\\]\\]|${markdownLink}|${mentions.join("|")})`, "g");
   return normalized.split(pattern).map((part, index) => {
     const footnote = part.match(/^\[\[FN:(\d+)\]\]$/);
     if (footnote) {
       return <sup className="footnote-ref" id={`footnote-ref-${footnote[1]}`} key={`${part}-${index}`}><a href={`#footnote-${footnote[1]}`} aria-label={`رفتن به زیرنویس ${toFaDigits(footnote[1])}`}>{toFaDigits(footnote[1])}</a></sup>;
+    }
+    const source = part.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+    if (source) {
+      return <a className="inline-source" href={source[2]} target="_blank" rel="noreferrer" key={`${part}-${index}`}>{toFaDigits(source[1].trim())}</a>;
     }
     const href = decisionRouteByMention[part];
     return href ? <Link className="inline-decision" href={href} key={`${part}-${index}`}>{toFaDigits(part)}</Link> : toFaDigits(part);
