@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { decisionRecords, type DecisionRecord, type ParsedDecision } from "@/app/decision-data";
 import { toFaDate, toFaDigits } from "@/app/text";
+import {
+  institutionsForDocument,
+  marketsForDocument,
+  provisionsForDocument,
+  topicsForDocument,
+} from "@/lib/knowledge/queries";
 
 function Stage({ record, index, total }: { record: ParsedDecision; index: number; total: number }) {
   const { meta, body } = record;
@@ -22,32 +28,29 @@ function Stage({ record, index, total }: { record: ParsedDecision; index: number
         <summary>متن کامل تصمیم</summary>
         <div>{body.split(/\n{2,}/).map((paragraph, pIndex) => <p key={pIndex}>{toFaDigits(paragraph)}</p>)}</div>
       </details>
-      {meta["نشانی رسمی"] ? <a className="official-source" href={meta["نشانی رسمی"]} target="_blank" rel="noreferrer">مشاهده منبع رسمی در شورای رقابت ←</a> : null}
+      {meta["نشانی رسمی"] ? <a className="official-source" href={meta["نشانی رسمی"]} target="_blank" rel="noreferrer">مشاهده منبع رسمی ←</a> : null}
     </article>
   );
 }
 
-const commentaryLabels: Record<string, string> = {
-  chapeau: "شرح صدر ماده ۴۴",
-  "clause-1": "شرح بند ۱",
-  "clause-2": "شرح بند ۲",
-  "clause-3": "شرح بند ۳",
-  "clause-4": "شرح بند ۴",
-  "clause-5": "شرح بند ۵",
-  "clause-6": "شرح بند ۶",
-  "clause-7": "شرح بند ۷",
-  note: "شرح تبصره",
-};
-
-function RelatedCommentary({ decision }: { decision: DecisionRecord }) {
-  if (!decision.commentaryParts.length) return null;
+function KnowledgeConnections({ decision }: { decision: DecisionRecord }) {
+  const institutions = institutionsForDocument(decision.id);
+  const provisions = provisionsForDocument(decision.id);
+  const topics = topicsForDocument(decision.id);
+  const markets = marketsForDocument(decision.id);
   return (
-    <nav className="decision-commentary-links" aria-label="شرح‌های مرتبط با این رأی">
-      <span>شرح‌های مرتبط</span>
-      <div>{decision.commentaryParts.map((part) => (
-        <Link href={`/laws/article-44/commentary/${part}`} key={part}>{commentaryLabels[part] ?? part}</Link>
-      ))}</div>
-    </nav>
+    <section className="knowledge-connections" aria-labelledby="connections-title">
+      <div className="knowledge-connections-heading">
+        <p className="eyebrow">شبکه حقوقی</p>
+        <h2 id="connections-title">ارتباطات این پرونده</h2>
+      </div>
+      <div className="connection-groups">
+        <div><span>نهاد صادرکننده</span><div>{institutions.map((institution) => <Link href={institution.route} key={institution.id}>{institution.shortName}</Link>)}</div></div>
+        <div><span>مواد و اجزای مرتبط</span><div>{provisions.map(({ provision }) => provision.status === "published" ? <Link href={provision.route} key={provision.id}>{provision.label}</Link> : <span className="connection-pending" key={provision.id}>{provision.label}</span>)}</div></div>
+        <div><span>موضوعات</span><div>{topics.map((topic) => <Link href={topic.route} key={topic.id}>{topic.title}</Link>)}</div></div>
+        <div><span>بازارها</span><div>{markets.map((market) => <Link href={market.route} key={market.id}>{market.title}</Link>)}</div></div>
+      </div>
+    </section>
   );
 }
 
@@ -56,15 +59,15 @@ export function DecisionPage({ slug }: { slug: string }) {
   return (
     <>
       <section className="decision-hero">
-        <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/article-44/decisions">آرای مرتبط ماده ۴۴</Link><span>←</span><b>پرونده</b></div>
+        <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/decisions">آرای منتخب</Link><span>←</span><b>پرونده</b></div>
         <p className="eyebrow">پرونده‌خوانی حقوق رقابت</p>
         <h1>{decision.title}</h1>
         <p>{decision.relation}</p>
-        <Link className="back-to-commentary" href="/laws/article-44/decisions">بازگشت به آرای مرتبط ماده ۴۴ ←</Link>
+        <Link className="back-to-commentary" href="/decisions">بازگشت به فهرست آرا ←</Link>
       </section>
       <section className="decision-content">
         {decision.stages.map((stage, index) => <Stage record={stage} index={index} total={decision.stages.length} key={`${slug}-${index}`} />)}
-        <RelatedCommentary decision={decision} />
+        <KnowledgeConnections decision={decision} />
       </section>
     </>
   );

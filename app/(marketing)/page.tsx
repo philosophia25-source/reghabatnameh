@@ -24,9 +24,10 @@ export const metadata: Metadata = {
 const Arrow = () => <span aria-hidden="true">←</span>;
 
 const quickAccess = [
-  { label: "قوانین و مقررات", detail: "متن قوانین", href: "/laws/" },
-  { label: "شرح مواد", detail: "شرح جزءبه‌جزء ماده ۴۴", href: "/laws/article-44/commentary/" },
-  { label: "آرای مهم", detail: "پرونده‌های شورای رقابت", href: "/decisions/" },
+  { label: "قوانین و شرح", detail: "مجموعه‌های قانونی", href: "/laws" },
+  { label: "آرای منتخب", detail: "پرونده‌های قاعده‌ساز", href: "/decisions" },
+  { label: "نهادها", detail: "مراجع و اسناد", href: "/institutions" },
+  { label: "موضوعات", detail: "شبکه مفهومی", href: "/topics" },
 ];
 
 const articles = [
@@ -37,7 +38,7 @@ const articles = [
     summary: "قرارداد، توافق و تفاهم میان اشخاص و معیار قابلیت اخلال در رقابت",
     type: "شرح ماده",
     status: "منتشر شده",
-    href: "/laws/article-44/commentary/chapeau/",
+    href: "/laws/article-44/commentary/chapeau",
   },
   {
     tone: "arch-two",
@@ -46,7 +47,7 @@ const articles = [
     summary: "تعیین مستقیم و غیرمستقیم قیمت و مرز آن با رفتارهای یک‌جانبه و تنظیم‌گری",
     type: "شرح ماده",
     status: "منتشر شده",
-    href: "/laws/article-44/commentary/clause-1/",
+    href: "/laws/article-44/commentary/clause-1",
   },
   {
     tone: "arch-three",
@@ -55,14 +56,15 @@ const articles = [
     summary: "بازار نخ تایر و مسئله توافق رقابتی در زنجیره تولید و تأمین",
     type: "رأی شورای رقابت",
     status: "پرونده کامل",
-    href: "/decisions/631/",
+    href: "/decisions/631",
   },
 ];
 
 const topics = [
-  ["قوانین و مقررات", "/laws/"],
-  ["شرح ماده ۴۴", "/laws/article-44/commentary/"],
-  ["آرای شورای رقابت", "/decisions/"],
+  ["قوانین و شرح‌ها", "/laws"],
+  ["نهادهای تنظیم‌گر", "/institutions"],
+  ["موضوعات حقوقی", "/topics"],
+  ["بازارها و صنایع", "/markets"],
 ];
 
 export default function HomePage() {
@@ -97,11 +99,11 @@ export default function HomePage() {
               <li key={name}><Link href={href}><span className="topic-icon">□</span><strong>{name}</strong><Arrow /></Link></li>
             ))}
           </ul>
-          <Link className="all-link" href="/laws/article-44">ورود به پایگاه ماده ۴۴ <Arrow /></Link>
+          <Link className="all-link" href="/laws/general-policies-44">ورود به مجموعه قانون اصل ۴۴ <Arrow /></Link>
         </aside>
 
         <div className="latest">
-          <div className="section-title"><span>تازه‌های رقابت‌نامه</span><i /></div>
+          <div className="section-title"><span>تازه‌های شبکه</span><i /></div>
           <div className="article-grid">
             {articles.map((article) => (
               <Link className="article-card" href={article.href} key={article.title}>
@@ -141,7 +143,7 @@ export default function HomePage() {
       <section className="research shell">
         <p>پژوهش جاری</p>
         <h2>محشی قانون اجرای سیاست‌های کلی اصل چهل‌وچهار</h2>
-        <span>خوانشی ماده‌به‌ماده از حقوق رقابت ایران، با تکیه بر آرای شورای رقابت و رویه قضایی</span>
+        <span>خوانشی ماده‌به‌ماده از حقوق رقابت ایران، با اتصال هر شرح به آرای منتخب، موضوعات و بازارهای مرتبط</span>
         <Link href="/laws/article-44">مطالعه ماده ۴۴ <Arrow /></Link>
       </section>
     </>

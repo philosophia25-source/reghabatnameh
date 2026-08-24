@@ -17,6 +17,8 @@ export function generateStaticParams() {
   return [{ tab: "commentary" }, { tab: "decisions" }];
 }
 
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }: { params: Promise<{ tab: string }> }): Promise<Metadata> {
   const { tab } = await params;
   if (tab !== "commentary" && tab !== "decisions") return {};

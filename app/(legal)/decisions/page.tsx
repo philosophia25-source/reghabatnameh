@@ -22,7 +22,7 @@ export default function DecisionsPage() {
     <section className="shell listing-page">
       <p className="kicker">رویه</p>
       <h1>آرای شورای رقابت</h1>
-      <p className="lead">۲۶ پرونده منتخب مرتبط با ماده ۴۴ با متن کامل، مشخصات تصمیم، نتیجه و پیوند به شرح اجزای ماده در دسترس است.</p>
+      <p className="lead">مجموعه‌ای گزینشی از آرای دارای ارزش تحلیلی، با متن کامل، نتیجه، منبع رسمی و پیوند به مواد، موضوعات، بازارها و نهاد صادرکننده.</p>
       <div className="decision-grid">
         {decisionIndexRecords.map((decision) => (
           <Link className="decision-card" href={decision.href} key={decision.href}>
