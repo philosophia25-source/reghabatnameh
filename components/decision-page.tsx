@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { LegalShell } from "@/components/legal-shell";
 import { toFaDigits } from "@/app/text";
 
 const readDecision = (name: string) => readFileSync(join(process.cwd(), "content/decisions", name), "utf8");
@@ -74,7 +73,7 @@ function Stage({ record, index, total }: { record: ParsedDecision; index: number
 export function DecisionPage({ slug }: { slug: DecisionSlug }) {
   const decision = decisionRecords[slug];
   return (
-    <LegalShell>
+    <>
       <section className="decision-hero">
         <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/article-44/decisions">آرای مرتبط ماده ۴۴</Link><span>←</span><b>پرونده</b></div>
         <p className="eyebrow">پرونده‌خوانی حقوق رقابت</p>
@@ -85,6 +84,6 @@ export function DecisionPage({ slug }: { slug: DecisionSlug }) {
       <section className="decision-content">
         {decision.stages.map((stage, index) => <Stage record={stage} index={index} total={decision.stages.length} key={`${slug}-${index}`} />)}
       </section>
-    </LegalShell>
+    </>
   );
 }

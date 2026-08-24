@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import heroImage from "../public/hero-tehran.jpg";
+import heroImage from "../../public/hero-tehran.jpg";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
