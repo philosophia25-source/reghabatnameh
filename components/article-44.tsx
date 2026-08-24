@@ -5,9 +5,8 @@ import {
   article44Note,
   article44Paragraphs,
   commentaryParts,
-  decisionRouteByMention,
-  referencedDecisions,
 } from "@/app/legal-data";
+import { decisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
 import { toFaDigits } from "@/app/text";
 
 function commentaryFile(slug: string) {
@@ -19,7 +18,7 @@ type Tab = "text" | "commentary" | "decisions";
 const tabs: { key: Tab; label: string; href: string; count?: string }[] = [
   { key: "text", label: "متن ماده", href: "/laws/article-44" },
   { key: "commentary", label: "شرح", href: "/laws/article-44/commentary", count: "۹" },
-  { key: "decisions", label: "آرای مرتبط", href: "/laws/article-44/decisions", count: "۱۷" },
+  { key: "decisions", label: "آرای مرتبط", href: "/laws/article-44/decisions", count: "۲۶" },
 ];
 
 function clean(text: string) {
@@ -37,7 +36,8 @@ function linkedText(text: string) {
   const mentions = Object.keys(decisionRouteByMention).sort((a, b) => b.length - a.length);
   const normalized = clean(text).replace(/\[\\?\[(\d+)\\?\]\]\(#_ftn\d+\)/g, "[[FN:$1]]");
   const markdownLink = "\\[[^\\]]+\\]\\(https?:\\/\\/[^\\s)]+\\)";
-  const pattern = new RegExp(`(\\[\\[FN:\\d+\\]\\]|${markdownLink}|${mentions.join("|")})`, "g");
+  const escapedMentions = mentions.map((mention) => mention.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const pattern = new RegExp(`(\\[\\[FN:\\d+\\]\\]|${markdownLink}|${escapedMentions.join("|")})`, "g");
   return normalized.split(pattern).map((part, index) => {
     const footnote = part.match(/^\[\[FN:(\d+)\]\]$/);
     if (footnote) {
@@ -217,16 +217,18 @@ function Decisions() {
   return (
     <div className="related-decisions">
       <div className="decisions-intro">
-        <p>این فهرست از آرایی تشکیل شده است که در شرح صدر ماده ۴۴ مورد استفاده یا نقد قرار گرفته‌اند.</p>
-        <span>صفحات کامل سه پرونده اکنون در دسترس است و سایر پرونده‌ها به‌تدریج با متن، نتیجه و سرنوشت اعتراض تکمیل می‌شوند.</span>
+        <p>این فهرست مجموعه آرای منتخب مرتبط با ماده ۴۴ است. هر پرونده صفحه مستقل و پیوند به اجزای مرتبط ماده دارد.</p>
+        <span>۲۶ پرونده با متن کامل، مشخصات تصمیم، نتیجه و منبع رسمی در دسترس است.</span>
       </div>
       <div className="decision-cards">
-        {referencedDecisions.map((decision) => {
-          const content = <><small>رأی {decision.number}</small><h3>{decision.title}</h3><p>{decision.role}</p><span>{decision.href ? "مشاهده پرونده ←" : "در صف تکمیل"}</span></>;
-          return decision.href
-            ? <Link className="decision-reference ready" href={decision.href} key={decision.number}>{content}</Link>
-            : <article className="decision-reference" key={decision.number}>{content}</article>;
-        })}
+        {decisionIndexRecords.map((decision) => (
+          <Link className="decision-reference ready" href={decision.href} key={decision.slug}>
+            <small>رأی {toFaDigits(decision.number)}</small>
+            <h3>{decision.title}</h3>
+            <p>{toFaDigits(decision.type)} · {decision.authority}</p>
+            <span>مشاهده پرونده ←</span>
+          </Link>
+        ))}
       </div>
     </div>
   );

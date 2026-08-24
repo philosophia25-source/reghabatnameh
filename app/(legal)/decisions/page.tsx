@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { decisionIndexRecords } from "@/app/decision-data";
+import { toFaDate, toFaDigits } from "@/app/text";
 
 export const metadata: Metadata = {
   title: "آرای شورای رقابت",
@@ -15,24 +17,18 @@ export const metadata: Metadata = {
   },
 };
 
-const decisions = [
-  { href: "/decisions/631/", number: "رأی شماره ۶۳۱", title: "تفاهم انحصاری در زنجیره نخ تایر", relation: "ماده ۴۴ و توافق محدودکننده" },
-  { href: "/decisions/437/", number: "رأی شماره ۴۳۷", title: "امتناع ایرانسل از همکاری", relation: "تفکیک رفتار یک‌جانبه از تبانی" },
-  { href: "/decisions/sugar/", number: "آرای ۲۹۶ و ۲۹/۹۶/هـ‌ت", title: "بازار شکر و انحصار واردات", relation: "رابطه تصمیم بدوی و تجدیدنظر" },
-];
-
 export default function DecisionsPage() {
   return (
     <section className="shell listing-page">
       <p className="kicker">رویه</p>
       <h1>آرای شورای رقابت</h1>
-      <p className="lead">آرای منتخب با موضوع، بازار، مواد قانونی مرتبط و پیوند به شرح تحلیلی بررسی می‌شوند.</p>
+      <p className="lead">۲۶ پرونده منتخب مرتبط با ماده ۴۴ با متن کامل، مشخصات تصمیم، نتیجه و پیوند به شرح اجزای ماده در دسترس است.</p>
       <div className="decision-grid">
-        {decisions.map((decision) => (
+        {decisionIndexRecords.map((decision) => (
           <Link className="decision-card" href={decision.href} key={decision.href}>
-            <span>شورای رقابت</span>
-            <h2>{decision.number}</h2>
-            <p>{decision.title}<br />{decision.relation}</p>
+            <span>{decision.authority}</span>
+            <h2>{toFaDigits(decision.number)}</h2>
+            <p>{decision.title}<br />{toFaDigits(decision.type)} · {toFaDate(decision.date)}</p>
           </Link>
         ))}
       </div>
