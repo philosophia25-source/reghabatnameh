@@ -361,6 +361,10 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
 .decision-fulltext>div { padding:0 0 22px; }
 .decision-fulltext p { white-space:pre-line; color:#b6c1c7; font-size:1rem; line-height:2.05; }
 .official-source { width:max-content; margin-top:27px; padding-bottom:6px; display:block; color:var(--gold-light); border-bottom:1px solid rgba(201,164,104,.5); font-size:var(--font-small); }
+.decision-commentary-links { margin-top:28px; padding:24px 26px; display:grid; grid-template-columns:max-content 1fr; align-items:start; gap:24px; background:#081722; border:1px solid rgba(255,255,255,.08); }
+.decision-commentary-links>span { color:#95a6ae; font-size:var(--font-caption); }
+.decision-commentary-links>div { display:flex; flex-wrap:wrap; gap:10px; }
+.decision-commentary-links a { padding:9px 13px; color:var(--gold-light); background:rgba(201,164,104,.07); border:1px solid rgba(201,164,104,.25); font-size:var(--font-small); }
 
 @media (max-width:900px) {
   .commentary-layout { grid-template-columns:1fr; gap:36px; }.commentary-toc { position:static; }.commentary-toc ol { columns:2; column-gap:30px; }
@@ -379,6 +383,6 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
   .part-grid { grid-template-columns:1fr; }.part-card { min-height:205px; }.parts-nav ol { grid-template-columns:1fr; }.parts-nav li:nth-child(odd) { border-left:0; }.commentary-on-page ol { columns:1; }.part-pagination { margin-top:40px; }.part-pagination strong { font-size:var(--font-caption); }
   .law-unit>small { opacity:1; transform:none; }.clickable-law .law-lead { margin-inline:-10px; padding-inline:10px; }
   .decision-cards { grid-template-columns:1fr; }.decision-reference { min-height:155px; }.law-pagination { padding-inline:18px; }.law-pagination>span { display:none; }
-  .legal-footer { min-height:110px; padding-inline:20px; }.decision-stage { padding:28px 20px; }.stage-label { margin:-29px 0 26px; }
+  .legal-footer { min-height:110px; padding-inline:20px; }.decision-stage { padding:28px 20px; }.stage-label { margin:-29px 0 26px; }.decision-commentary-links { grid-template-columns:1fr; gap:14px; padding:20px; }
   .decision-facts { grid-template-columns:1fr; }.decision-facts div { min-height:auto; }.decision-summary { grid-template-columns:1fr; }.decision-summary .research-caution { grid-column:auto; }
 }

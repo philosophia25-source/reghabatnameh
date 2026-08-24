@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DecisionPage, decisionRecords, decisionSlugs, type DecisionSlug } from "@/components/decision-page";
+import { decisionDescription, decisionRecords, decisionSlugs } from "@/app/decision-data";
+import { DecisionPage } from "@/components/decision-page";
 
 export function generateStaticParams() {
   return decisionSlugs.map((slug) => ({ slug }));
@@ -8,16 +9,16 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  if (!decisionSlugs.includes(slug as DecisionSlug)) return {};
-  const decision = decisionRecords[slug as DecisionSlug];
+  if (!decisionSlugs.includes(slug)) return {};
+  const decision = decisionRecords[slug];
   const canonical = `/decisions/${slug}/`;
   return {
     title: decision.title,
-    description: decision.relation,
+    description: decisionDescription(decision),
     alternates: { canonical },
     openGraph: {
       title: `${decision.title} | رقابت‌نامه`,
-      description: decision.relation,
+      description: decisionDescription(decision),
       url: canonical,
       siteName: "رقابت‌نامه",
       locale: "fa_IR",
@@ -29,6 +30,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function DecisionDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  if (!decisionSlugs.includes(slug as DecisionSlug)) notFound();
-  return <DecisionPage slug={slug as DecisionSlug} />;
+  if (!decisionSlugs.includes(slug)) notFound();
+  return <DecisionPage slug={slug} />;
 }

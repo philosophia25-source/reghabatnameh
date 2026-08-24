@@ -1,49 +1,6 @@
 import Link from "next/link";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import { toFaDigits } from "@/app/text";
-
-const readDecision = (name: string) => readFileSync(join(process.cwd(), "content/decisions", name), "utf8");
-const decision437 = readDecision("437.txt");
-const decision631 = readDecision("631.txt");
-const sugar296 = readDecision("sugar-296.txt");
-const sugarAppeal = readDecision("sugar-appeal.txt");
-
-type ParsedDecision = {
-  meta: Record<string, string>;
-  body: string;
-};
-
-function parseDecision(raw: string): ParsedDecision {
-  const [head, ...bodyParts] = raw.replace(/^﻿/, "").split(/={20,}/);
-  const meta: Record<string, string> = {};
-  head.split("\n").forEach((line) => {
-    const separator = line.indexOf(":");
-    if (separator > 0) meta[line.slice(0, separator).trim()] = line.slice(separator + 1).trim();
-  });
-  return { meta, body: bodyParts.join("\n").replace(/^\s*متن کامل موضوع\s*/m, "").trim() };
-}
-
-export const decisionRecords = {
-  "437": {
-    title: "امتناع ایرانسل از همکاری",
-    relation: "رد تبانی و تفکیک رفتار هماهنگ از استنکاف یک‌جانبه",
-    stages: [parseDecision(decision437)],
-  },
-  "631": {
-    title: "تفاهم انحصاری در زنجیره نخ تایر",
-    relation: "احراز توافق محدودکننده و بررسی رابطه شرکت مادر و شرکت‌های وابسته",
-    stages: [parseDecision(decision631)],
-  },
-  sugar: {
-    title: "بازار شکر و انحصار واردات",
-    relation: "نمونه تعارض تحلیلی میان تصمیم بدوی و رأی هیئت تجدیدنظر",
-    stages: [parseDecision(sugar296), parseDecision(sugarAppeal)],
-  },
-};
-
-export type DecisionSlug = keyof typeof decisionRecords;
-export const decisionSlugs = Object.keys(decisionRecords) as DecisionSlug[];
+import { decisionRecords, type DecisionRecord, type ParsedDecision } from "@/app/decision-data";
+import { toFaDate, toFaDigits } from "@/app/text";
 
 function Stage({ record, index, total }: { record: ParsedDecision; index: number; total: number }) {
   const { meta, body } = record;
@@ -53,7 +10,7 @@ function Stage({ record, index, total }: { record: ParsedDecision; index: number
       <div className="decision-facts">
         <div><small>مرجع</small><strong>{toFaDigits(meta["مرجع"])}</strong></div>
         <div><small>شماره رأی</small><strong>{toFaDigits(meta["شماره جلسه/رأی"])}</strong></div>
-        <div><small>تاریخ</small><strong>{toFaDigits(meta["تاریخ"])}</strong></div>
+        <div><small>تاریخ</small><strong>{toFaDate(meta["تاریخ"])}</strong></div>
         <div><small>نوع تصمیم</small><strong>{toFaDigits(meta["نوع تصمیم"])}</strong></div>
       </div>
       <section className="decision-summary">
@@ -70,7 +27,31 @@ function Stage({ record, index, total }: { record: ParsedDecision; index: number
   );
 }
 
-export function DecisionPage({ slug }: { slug: DecisionSlug }) {
+const commentaryLabels: Record<string, string> = {
+  chapeau: "شرح صدر ماده ۴۴",
+  "clause-1": "شرح بند ۱",
+  "clause-2": "شرح بند ۲",
+  "clause-3": "شرح بند ۳",
+  "clause-4": "شرح بند ۴",
+  "clause-5": "شرح بند ۵",
+  "clause-6": "شرح بند ۶",
+  "clause-7": "شرح بند ۷",
+  note: "شرح تبصره",
+};
+
+function RelatedCommentary({ decision }: { decision: DecisionRecord }) {
+  if (!decision.commentaryParts.length) return null;
+  return (
+    <nav className="decision-commentary-links" aria-label="شرح‌های مرتبط با این رأی">
+      <span>شرح‌های مرتبط</span>
+      <div>{decision.commentaryParts.map((part) => (
+        <Link href={`/laws/article-44/commentary/${part}/`} key={part}>{commentaryLabels[part] ?? part}</Link>
+      ))}</div>
+    </nav>
+  );
+}
+
+export function DecisionPage({ slug }: { slug: string }) {
   const decision = decisionRecords[slug];
   return (
     <>
@@ -79,10 +60,11 @@ export function DecisionPage({ slug }: { slug: DecisionSlug }) {
         <p className="eyebrow">پرونده‌خوانی حقوق رقابت</p>
         <h1>{decision.title}</h1>
         <p>{decision.relation}</p>
-        <Link className="back-to-commentary" href="/laws/article-44/commentary">بازگشت به شرح صدر ماده ۴۴ ←</Link>
+        <Link className="back-to-commentary" href="/laws/article-44/decisions/">بازگشت به آرای مرتبط ماده ۴۴ ←</Link>
       </section>
       <section className="decision-content">
         {decision.stages.map((stage, index) => <Stage record={stage} index={index} total={decision.stages.length} key={`${slug}-${index}`} />)}
+        <RelatedCommentary decision={decision} />
       </section>
     </>
   );
