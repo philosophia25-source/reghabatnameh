@@ -6,7 +6,7 @@ import {
   article44Paragraphs,
   commentaryParts,
 } from "@/app/legal-data";
-import { decisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
+import { article44DecisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
 import { toFaDigits } from "@/app/text";
 
 function commentaryFile(slug: string) {
@@ -18,7 +18,7 @@ type Tab = "text" | "commentary" | "decisions";
 const tabs: { key: Tab; label: string; href: string; count?: string }[] = [
   { key: "text", label: "متن ماده", href: "/laws/article-44" },
   { key: "commentary", label: "شرح", href: "/laws/article-44/commentary", count: "۹" },
-  { key: "decisions", label: "آرای مرتبط", href: "/laws/article-44/decisions", count: "۲۶" },
+  { key: "decisions", label: "آرای مرتبط", href: "/laws/article-44/decisions", count: toFaDigits(article44DecisionIndexRecords.length) },
 ];
 
 function clean(text: string) {
@@ -59,11 +59,14 @@ function PartsNav({ current }: { current?: string }) {
       <ol>
         {commentaryParts.map((part, index) => (
           <li className={current === part.slug ? "active" : ""} key={part.slug}>
-            <Link href={`/laws/article-44/commentary/${part.slug}`}>
+            {part.available ? <Link className="parts-nav-link" href={`/laws/article-44/commentary/${part.slug}`}>
               <span>{toFaDigits(index + 1)}</span>
               <div><small>{part.shortLabel}</small><strong>{part.title}</strong></div>
-              {!part.available ? <i>به‌زودی</i> : null}
-            </Link>
+            </Link> : <span className="parts-nav-link unavailable" aria-disabled="true">
+              <span>{toFaDigits(index + 1)}</span>
+              <div><small>{part.shortLabel}</small><strong>{part.title}</strong></div>
+              <i>به‌زودی</i>
+            </span>}
           </li>
         ))}
       </ol>
@@ -141,15 +144,18 @@ function CommentaryIndex() {
         <p>صدر ماده، هفت بند و تبصره هرکدام صفحه مستقل دارند. این تفکیک امکان ارجاع مستقیم به هر بخش و اتصال دقیق آرا را فراهم می‌کند.</p>
       </div>
       <div className="part-grid">
-        {commentaryParts.map((part, index) => (
-          <Link className={`part-card ${part.available ? "available" : ""}`} href={`/laws/article-44/commentary/${part.slug}`} key={part.slug}>
+        {commentaryParts.map((part, index) => {
+          const content = <>
             <span className="part-index">{toFaDigits(index + 1)}</span>
             <small>{part.shortLabel}</small>
             <h3>{part.title}</h3>
             <p>{part.description}</p>
             <b>{part.available ? "مطالعه شرح ←" : "شرح هنوز منتشر نشده است"}</b>
-          </Link>
-        ))}
+          </>;
+          return part.available
+            ? <Link className="part-card available" href={`/laws/article-44/commentary/${part.slug}`} key={part.slug}>{content}</Link>
+            : <article className="part-card" aria-disabled="true" key={part.slug}>{content}</article>;
+        })}
       </div>
       <Link className="read-all-commentary" href="/laws/article-44/commentary/chapeau">شروع مطالعه از صدر ماده ←</Link>
     </div>
@@ -158,26 +164,16 @@ function CommentaryIndex() {
 
 function CommentaryPart({ slug }: { slug: string }) {
   const part = commentaryParts.find((item) => item.slug === slug);
-  if (!part) return null;
+  if (!part?.available) return null;
   const index = commentaryParts.findIndex((item) => item.slug === slug);
-  const previous = commentaryParts[index - 1];
-  const next = commentaryParts[index + 1];
+  const previous = commentaryParts.slice(0, index).reverse().find((item) => item.available);
+  const next = commentaryParts.slice(index + 1).find((item) => item.available);
 
   return (
     <>
       <div className="commentary-layout part-layout">
         <PartsNav current={slug} />
-        {part.available ? (
-          <CommentaryBody slug={slug} />
-        ) : (
-          <article className="empty-commentary">
-            <p className="eyebrow">{part.shortLabel}</p>
-            <h2>{part.title}</h2>
-            <p>{part.description}</p>
-            <div><strong>شرح این بخش هنوز منتشر نشده است.</strong><span>پس از دریافت متن نهایی، شرح و آرای مورد استناد در همین صفحه قرار می‌گیرند.</span></div>
-            <Link href="/laws/article-44">بازگشت به متن ماده ←</Link>
-          </article>
-        )}
+        <CommentaryBody slug={slug} />
       </div>
       <nav className="part-pagination" aria-label="حرکت میان اجزای شرح">
         {previous ? <Link href={`/laws/article-44/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}
@@ -199,15 +195,17 @@ function LawText() {
         <ol>
           {article44Paragraphs.slice(1).map((paragraph, index) => (
             <li key={paragraph}>
-              <Link className="law-unit" href={`/laws/article-44/commentary/clause-${index + 1}`}>
+              {commentaryParts.find((part) => part.slug === `clause-${index + 1}`)?.available ? <Link className="law-unit" href={`/laws/article-44/commentary/clause-${index + 1}`}>
                 <span>{toFaDigits(paragraph.replace(/^[۰-۹0-9]+ـ\s*/, ""))}</span><small>مطالعه شرح بند {toFaDigits(index + 1)} ←</small>
-              </Link>
+              </Link> : <span className="law-unit unavailable" aria-disabled="true">
+                <span>{toFaDigits(paragraph.replace(/^[۰-۹0-9]+ـ\s*/, ""))}</span><small>شرح این بند هنوز منتشر نشده است</small>
+              </span>}
             </li>
           ))}
         </ol>
-        <Link className="law-unit law-note" href="/laws/article-44/commentary/note">
+        <div className="law-unit law-note unavailable" aria-disabled="true">
           <span><strong>تبصره</strong> ـ {article44Note}</span><small>مطالعه شرح تبصره ←</small>
-        </Link>
+        </div>
       </div>
     </article>
   );
@@ -218,10 +216,10 @@ function Decisions() {
     <div className="related-decisions">
       <div className="decisions-intro">
         <p>این فهرست مجموعه آرای منتخب مرتبط با ماده ۴۴ است. هر پرونده صفحه مستقل و پیوند به اجزای مرتبط ماده دارد.</p>
-        <span>۲۶ پرونده با متن کامل، مشخصات تصمیم، نتیجه و منبع رسمی در دسترس است.</span>
+        <span>{toFaDigits(article44DecisionIndexRecords.length)} پرونده با متن کامل، مشخصات تصمیم، نتیجه و منبع رسمی در دسترس است.</span>
       </div>
       <div className="decision-cards">
-        {decisionIndexRecords.map((decision) => (
+        {article44DecisionIndexRecords.map((decision) => (
           <Link className="decision-reference ready" href={decision.href} key={decision.slug}>
             <small>رأی {toFaDigits(decision.number)}</small>
             <h3>{decision.title}</h3>
@@ -238,7 +236,7 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
   return (
     <>
       <section className="legal-hero">
-        <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/article-44">قوانین و مقررات</Link><span>←</span><b>ماده ۴۴</b></div>
+        <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span><b>ماده ۴۴</b></div>
         <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>
         <h1>ماده ۴۴</h1>
         <p>توافق‌ها و هماهنگی‌های اخلال‌گر در رقابت</p>
@@ -256,7 +254,7 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
         {active === "decisions" ? <Decisions /> : null}
       </section>
 
-      <nav className="law-pagination" aria-label="حرکت میان مواد"><span>ماده پیشین</span><Link href="/laws/article-44">بازگشت به ابتدای ماده ۴۴</Link><span>ماده بعدی</span></nav>
+      <nav className="law-pagination" aria-label="حرکت میان مواد"><span>ماده پیشین</span><Link href="/laws/general-policies-44">بازگشت به مجموعه قانون</Link><span>ماده بعدی</span></nav>
     </>
   );
 }

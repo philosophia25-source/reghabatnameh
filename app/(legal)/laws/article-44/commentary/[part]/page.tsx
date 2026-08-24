@@ -4,21 +4,23 @@ import { commentaryParts } from "@/app/legal-data";
 import { Article44 } from "@/components/article-44";
 
 export function generateStaticParams() {
-  return commentaryParts.map((part) => ({ part: part.slug }));
+  return commentaryParts.filter((part) => part.available).map((part) => ({ part: part.slug }));
 }
+
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ part: string }> }): Promise<Metadata> {
   const { part: slug } = await params;
   const part = commentaryParts.find((item) => item.slug === slug);
-  if (!part) return {};
+  if (!part?.available) return {};
   const canonical = `/laws/article-44/commentary/${part.slug}`;
   const title = part.slug === "chapeau" ? part.title : `شرح ${part.shortLabel} ماده ۴۴ | ${part.title}`;
   return {
     title,
     description: part.description,
     alternates: { canonical },
-    robots: part.available ? { index: true, follow: true } : { index: false, follow: true },
-    openGraph: part.available ? {
+    robots: { index: true, follow: true },
+    openGraph: {
       title: `${title} | رقابت‌نامه`,
       description: part.description,
       url: canonical,
@@ -26,12 +28,12 @@ export async function generateMetadata({ params }: { params: Promise<{ part: str
       locale: "fa_IR",
       type: "article",
       images: [],
-    } : undefined,
+    },
   };
 }
 
 export default async function CommentaryPartPage({ params }: { params: Promise<{ part: string }> }) {
   const { part } = await params;
-  if (!commentaryParts.some((item) => item.slug === part)) notFound();
+  if (!commentaryParts.some((item) => item.slug === part && item.available)) notFound();
   return <Article44 active="commentary" commentaryPart={part} />;
 }

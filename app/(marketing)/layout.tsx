@@ -2,11 +2,12 @@ import Link from "next/link";
 
 const nav = [
   ["خانه", "/"],
-  ["قوانین", "/laws/"],
-  ["شرح مواد", "/laws/article-44/commentary/"],
-  ["آرای مهم", "/decisions/"],
-  ["درباره", "/about/"],
-  ["ارتباط", "/contact/"],
+  ["قوانین و شرح", "/laws"],
+  ["نهادها", "/institutions"],
+  ["موضوعات", "/topics"],
+  ["آرای منتخب", "/decisions"],
+  ["درباره", "/about"],
+  ["ارتباط", "/contact"],
 ];
 
 export default function MarketingLayout({ children }: Readonly<{ children: React.ReactNode }>) {
