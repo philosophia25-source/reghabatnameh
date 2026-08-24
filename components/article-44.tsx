@@ -8,7 +8,6 @@ import {
   decisionRouteByMention,
   referencedDecisions,
 } from "@/app/legal-data";
-import { LegalShell } from "@/components/legal-shell";
 import { toFaDigits } from "@/app/text";
 
 function commentaryFile(slug: string) {
@@ -235,7 +234,7 @@ function Decisions() {
 
 export function Article44({ active, commentaryPart }: { active: Tab; commentaryPart?: string }) {
   return (
-    <LegalShell>
+    <>
       <section className="legal-hero">
         <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/article-44">قوانین و مقررات</Link><span>←</span><b>ماده ۴۴</b></div>
         <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>
@@ -256,6 +255,6 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
       </section>
 
       <nav className="law-pagination" aria-label="حرکت میان مواد"><span>ماده پیشین</span><Link href="/laws/article-44">بازگشت به ابتدای ماده ۴۴</Link><span>ماده بعدی</span></nav>
-    </LegalShell>
+    </>
   );
 }
