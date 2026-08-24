@@ -30,7 +30,7 @@ export default function MarketingLayout({ children }: Readonly<{ children: React
         <div className="footer-contact" aria-label="راه‌های ارتباط با نادر جعفری">
           <a href="mailto:nader.jafari@modares.ac.ir">ایمیل</a>
           <a href="https://wa.me/989123084826" target="_blank" rel="noreferrer">واتس‌اپ</a>
-          <Link href="/contact/">نشانی دفتر</Link>
+          <Link href="/contact">نشانی دفتر</Link>
         </div>
         <span className="copyright">© ۱۴۰۵ نادر جعفری</span>
       </footer>

@@ -6,11 +6,11 @@ import { toFaDate, toFaDigits } from "@/app/text";
 export const metadata: Metadata = {
   title: "آرای شورای رقابت",
   description: "متن و تحلیل آرای منتخب شورای رقابت و هیئت تجدیدنظر با ارتباط به مواد قانونی",
-  alternates: { canonical: "/decisions/" },
+  alternates: { canonical: "/decisions" },
   openGraph: {
     title: "آرای شورای رقابت",
     description: "متن و تحلیل آرای منتخب شورای رقابت و هیئت تجدیدنظر",
-    url: "/decisions/",
+    url: "/decisions",
     siteName: "رقابت‌نامه",
     locale: "fa_IR",
     type: "website",

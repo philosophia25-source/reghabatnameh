@@ -45,7 +45,7 @@ function RelatedCommentary({ decision }: { decision: DecisionRecord }) {
     <nav className="decision-commentary-links" aria-label="شرح‌های مرتبط با این رأی">
       <span>شرح‌های مرتبط</span>
       <div>{decision.commentaryParts.map((part) => (
-        <Link href={`/laws/article-44/commentary/${part}/`} key={part}>{commentaryLabels[part] ?? part}</Link>
+        <Link href={`/laws/article-44/commentary/${part}`} key={part}>{commentaryLabels[part] ?? part}</Link>
       ))}</div>
     </nav>
   );
@@ -60,7 +60,7 @@ export function DecisionPage({ slug }: { slug: string }) {
         <p className="eyebrow">پرونده‌خوانی حقوق رقابت</p>
         <h1>{decision.title}</h1>
         <p>{decision.relation}</p>
-        <Link className="back-to-commentary" href="/laws/article-44/decisions/">بازگشت به آرای مرتبط ماده ۴۴ ←</Link>
+        <Link className="back-to-commentary" href="/laws/article-44/decisions">بازگشت به آرای مرتبط ماده ۴۴ ←</Link>
       </section>
       <section className="decision-content">
         {decision.stages.map((stage, index) => <Stage record={stage} index={index} total={decision.stages.length} key={`${slug}-${index}`} />)}
