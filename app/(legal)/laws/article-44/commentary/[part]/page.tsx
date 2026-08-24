@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ part: str
   const { part: slug } = await params;
   const part = commentaryParts.find((item) => item.slug === slug);
   if (!part) return {};
-  const canonical = `/laws/article-44/commentary/${part.slug}/`;
+  const canonical = `/laws/article-44/commentary/${part.slug}`;
   const title = part.slug === "chapeau" ? part.title : `شرح ${part.shortLabel} ماده ۴۴ | ${part.title}`;
   return {
     title,

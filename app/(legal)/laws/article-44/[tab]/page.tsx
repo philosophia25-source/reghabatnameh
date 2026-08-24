@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ tab: stri
   const { tab } = await params;
   if (tab !== "commentary" && tab !== "decisions") return {};
   const current = tabMetadata[tab];
-  const canonical = `/laws/article-44/${tab}/`;
+  const canonical = `/laws/article-44/${tab}`;
   return {
     title: current.title,
     description: current.description,

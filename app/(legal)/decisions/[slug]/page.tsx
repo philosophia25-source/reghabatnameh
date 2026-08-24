@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   if (!decisionSlugs.includes(slug)) return {};
   const decision = decisionRecords[slug];
-  const canonical = `/decisions/${slug}/`;
+  const canonical = `/decisions/${slug}`;
   return {
     title: decision.title,
     description: decisionDescription(decision),

@@ -10,9 +10,9 @@ export function LegalShell({ children }: { children: React.ReactNode }) {
         </Link>
         <nav aria-label="ناوبری پایگاه حقوقی">
           <Link href="/">خانه</Link>
-          <Link className="active" href="/laws/">قوانین</Link>
-          <Link href="/laws/article-44/commentary/">شرح مواد</Link>
-          <Link href="/decisions/">آرای مهم</Link>
+          <Link className="active" href="/laws">قوانین</Link>
+          <Link href="/laws/article-44/commentary">شرح مواد</Link>
+          <Link href="/decisions">آرای مهم</Link>
         </nav>
       </header>
       {children}

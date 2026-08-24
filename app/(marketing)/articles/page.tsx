@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "تحلیل‌ها",
   description: "تحلیل‌های حقوقی رقابت‌نامه درباره حقوق رقابت و تنظیم‌گری ایران",
-  alternates: { canonical: "/articles/" },
+  alternates: { canonical: "/articles" },
   robots: { index: false, follow: true },
 };
 

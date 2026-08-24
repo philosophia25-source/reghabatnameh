@@ -89,7 +89,7 @@ export const decisionIndexRecords = manifest.map((item) => {
   const numbers = record.stages.map((stage) => stage.meta["شماره جلسه/رأی"]).filter(Boolean);
   return {
     slug: item.slug,
-    href: `/decisions/${item.slug}/`,
+    href: `/decisions/${item.slug}`,
     title: item.title,
     number: numbers.join(" و "),
     authority: first["مرجع"],
@@ -108,7 +108,7 @@ export const decisionRouteByMention: Record<string, string> = Object.fromEntries
   manifest.flatMap((item) => decisionRecords[item.slug].stages.flatMap((stage) => {
     const raw = stage.meta["شماره جلسه/رأی"] ?? "";
     const number = faDigits(raw.replace(/^رأی\s*/, "").trim());
-    const href = `/decisions/${item.slug}/`;
+    const href = `/decisions/${item.slug}`;
     return [
       [`رأی شماره ${number}`, href],
       [`رأی ${number}`, href],

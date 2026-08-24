@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "قوانین و مقررات",
   description: "متن، ساختار و شرح قوانین و مقررات مرتبط با حقوق رقابت و تنظیم‌گری ایران",
-  alternates: { canonical: "/laws/" },
+  alternates: { canonical: "/laws" },
 };
 
 export default function LawsPage() {
@@ -14,7 +14,7 @@ export default function LawsPage() {
       <h1>قوانین و مقررات</h1>
       <p className="lead">دسترسی به متن قوانین و شرح ماده‌به‌ماده آن‌ها، همراه با آرای مرتبط شورای رقابت</p>
       <div className="law-index-grid">
-        <Link className="law-index-card" href="/laws/article-44/">
+        <Link className="law-index-card" href="/laws/article-44">
           <small>قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</small>
           <span>۴۴</span>
           <h2>ماده ۴۴</h2>
