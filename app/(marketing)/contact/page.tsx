@@ -11,7 +11,9 @@ export const metadata: Metadata = {
     siteName: "رقابت‌نامه",
     locale: "fa_IR",
     type: "website",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ارتباط با نادر جعفری | رقابت‌نامه" }],
   },
+  twitter: { card: "summary_large_image", title: "ارتباط با نادر جعفری | رقابت‌نامه", description: "راه‌های ارتباط و نشانی دفتر", images: ["/og.jpg"] },
 };
 
 const officeMap = "https://maps.app.goo.gl/3XFQqVikcWvp4p9F9";

@@ -15,12 +15,13 @@ export function LegalShell({ children }: { children: React.ReactNode }) {
           <Link href="/topics">موضوعات</Link>
           <Link href="/markets">بازارها</Link>
           <Link href="/decisions">آرای منتخب</Link>
+          <Link href="/search">جست‌وجو</Link>
         </nav>
       </header>
-      <main>{children}</main>
+      <main id="main-content">{children}</main>
       <footer className="legal-footer">
         <Link href="/">رقابت‌نامه</Link>
-        <span>شبکه تحلیلی حقوق رقابت و تنظیم‌گری ایران</span>
+        <span>پایگاه تحلیلی حقوق رقابت و تنظیم‌گری ایران</span>
       </footer>
     </div>
   );

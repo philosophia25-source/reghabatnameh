@@ -3,6 +3,12 @@ import { join } from "node:path";
 import { documents } from "@/lib/knowledge/registry";
 import { ARTICLE_44_ID } from "@/lib/knowledge/article44";
 import type { KnowledgeDocument } from "@/lib/knowledge/types";
+import {
+  institutionById,
+  marketById,
+  provisionById,
+  topicById,
+} from "@/lib/knowledge/queries";
 
 export type ParsedDecision = {
   meta: Record<string, string>;
@@ -65,6 +71,10 @@ export const decisionIndexRecords = decisionDocuments.map((document) => {
     provisionLinks: document.provisionLinks,
     topicIds: document.topicIds,
     marketIds: document.marketIds,
+    institutionLabels: document.issuerIds.map((id) => institutionById(id)?.shortName).filter((value): value is string => Boolean(value)),
+    provisionLabels: document.provisionLinks.map((link) => provisionById(link.provisionId)?.label).filter((value): value is string => Boolean(value)),
+    topicLabels: document.topicIds.map((id) => topicById(id)?.title).filter((value): value is string => Boolean(value)),
+    marketLabels: document.marketIds.map((id) => marketById(id)?.title).filter((value): value is string => Boolean(value)),
   };
 });
 

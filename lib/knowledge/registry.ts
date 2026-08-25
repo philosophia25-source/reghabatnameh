@@ -14,6 +14,7 @@ import type {
   Topic,
 } from "./types";
 import { validateKnowledgeRegistry } from "./validate";
+import { CONTENT_UPDATED_ISO } from "@/lib/site";
 
 export const institutionalDomains: InstitutionalDomain[] = [
   {
@@ -168,6 +169,7 @@ function decision(input: DecisionInput): KnowledgeDocument {
     documentLinks: [],
     relation: input.relation ?? "متن کامل تصمیم، مشخصات پرونده و جایگاه آن در شبکه حقوق رقابت",
     curated: true,
+    updatedAt: CONTENT_UPDATED_ISO,
     status: "published",
   };
 }

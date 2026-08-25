@@ -8,6 +8,9 @@ import {
 } from "@/app/legal-data";
 import { article44DecisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
 import { toFaDigits } from "@/app/text";
+import { EditorialMeta } from "@/components/editorial-meta";
+import { JsonLd } from "@/components/json-ld";
+import { AUTHOR, CONTENT_UPDATED_FA, CONTENT_UPDATED_ISO, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function commentaryFile(slug: string) {
   return slug === "chapeau" ? "commentary44.md" : `commentary44-${slug}.md`;
@@ -93,6 +96,7 @@ function CommentaryBody({ slug }: { slug: string }) {
         <h2>{displayTitle}</h2>
         <p>{part.title}، {part.description}</p>
       </div>
+      <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/article-44/commentary/${slug}`} />
       <details className="commentary-on-page">
         <summary>فهرست مطالب این شرح</summary>
         <ol>
@@ -233,8 +237,24 @@ function Decisions() {
 }
 
 export function Article44({ active, commentaryPart }: { active: Tab; commentaryPart?: string }) {
+  const currentPart = commentaryPart ? commentaryParts.find((part) => part.slug === commentaryPart) : undefined;
+  const commentaryTitle = currentPart
+    ? (currentPart.slug === "chapeau" ? currentPart.title : `شرح ${currentPart.shortLabel} ماده ۴۴`)
+    : undefined;
   return (
     <>
+      {currentPart && commentaryTitle ? <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: commentaryTitle,
+        description: currentPart.description,
+        inLanguage: "fa-IR",
+        dateModified: CONTENT_UPDATED_ISO,
+        mainEntityOfPage: `${SITE_URL}/laws/article-44/commentary/${currentPart.slug}`,
+        author: { "@id": `${SITE_URL}/about#person` },
+        publisher: { "@type": "Person", name: AUTHOR.name },
+        isPartOf: { "@type": "CreativeWork", name: "شرح ماده ۴۴ قانون اجرای سیاست‌های کلی اصل چهل‌وچهار", url: `${SITE_URL}/laws/article-44` },
+      }} /> : null}
       <section className="legal-hero">
         <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span><b>ماده ۴۴</b></div>
         <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>
