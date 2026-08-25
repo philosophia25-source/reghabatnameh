@@ -51,20 +51,13 @@ const articles = [
   },
   {
     tone: "arch-three",
-    category: "پرونده‌خوانی",
-    title: "رأی شماره ۶۳۱ شورای رقابت",
-    summary: "بازار نخ تایر و مسئله توافق رقابتی در زنجیره تولید و تأمین",
-    type: "رأی شورای رقابت",
-    status: "پرونده کامل",
-    href: "/decisions/631",
+    category: "شرح بند ۲",
+    title: "محدودکردن تولید، خرید یا فروش",
+    summary: "مفهوم محدودیت مقداری، کنترل عرضه و مرز آن با تصمیم مستقل بنگاه",
+    type: "شرح ماده",
+    status: "منتشر شده",
+    href: "/laws/article-44/commentary/clause-2",
   },
-];
-
-const topics = [
-  ["قوانین و شرح‌ها", "/laws"],
-  ["نهادهای تنظیم‌گر", "/institutions"],
-  ["موضوعات حقوقی", "/topics"],
-  ["بازارها و صنایع", "/markets"],
 ];
 
 export default function HomePage() {
@@ -73,7 +66,7 @@ export default function HomePage() {
       <section className="hero" id="top" style={{ backgroundImage: `url(${heroImage.src})` }}>
         <div className="hero-shade" />
         <div className="hero-content">
-          <p className="hero-kicker">دفتر مستقل حقوق رقابت ایران</p>
+          <p className="hero-kicker">پایگاه تحلیلی حقوق رقابت و تنظیم‌گری</p>
           <h1>رقابت‌نامه</h1>
           <h2>حقوق رقابت و تنظیم‌گری در بازارهای ایران</h2>
           <p>تحلیل قوانین، رویه‌ها و سیاست‌های مرتبط با رقابت، تمرکزهای اقتصادی و تنظیم‌گری در بخش‌های مختلف اقتصاد ایران</p>
@@ -92,18 +85,8 @@ export default function HomePage() {
       </section>
 
       <section className="insights shell" id="analysis">
-        <aside className="topics">
-          <div className="section-title"><span>موضوعات اصلی</span><i /></div>
-          <ul>
-            {topics.map(([name, href]) => (
-              <li key={name}><Link href={href}><span className="topic-icon">□</span><strong>{name}</strong><Arrow /></Link></li>
-            ))}
-          </ul>
-          <Link className="all-link" href="/laws/general-policies-44">ورود به مجموعه قانون اصل ۴۴ <Arrow /></Link>
-        </aside>
-
         <div className="latest">
-          <div className="section-title"><span>تازه‌های شبکه</span><i /></div>
+          <div className="section-title section-title-with-link"><span>تازه‌های شبکه</span><i /><Link href="/search">جست‌وجو در همه محتوا <Arrow /></Link></div>
           <div className="article-grid">
             {articles.map((article) => (
               <Link className="article-card" href={article.href} key={article.title}>
@@ -116,15 +99,6 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="statement shell">
-        <div className="statement-lines" aria-hidden="true"><i /><i /><i /><i /><i /></div>
-        <div className="quote-mark">”</div>
-        <div>
-          <blockquote>رقابت سالم، موتور پیشرفت اقتصاد و تضمین‌کننده رفاه مصرف‌کننده است.</blockquote>
-          <p>تحلیل دقیق قوانین و رویه‌ها، نخستین گام برای ارتقای رقابت‌پذیری اقتصاد ایران است.</p>
         </div>
       </section>
 

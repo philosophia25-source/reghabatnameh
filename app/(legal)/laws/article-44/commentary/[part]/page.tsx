@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { commentaryParts } from "@/app/legal-data";
 import { Article44 } from "@/components/article-44";
+import { CONTENT_UPDATED_ISO } from "@/lib/site";
 
 export function generateStaticParams() {
   return commentaryParts.filter((part) => part.available).map((part) => ({ part: part.slug }));
@@ -27,8 +28,10 @@ export async function generateMetadata({ params }: { params: Promise<{ part: str
       siteName: "رقابت‌نامه",
       locale: "fa_IR",
       type: "article",
-      images: [],
+      modifiedTime: CONTENT_UPDATED_ISO,
+      images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${title} | رقابت‌نامه` }],
     },
+    twitter: { card: "summary_large_image", title: `${title} | رقابت‌نامه`, description: part.description, images: ["/og.jpg"] },
   };
 }
 

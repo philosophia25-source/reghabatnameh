@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { decisionDescription, decisionRecords, decisionSlugs } from "@/app/decision-data";
 import { DecisionPage } from "@/components/decision-page";
+import { CONTENT_UPDATED_ISO } from "@/lib/site";
 
 export function generateStaticParams() {
   return decisionSlugs.map((slug) => ({ slug }));
@@ -25,8 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: "رقابت‌نامه",
       locale: "fa_IR",
       type: "article",
-      images: [],
+      modifiedTime: CONTENT_UPDATED_ISO,
+      images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${decision.title} | رقابت‌نامه` }],
     },
+    twitter: { card: "summary_large_image", title: `${decision.title} | رقابت‌نامه`, description: decisionDescription(decision), images: ["/og.jpg"] },
   };
 }
 

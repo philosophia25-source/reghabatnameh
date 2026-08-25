@@ -58,6 +58,7 @@ export type CommentaryRecord = {
   title: string;
   route: string;
   contentFile?: string;
+  updatedAt?: string;
   status: PublicationStatus;
 };
 
@@ -118,6 +119,7 @@ export type KnowledgeDocument = {
   documentLinks: DocumentLink[];
   relation: string;
   curated: boolean;
+  updatedAt?: string;
   status: PublicationStatus;
 };
 

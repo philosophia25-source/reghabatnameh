@@ -7,6 +7,9 @@ import {
   provisionsForDocument,
   topicsForDocument,
 } from "@/lib/knowledge/queries";
+import { EditorialMeta } from "@/components/editorial-meta";
+import { JsonLd } from "@/components/json-ld";
+import { AUTHOR, CONTENT_UPDATED_FA, CONTENT_UPDATED_ISO, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function Stage({ record, index, total }: { record: ParsedDecision; index: number; total: number }) {
   const { meta, body } = record;
@@ -56,8 +59,25 @@ function KnowledgeConnections({ decision }: { decision: DecisionRecord }) {
 
 export function DecisionPage({ slug }: { slug: string }) {
   const decision = decisionRecords[slug];
+  const first = decision.stages[0];
+  const decisionNumber = toFaDigits(decision.stages.map((stage) => stage.meta["شماره جلسه/رأی"]).filter(Boolean).join(" و "));
+  const citation = `${AUTHOR.name}، «${decision.title}»، پرونده‌خوانی رأی ${decisionNumber}، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}${decision.route}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: decision.title,
+    description: decision.relation,
+    inLanguage: "fa-IR",
+    dateModified: CONTENT_UPDATED_ISO,
+    mainEntityOfPage: `${SITE_URL}${decision.route}`,
+    author: { "@id": `${SITE_URL}/about#person` },
+    publisher: { "@type": "Person", name: AUTHOR.name },
+    about: topicsForDocument(decision.id).map((topic) => topic.title),
+    isBasedOn: first.meta["نشانی رسمی"] || undefined,
+  };
   return (
     <>
+      <JsonLd data={jsonLd} />
       <section className="decision-hero">
         <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/decisions">آرای منتخب</Link><span>←</span><b>پرونده</b></div>
         <p className="eyebrow">پرونده‌خوانی حقوق رقابت</p>
@@ -67,6 +87,7 @@ export function DecisionPage({ slug }: { slug: string }) {
       </section>
       <section className="decision-content">
         {decision.stages.map((stage, index) => <Stage record={stage} index={index} total={decision.stages.length} key={`${slug}-${index}`} />)}
+        <EditorialMeta citation={citation} />
         <KnowledgeConnections decision={decision} />
       </section>
     </>

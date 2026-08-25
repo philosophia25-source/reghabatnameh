@@ -1,4 +1,5 @@
 import type { CommentaryRecord, Provision } from "./types";
+import { CONTENT_UPDATED_ISO } from "@/lib/site";
 
 export const ARTICLE_44_ID = "general-policies-44:article-44";
 
@@ -66,6 +67,7 @@ export const article44Commentaries: CommentaryRecord[] = commentaryParts.map((pa
   title: part.title,
   route: `/laws/article-44/commentary/${part.slug}`,
   contentFile: part.available ? (part.slug === "chapeau" ? "commentary44.md" : `commentary44-${part.slug}.md`) : undefined,
+  updatedAt: part.available ? CONTENT_UPDATED_ISO : undefined,
   status: part.available ? "published" : "draft",
 }));
 

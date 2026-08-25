@@ -6,6 +6,7 @@ const nav = [
   ["نهادها", "/institutions"],
   ["موضوعات", "/topics"],
   ["آرای منتخب", "/decisions"],
+  ["جست‌وجو", "/search"],
   ["درباره", "/about"],
   ["ارتباط", "/contact"],
 ];
@@ -22,11 +23,11 @@ export default function MarketingLayout({ children }: Readonly<{ children: React
           {nav.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
         </nav>
       </header>
-      <main>{children}</main>
+      <main id="main-content">{children}</main>
       <footer>
         <div className="footer-identity">
           <Link className="brand footer-brand" href="/"><span className="brand-seal"><img src="/mark.svg" alt="" /></span><strong>رقابت‌نامه</strong></Link>
-          <p>دفتر شخصی نادر جعفری برای حقوق رقابت و تنظیم‌گری</p>
+          <p>پایگاه تحلیلی حقوق رقابت و تنظیم‌گری ایران</p>
         </div>
         <div className="footer-contact" aria-label="راه‌های ارتباط با نادر جعفری">
           <a href="mailto:nader.jafari@modares.ac.ir">ایمیل</a>
