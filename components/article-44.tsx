@@ -83,6 +83,7 @@ function CommentaryBody({ slug }: { slug: string }) {
   const commentary = readFileSync(join(process.cwd(), "content", commentaryFile(slug)), "utf8");
   const [commentaryMain, commentaryFootnotes = ""] = commentary.split(/\n---\n/, 2);
   const sections = commentaryMain.split(/\n(?=\*\*\d+\.)/).map((section) => section.trim()).filter(Boolean);
+  const tocSections = sections.slice(1, 11);
   const footnotes = Array.from(commentaryFootnotes.matchAll(/\[\\?\[(\d+)\\?\]\]\(#_ftnref\d+\)\s*([\s\S]*?)(?=\n\n\[\\?\[\d+|$)/g)).map((match) => ({
     number: match[1],
     text: match[2].trim(),
@@ -97,16 +98,16 @@ function CommentaryBody({ slug }: { slug: string }) {
         <p>{part.title}، {part.description}</p>
       </div>
       <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/article-44/commentary/${slug}`} />
-      <details className="commentary-on-page">
+      {tocSections.length ? <details className="commentary-on-page">
         <summary>فهرست مطالب این شرح</summary>
         <ol>
-          {sections.slice(1, 11).map((section) => {
+          {tocSections.map((section) => {
             const heading = clean(section.split("\n")[0]);
             const id = `section-${heading.match(/^\d+/)?.[0] ?? "intro"}`;
             return <li key={id}><a href={`#${id}`}>{plainHeading(heading.replace(/^\d+\.\s*/, ""))}</a></li>;
           })}
         </ol>
-      </details>
+      </details> : null}
       {sections.map((section, index) => {
         const lines = section.split("\n").filter((line) => line.trim());
         const headingLine = lines[0];

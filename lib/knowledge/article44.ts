@@ -30,7 +30,7 @@ export const commentaryParts: CommentaryPart[] = [
   { slug: "clause-1", shortLabel: "بند ۱", title: "تعیین قیمت", description: "مشخص‌کردن مستقیم یا غیرمستقیم قیمت خرید یا فروش", available: true, provisionId: `${ARTICLE_44_ID}:clause-1` },
   { slug: "clause-2", shortLabel: "بند ۲", title: "محدودکردن تولید، خرید یا فروش", description: "کنترل مقدار کالا یا خدمت در بازار", available: true, provisionId: `${ARTICLE_44_ID}:clause-2` },
   { slug: "clause-3", shortLabel: "بند ۳", title: "شرایط تبعیض‌آمیز", description: "تحمیل شرایط متفاوت در معاملات همسان", available: true, provisionId: `${ARTICLE_44_ID}:clause-3` },
-  { slug: "clause-4", shortLabel: "بند ۴", title: "الزام به معامله با شخص ثالث", description: "تحمیل طرف قرارداد یا شروط قراردادی به دیگران", available: false, provisionId: `${ARTICLE_44_ID}:clause-4` },
+  { slug: "clause-4", shortLabel: "بند ۴", title: "الزام به معامله با شخص ثالث", description: "تحمیل طرف قرارداد یا شروط قراردادی به دیگران", available: true, provisionId: `${ARTICLE_44_ID}:clause-4` },
   { slug: "clause-5", shortLabel: "بند ۵", title: "تعهدات تکمیلی نامرتبط", description: "موکول‌کردن قرارداد به پذیرش تعهدات خارج از موضوع", available: false, provisionId: `${ARTICLE_44_ID}:clause-5` },
   { slug: "clause-6", shortLabel: "بند ۶", title: "تقسیم یا تسهیم بازار", description: "تقسیم بازار کالا یا خدمت میان اشخاص", available: false, provisionId: `${ARTICLE_44_ID}:clause-6` },
   { slug: "clause-7", shortLabel: "بند ۷", title: "محدودکردن دسترسی به بازار", description: "ممانعت از دسترسی اشخاص خارج از توافق", available: false, provisionId: `${ARTICLE_44_ID}:clause-7` },
