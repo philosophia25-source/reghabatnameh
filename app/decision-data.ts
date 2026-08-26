@@ -94,6 +94,8 @@ export const decisionRouteByMention: Record<string, string> = Object.fromEntries
       [`رأی شماره ${number}`, document.route],
       [`رأی ${number}`, document.route],
       [`تصمیم شماره ${number}`, document.route],
+      [`تصمیم جلسه شماره ${number}`, document.route],
+      [`تصمیم جلسه ${number}`, document.route],
       [`تصمیم ${number}`, document.route],
     ];
   })),
