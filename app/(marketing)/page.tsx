@@ -33,15 +33,6 @@ const quickAccess = [
 const articles = [
   {
     tone: "arch-one",
-    category: "شرح قانون",
-    title: "شرح صدر ماده ۴۴",
-    summary: "قرارداد، توافق و تفاهم میان اشخاص و معیار قابلیت اخلال در رقابت",
-    type: "شرح ماده",
-    status: "منتشر شده",
-    href: "/laws/article-44/commentary/chapeau",
-  },
-  {
-    tone: "arch-two",
     category: "شرح بند ۱",
     title: "توافق بر تعیین قیمت",
     summary: "تعیین مستقیم و غیرمستقیم قیمت و مرز آن با رفتارهای یک‌جانبه و تنظیم‌گری",
@@ -50,13 +41,22 @@ const articles = [
     href: "/laws/article-44/commentary/clause-1",
   },
   {
-    tone: "arch-three",
+    tone: "arch-two",
     category: "شرح بند ۲",
     title: "محدودکردن تولید، خرید یا فروش",
     summary: "مفهوم محدودیت مقداری، کنترل عرضه و مرز آن با تصمیم مستقل بنگاه",
     type: "شرح ماده",
     status: "منتشر شده",
     href: "/laws/article-44/commentary/clause-2",
+  },
+  {
+    tone: "arch-three",
+    category: "شرح بند ۳",
+    title: "شرایط تبعیض‌آمیز در معاملات همسان",
+    summary: "مرز تبعیض قراردادی با تفاوت موجه و معیار قابلیت اخلال در رقابت",
+    type: "شرح ماده",
+    status: "منتشر شده",
+    href: "/laws/article-44/commentary/clause-3",
   },
 ];
 
