@@ -21,7 +21,7 @@ type Tab = "text" | "commentary" | "decisions";
 const tabs: { key: Tab; label: string; href: string; count?: string }[] = [
   { key: "text", label: "متن ماده", href: "/laws/article-44" },
   { key: "commentary", label: "شرح", href: "/laws/article-44/commentary", count: "۹" },
-  { key: "decisions", label: "آرای مرتبط", href: "/laws/article-44/decisions", count: toFaDigits(article44DecisionIndexRecords.length) },
+  { key: "decisions", label: "آرای ماده ۴۴", href: "/laws/article-44/decisions", count: toFaDigits(article44DecisionIndexRecords.length) },
 ];
 
 function clean(text: string) {
@@ -58,6 +58,16 @@ function linkedText(text: string) {
   });
 }
 
+function referencedDecisionCount(commentary: string) {
+  const routes = new Set(
+    Array.from(commentary.matchAll(/\]\((\/decisions\/[^)\s]+)\)/g), (match) => match[1]),
+  );
+  Object.entries(decisionRouteByMention).forEach(([mention, route]) => {
+    if (commentary.includes(mention)) routes.add(route);
+  });
+  return article44DecisionIndexRecords.filter((decision) => routes.has(decision.href)).length;
+}
+
 function PartsNav({ current }: { current?: string }) {
   return (
     <aside className="parts-nav">
@@ -91,6 +101,7 @@ function CommentaryBody({ slug }: { slug: string }) {
     number: match[1],
     text: match[2].trim(),
   }));
+  const decisionCount = referencedDecisionCount(commentaryMain);
   const displayTitle = slug === "chapeau" ? "شرح صدر ماده ۴۴" : `شرح ${part.shortLabel} ماده ۴۴`;
 
   return (
@@ -101,6 +112,11 @@ function CommentaryBody({ slug }: { slug: string }) {
         <p>{part.title}، {part.description}</p>
       </div>
       <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/article-44/commentary/${slug}`} />
+      {decisionCount ? <div className="commentary-decision-count">
+        <span>آرای پیوندشده در این شرح</span>
+        <strong>{toFaDigits(decisionCount)} پرونده</strong>
+        <small>فقط پرونده‌های دارای صفحه در رقابت‌نامه شمرده شده‌اند</small>
+      </div> : null}
       {tocSections.length ? <details className="commentary-on-page">
         <summary>فهرست مطالب این شرح</summary>
         <ol>
