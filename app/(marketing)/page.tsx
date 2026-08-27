@@ -33,15 +33,6 @@ const quickAccess = [
 const articles = [
   {
     tone: "arch-one",
-    category: "شرح بند ۲",
-    title: "محدودکردن تولید، خرید یا فروش",
-    summary: "مفهوم محدودیت مقداری، کنترل عرضه و مرز آن با تصمیم مستقل بنگاه",
-    type: "شرح ماده",
-    status: "منتشر شده",
-    href: "/laws/article-44/commentary/clause-2",
-  },
-  {
-    tone: "arch-two",
     category: "شرح بند ۳",
     title: "شرایط تبعیض‌آمیز در معاملات همسان",
     summary: "مرز تبعیض قراردادی با تفاوت موجه و معیار قابلیت اخلال در رقابت",
@@ -50,13 +41,22 @@ const articles = [
     href: "/laws/article-44/commentary/clause-3",
   },
   {
-    tone: "arch-three",
+    tone: "arch-two",
     category: "شرح بند ۴",
     title: "الزام به معامله با شخص ثالث",
     summary: "تحمیل طرف قرارداد یا شروط قراردادی به دیگران و مرز آن با فشار یک‌جانبه",
     type: "شرح ماده",
     status: "منتشر شده",
     href: "/laws/article-44/commentary/clause-4",
+  },
+  {
+    tone: "arch-three",
+    category: "شرح بند ۵",
+    title: "تعهدات تکمیلی نامرتبط",
+    summary: "شرط‌کردن قرارداد به پذیرش تعهد اضافی و معیار ارتباط عرفی آن با معامله",
+    type: "شرح ماده",
+    status: "منتشر شده",
+    href: "/laws/article-44/commentary/clause-5",
   },
 ];
 
