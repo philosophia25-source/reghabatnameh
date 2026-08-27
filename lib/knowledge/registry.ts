@@ -101,6 +101,7 @@ export const topics: Topic[] = [
   { id: "output-restriction", slug: "output-restriction", title: "محدودکردن تولید یا عرضه", description: "کنترل مقدار تولید، خرید یا فروش کالا و خدمت", route: "/topics/output-restriction", status: "published" },
   { id: "discriminatory-conditions", slug: "discriminatory-conditions", title: "شرایط تبعیض‌آمیز", description: "تحمیل شرایط متفاوت در معاملات همسان", route: "/topics/discriminatory-conditions", status: "published" },
   { id: "third-party-dealing", slug: "third-party-dealing", title: "الزام به معامله با شخص ثالث", description: "تحمیل طرف قرارداد یا شروط قراردادی به دیگران", route: "/topics/third-party-dealing", status: "published" },
+  { id: "supplementary-obligations", slug: "supplementary-obligations", title: "تعهدات تکمیلی نامرتبط", description: "موکول‌کردن قرارداد به پذیرش تعهداتی که بنا بر عرف تجاری با موضوع آن ارتباط ندارند", route: "/topics/supplementary-obligations", status: "published" },
   { id: "market-allocation", slug: "market-allocation", title: "تقسیم بازار", description: "تقسیم یا تسهیم بازار کالا و خدمت میان اشخاص", route: "/topics/market-allocation", status: "published" },
   { id: "market-access", slug: "market-access", title: "دسترسی و ورود به بازار", description: "محدودیت ورود، مجوز، حذف رقیب و دسترسی به بازار", route: "/topics/market-access", status: "published" },
 ];
@@ -122,6 +123,7 @@ const topicByPart: Record<string, string> = {
   "clause-2": "output-restriction",
   "clause-3": "discriminatory-conditions",
   "clause-4": "third-party-dealing",
+  "clause-5": "supplementary-obligations",
   "clause-6": "market-allocation",
   "clause-7": "market-access",
 };
@@ -198,7 +200,7 @@ export const documents: KnowledgeDocument[] = [
   decision({ slug: "403", title: "قراردادهای جایگاه‌داری سوخت", files: ["403.txt"], markets: ["energy"] }),
   decision({ slug: "354", title: "تبعیض در مزایده تبلیغات شهری", files: ["354.txt"], parts: ["clause-3"], markets: ["public-local-markets"] }),
   decision({ slug: "sugar", title: "بازار شکر و انحصار واردات", files: ["sugar-296.txt", "sugar-appeal.txt"], parts: ["clause-6"], issuerIds: ["competition-council", "competition-appeal-board"], markets: ["agriculture-food"], relation: "نمونه تعارض تحلیلی میان تصمیم بدوی و رأی هیئت تجدیدنظر" }),
-  decision({ slug: "270", title: "پرونده جامع بازار فولاد", files: ["270.txt"], markets: ["industry"] }),
+  decision({ slug: "270", title: "پرونده جامع بازار فولاد", files: ["270.txt"], parts: ["clause-5"], markets: ["industry"] }),
   decision({ slug: "236", title: "پرونده ارزی ۶۵۰ میلیون یورویی", files: ["236.txt"], parts: ["clause-3", "clause-7"], markets: ["finance-insurance"] }),
   decision({ slug: "232", title: "تعیین قیمت صنفی لوح فشرده", files: ["232.txt"], parts: ["clause-2", "clause-6", "clause-7"], markets: ["industry"] }),
 ];
