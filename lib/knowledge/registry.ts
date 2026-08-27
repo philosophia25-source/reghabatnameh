@@ -190,7 +190,7 @@ export const documents: KnowledgeDocument[] = [
   decision({ slug: "562", title: "رد شکایت سامانه سوئیچ بیمه", files: ["562.txt"], markets: ["finance-insurance", "digital-markets"] }),
   decision({ slug: "522", title: "واگذاری طرح‌های پژوهشی صنعت نفت", files: ["522.txt"], parts: ["clause-7"], markets: ["energy"] }),
   decision({ slug: "631", title: "تفاهم انحصاری در زنجیره نخ تایر", files: ["631.txt"], parts: ["clause-7"], markets: ["industry"], relation: "احراز توافق محدودکننده و بررسی رابطه شرکت مادر و شرکت‌های وابسته" }),
-  decision({ slug: "504", title: "تعیین قیمت و سهمیه لباس مدارس", files: ["504.txt"], parts: ["clause-1"], markets: ["public-local-markets"] }),
+  decision({ slug: "504", title: "تعیین قیمت و سهمیه لباس مدارس", files: ["504.txt"], parts: ["clause-1", "clause-6"], markets: ["public-local-markets"] }),
   decision({ slug: "476", title: "ارجاع کار مهندسی در استان سمنان", files: ["476.txt"], parts: ["chapeau", "clause-2", "clause-6"], markets: ["professional-services"] }),
   decision({ slug: "466", title: "انحصار نرم‌افزار LIMS آزمایشگاهی", files: ["466.txt"], parts: ["clause-7"], markets: ["digital-markets"] }),
   decision({ slug: "445", title: "امحای جوجه یک‌روزه برای کنترل قیمت", files: ["445.txt"], parts: ["clause-2"], markets: ["agriculture-food"] }),
