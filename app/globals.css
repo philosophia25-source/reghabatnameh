@@ -296,10 +296,18 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
 .commentary-kicker { color:var(--gold)!important; font-size:var(--font-caption)!important; }
 .commentary-body h2 { margin:15px 0 25px; color:#f3f5f5; font-size:clamp(24px,3vw,36px); line-height:1.55; letter-spacing:-.035em; }
 .commentary-body p { margin:0 0 22px; color:#c7d0d4; font-size:var(--font-reading); line-height:2.05; text-align:justify; }
-.commentary-decision-count { margin:4px 0 32px; padding:17px 19px; display:grid; grid-template-columns:1fr auto; align-items:center; gap:4px 20px; background:rgba(201,164,104,.07); border:1px solid rgba(201,164,104,.22); }
-.commentary-decision-count span { color:#d7c49e; font-size:var(--font-small); }
-.commentary-decision-count strong { color:var(--gold-light); font-size:17px; font-weight:600; }
-.commentary-decision-count small { grid-column:1/-1; color:#91a2ab; font-size:var(--font-caption); line-height:1.8; }
+.commentary-decision-count { margin:4px 0 32px; background:rgba(201,164,104,.07); border:1px solid rgba(201,164,104,.22); }
+.commentary-decision-count summary { padding:17px 19px; display:grid; grid-template-columns:1fr auto; align-items:center; gap:4px 20px; cursor:pointer; list-style:none; }
+.commentary-decision-count summary::-webkit-details-marker { display:none; }
+.commentary-decision-count summary span { color:#d7c49e; font-size:var(--font-small); }
+.commentary-decision-count summary strong { color:var(--gold-light); font-size:17px; font-weight:600; }
+.commentary-decision-count summary small { grid-column:1/-1; color:#91a2ab; font-size:var(--font-caption); line-height:1.8; }
+.commentary-decision-list { padding:0 19px 18px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.commentary-decision-list a { min-height:132px; padding:17px 16px; display:flex; flex-direction:column; align-items:flex-start; background:#0a1c29; border:1px solid rgba(255,255,255,.08); transition:border-color .2s ease,background .2s ease; }
+.commentary-decision-list a:hover { background:#0d2231; border-color:rgba(201,164,104,.4); }
+.commentary-decision-list a small { color:#8fa2ac; font-size:var(--font-caption); line-height:1.7; }
+.commentary-decision-list a strong { margin:7px 0 13px; color:#e6ebed; font-size:var(--font-small); font-weight:600; line-height:1.8; }
+.commentary-decision-list a span { margin-top:auto; color:var(--gold-light); font-size:var(--font-caption); }
 .inline-decision,.inline-source { padding:1px 3px; color:#e0c183; border-bottom:1px solid rgba(201,164,104,.5); }
 .inline-decision:hover,.inline-source:hover { color:white; background:rgba(201,164,104,.1); }
 .footnote-ref { margin-inline:3px; vertical-align:super; font-size:.68em; line-height:0; }
@@ -468,7 +476,7 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
   .legal-hero,.decision-hero { padding:42px 22px 52px; }.breadcrumbs { margin-bottom:32px; }.legal-hero h1 { font-size:56px; }.decision-hero h1 { font-size:38px; }
   .law-meta { margin-top:34px; gap:15px 25px; }.legal-tabs { min-height:60px; padding-inline:18px; gap:10px; justify-content:space-between; }.legal-tabs a { min-width:auto; font-size:var(--font-caption); }
   .legal-content,.decision-content { width:calc(100% - 28px); padding-block:42px 70px; }.law-text-card { padding:27px 22px; gap:22px; }.law-lead { font-size:var(--font-body); }.law-text-card li { font-size:1rem; }
-  .commentary-toc ol { columns:1; }.commentary-body h2 { font-size:25px; }.commentary-body p { font-size:var(--font-body); line-height:2.05; text-align:right; }
+  .commentary-toc ol { columns:1; }.commentary-body h2 { font-size:25px; }.commentary-body p { font-size:var(--font-body); line-height:2.05; text-align:right; }.commentary-decision-list { grid-template-columns:1fr; }
   .footnotes { padding:24px 18px 8px!important; }.footnotes-heading { align-items:start; flex-direction:column; gap:7px; }.footnotes li { grid-template-columns:25px 1fr; }.footnote-back { grid-column:2; }
   .part-grid { grid-template-columns:1fr; }.part-card { min-height:205px; }.parts-nav ol { grid-template-columns:1fr; }.parts-nav li:nth-child(odd) { border-left:0; }.commentary-on-page ol { columns:1; }.part-pagination { margin-top:40px; }.part-pagination strong { font-size:var(--font-caption); }
   .law-unit>small { opacity:1; transform:none; }.clickable-law .law-lead { margin-inline:-10px; padding-inline:10px; }
