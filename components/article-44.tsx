@@ -58,14 +58,61 @@ function linkedText(text: string) {
   });
 }
 
-function referencedDecisionCount(commentary: string) {
-  const routes = new Set(
-    Array.from(commentary.matchAll(/\]\((\/decisions\/[^)\s]+)\)/g), (match) => match[1]),
-  );
+type CommentaryDecisionReference = {
+  href: string;
+  title: string;
+  detail: string;
+  external: boolean;
+  position: number;
+};
+
+function commentaryDecisionReferences(commentary: string) {
+  const references: CommentaryDecisionReference[] = [];
+  const recordByRoute = new Map(article44DecisionIndexRecords.map((decision) => [decision.href, decision]));
+
+  for (const match of commentary.matchAll(/\[([^\]]+)\]\(((?:https?:\/\/|\/decisions\/)[^)\s]+)\)/g)) {
+    const label = toFaDigits(clean(match[1]).trim());
+    const href = match[2];
+    const internalDecision = recordByRoute.get(href);
+    if (internalDecision) {
+      references.push({
+        href,
+        title: internalDecision.title,
+        detail: label,
+        external: false,
+        position: match.index ?? 0,
+      });
+    } else if (/(?:تصمیم|رأی|پرونده)/.test(label)) {
+      references.push({
+        href,
+        title: label,
+        detail: label.includes("پرونده") ? "پرونده خارجی" : "منبع رسمی",
+        external: true,
+        position: match.index ?? 0,
+      });
+    }
+  }
+
   Object.entries(decisionRouteByMention).forEach(([mention, route]) => {
-    if (commentary.includes(mention)) routes.add(route);
+    const position = commentary.indexOf(mention);
+    const decision = recordByRoute.get(route);
+    if (position < 0 || !decision) return;
+    references.push({
+      href: route,
+      title: decision.title,
+      detail: toFaDigits(mention),
+      external: false,
+      position,
+    });
   });
-  return article44DecisionIndexRecords.filter((decision) => routes.has(decision.href)).length;
+
+  references.sort((first, second) => first.position - second.position);
+  const seen = new Set<string>();
+  return references.filter((reference) => {
+    if (seen.has(reference.href)) return false;
+    seen.add(reference.href);
+    return true;
+  });
 }
 
 function PartsNav({ current }: { current?: string }) {
@@ -101,7 +148,7 @@ function CommentaryBody({ slug }: { slug: string }) {
     number: match[1],
     text: match[2].trim(),
   }));
-  const decisionCount = referencedDecisionCount(commentaryMain);
+  const decisionReferences = commentaryDecisionReferences(commentaryMain);
   const displayTitle = slug === "chapeau" ? "شرح صدر ماده ۴۴" : `شرح ${part.shortLabel} ماده ۴۴`;
 
   return (
@@ -112,11 +159,25 @@ function CommentaryBody({ slug }: { slug: string }) {
         <p>{part.title}، {part.description}</p>
       </div>
       <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/article-44/commentary/${slug}`} />
-      {decisionCount ? <div className="commentary-decision-count">
-        <span>آرای پیوندشده در این شرح</span>
-        <strong>{toFaDigits(decisionCount)} پرونده</strong>
-        <small>فقط پرونده‌های دارای صفحه در رقابت‌نامه شمرده شده‌اند</small>
-      </div> : null}
+      {decisionReferences.length ? <details className="commentary-decision-count">
+        <summary>
+          <span>آرا و پرونده‌های مورد بررسی در این شرح</span>
+          <strong>{toFaDigits(decisionReferences.length)} پرونده</strong>
+          <small>مشاهده فهرست و دسترسی به پرونده‌ها</small>
+        </summary>
+        <div className="commentary-decision-list">
+          {decisionReferences.map((reference) => {
+            const content = <>
+              <small>{reference.detail}</small>
+              <strong>{reference.title}</strong>
+              <span>{reference.external ? "مشاهده منبع بیرونی ↗" : "مشاهده پرونده ←"}</span>
+            </>;
+            return reference.external
+              ? <a href={reference.href} target="_blank" rel="noreferrer" key={reference.href}>{content}</a>
+              : <Link href={reference.href} key={reference.href}>{content}</Link>;
+          })}
+        </div>
+      </details> : null}
       {tocSections.length ? <details className="commentary-on-page">
         <summary>فهرست مطالب این شرح</summary>
         <ol>
