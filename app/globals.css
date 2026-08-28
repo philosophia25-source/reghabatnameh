@@ -45,12 +45,12 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .search-icon span::after { content:""; position:absolute; width:7px; height:1px; background:white; transform:rotate(45deg); left:3px; bottom:5px; }
 
 .hero { min-height:100svh; position:relative; overflow:hidden; isolation:isolate; background-color:#111; }
-.hero-backdrop { position:absolute; z-index:0; inset:-4%; background-position:center; background-size:cover; background-repeat:no-repeat; transform:scale(1.015); animation:hero-breathe 26s ease-in-out infinite alternate; will-change:transform; }
-.hero-backdrop::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 31% 42%,rgba(221,191,134,.16),transparent 38%); opacity:.28; animation:hero-light 13s ease-in-out infinite alternate; }
+.hero-backdrop { position:absolute; z-index:0; inset:-4%; background-position:center; background-size:cover; background-repeat:no-repeat; transform:scale(1.02); animation:hero-breathe 18s ease-in-out infinite alternate; will-change:transform; }
+.hero-backdrop::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 31% 42%,rgba(221,191,134,.24),transparent 40%); opacity:.18; animation:hero-light 9s ease-in-out infinite alternate; }
 .hero::before { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(90deg,rgba(3,7,9,.04) 0%,rgba(3,7,9,.1) 38%,rgba(3,7,9,.66) 67%,rgba(3,7,9,.91) 100%),linear-gradient(0deg,rgba(3,7,9,.65),transparent 35%); }
 .hero-shade { position:absolute; inset:0; z-index:1; box-shadow:inset 0 0 180px rgba(0,0,0,.32); }
-@keyframes hero-breathe { to { transform:scale(1.06) translate3d(-.6%,.35%,0); } }
-@keyframes hero-light { to { opacity:.58; } }
+@keyframes hero-breathe { to { transform:scale(1.13) translate3d(-1.5%,.7%,0); } }
+@keyframes hero-light { to { opacity:.72; } }
 .hero-content { width:min(660px,48vw); margin-right:clamp(46px,8vw,135px); padding-top:clamp(210px,27vh,310px); position:relative; z-index:2; }
 .hero-kicker { margin:0 0 22px; display:flex; align-items:center; gap:13px; color:rgba(255,255,255,.68); font-size:var(--font-caption); }
 .hero-kicker::before { content:""; width:34px; height:1px; background:var(--gold); }
