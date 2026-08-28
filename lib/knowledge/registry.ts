@@ -149,6 +149,7 @@ type DecisionInput = {
   title: string;
   files: string[];
   parts?: string[];
+  includeInArticle44?: boolean;
   issuerIds?: string[];
   markets: string[];
   additionalTopics?: string[];
@@ -157,6 +158,7 @@ type DecisionInput = {
 
 function decision(input: DecisionInput): KnowledgeDocument {
   const parts = input.parts ?? [];
+  const includeInArticle44 = input.includeInArticle44 ?? true;
   return {
     id: `decision:${input.slug}`,
     slug: input.slug,
@@ -165,8 +167,8 @@ function decision(input: DecisionInput): KnowledgeDocument {
     route: `/decisions/${input.slug}`,
     files: input.files,
     issuerIds: input.issuerIds ?? ["competition-council"],
-    provisionLinks: links(parts),
-    topicIds: topicIds(parts, input.additionalTopics),
+    provisionLinks: includeInArticle44 ? links(parts) : [],
+    topicIds: includeInArticle44 ? topicIds(parts, input.additionalTopics) : (input.additionalTopics ?? []),
     marketIds: input.markets,
     documentLinks: [],
     relation: input.relation ?? "متن کامل تصمیم، مشخصات پرونده و جایگاه آن در شبکه حقوق رقابت",
@@ -197,7 +199,7 @@ export const documents: KnowledgeDocument[] = [
   decision({ slug: "437", title: "شکایت از ایرانسل بابت امتناع از همکاری", files: ["437.txt"], parts: ["clause-2"], markets: ["communications"], relation: "رد تبانی و تفکیک رفتار هماهنگ از استنکاف یک‌جانبه" }),
   decision({ slug: "429", title: "قدرت مسلط و قیمت‌گذاری تهاجمی در خرید توتون", files: ["429.txt"], parts: ["clause-1", "clause-2"], markets: ["agriculture-food"] }),
   decision({ slug: "421", title: "ظرفیت وکالت و دامنه ماده ۷", files: ["421.txt"], parts: ["clause-2", "clause-7"], markets: ["professional-services"] }),
-  decision({ slug: "403", title: "قراردادهای جایگاه‌داری سوخت", files: ["403.txt"], markets: ["energy"] }),
+  decision({ slug: "403", title: "قراردادهای جایگاه‌داری سوخت", files: ["403.txt"], includeInArticle44: false, markets: ["energy"] }),
   decision({ slug: "354", title: "تبعیض در مزایده تبلیغات شهری", files: ["354.txt"], parts: ["clause-3"], markets: ["public-local-markets"] }),
   decision({ slug: "sugar", title: "بازار شکر و انحصار واردات", files: ["sugar-296.txt", "sugar-appeal.txt"], parts: ["clause-6"], issuerIds: ["competition-council", "competition-appeal-board"], markets: ["agriculture-food"], relation: "نمونه تعارض تحلیلی میان تصمیم بدوی و رأی هیئت تجدیدنظر" }),
   decision({ slug: "270", title: "پرونده جامع بازار فولاد", files: ["270.txt"], parts: ["clause-5"], markets: ["industry"] }),
