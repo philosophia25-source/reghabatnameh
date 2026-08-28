@@ -7,7 +7,7 @@ import {
   commentaryParts,
 } from "@/app/legal-data";
 import { article44DecisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
-import { toFaDigits } from "@/app/text";
+import { toFaDate, toFaDigits } from "@/app/text";
 import { EditorialMeta } from "@/components/editorial-meta";
 import { JsonLd } from "@/components/json-ld";
 import { AUTHOR, CONTENT_UPDATED_FA, CONTENT_UPDATED_ISO, SITE_NAME, SITE_URL } from "@/lib/site";
@@ -32,7 +32,7 @@ function clean(text: string) {
 }
 
 function plainHeading(text: string) {
-  return toFaDigits(clean(text).replace(/\[\\?\[(\d+)\\?\]\]\(#_ftn\d+\)/g, "").trim());
+  return toFaDate(clean(text).replace(/\[\\?\[(\d+)\\?\]\]\(#_ftn\d+\)/g, "").trim());
 }
 
 function isCommentaryHeading(line: string) {
@@ -69,12 +69,12 @@ function linkedText(text: string) {
     const source = part.match(/^\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s)]+)\)$/);
     if (source) {
       if (source[2].startsWith("/")) {
-        return <Link className="inline-decision" href={source[2]} key={`${part}-${index}`}>{toFaDigits(source[1].trim())}</Link>;
+        return <Link className="inline-decision" href={source[2]} key={`${part}-${index}`}>{toFaDate(source[1].trim())}</Link>;
       }
-      return <a className="inline-source" href={source[2]} target="_blank" rel="noreferrer" key={`${part}-${index}`}>{toFaDigits(source[1].trim())}</a>;
+      return <a className="inline-source" href={source[2]} target="_blank" rel="noreferrer" key={`${part}-${index}`}>{toFaDate(source[1].trim())}</a>;
     }
     const href = decisionRouteByMention[part];
-    return href ? <Link className="inline-decision" href={href} key={`${part}-${index}`}>{toFaDigits(part)}</Link> : toFaDigits(part);
+    return href ? <Link className="inline-decision" href={href} key={`${part}-${index}`}>{toFaDate(part)}</Link> : toFaDate(part);
   });
 }
 
@@ -91,7 +91,7 @@ function commentaryDecisionReferences(commentary: string) {
   const recordByRoute = new Map(article44DecisionIndexRecords.map((decision) => [decision.href, decision]));
 
   for (const match of commentary.matchAll(/\[([^\]]+)\]\(((?:https?:\/\/|\/decisions\/)[^)\s]+)\)/g)) {
-    const label = toFaDigits(clean(match[1]).trim());
+    const label = toFaDate(clean(match[1]).trim());
     const href = match[2];
     const internalDecision = recordByRoute.get(href);
     if (internalDecision) {
@@ -120,7 +120,7 @@ function commentaryDecisionReferences(commentary: string) {
     references.push({
       href: route,
       title: decision.title,
-      detail: toFaDigits(mention),
+      detail: toFaDate(mention),
       external: false,
       position,
     });
@@ -290,6 +290,8 @@ function CommentaryPart({ slug }: { slug: string }) {
 }
 
 function LawText() {
+  const noteAvailable = commentaryParts.find((part) => part.slug === "note")?.available;
+
   return (
     <article className="law-text-card clickable-law">
       <div className="law-number">۴۴</div>
@@ -308,9 +310,11 @@ function LawText() {
             </li>
           ))}
         </ol>
-        <div className="law-unit law-note unavailable" aria-disabled="true">
+        {noteAvailable ? <Link className="law-unit law-note" href="/laws/article-44/commentary/note">
           <span><strong>تبصره</strong> ـ {article44Note}</span><small>مطالعه شرح تبصره ←</small>
-        </div>
+        </Link> : <div className="law-unit law-note unavailable" aria-disabled="true">
+          <span><strong>تبصره</strong> ـ {article44Note}</span><small>شرح تبصره هنوز منتشر نشده است</small>
+        </div>}
       </div>
     </article>
   );

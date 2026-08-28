@@ -34,7 +34,7 @@ export const commentaryParts: CommentaryPart[] = [
   { slug: "clause-5", shortLabel: "بند ۵", title: "تعهدات تکمیلی نامرتبط", description: "موکول‌کردن قرارداد به پذیرش تعهدات خارج از موضوع", available: true, provisionId: `${ARTICLE_44_ID}:clause-5` },
   { slug: "clause-6", shortLabel: "بند ۶", title: "تقسیم یا تسهیم بازار", description: "تقسیم بازار کالا یا خدمت میان اشخاص", available: true, provisionId: `${ARTICLE_44_ID}:clause-6` },
   { slug: "clause-7", shortLabel: "بند ۷", title: "محدودکردن دسترسی به بازار", description: "ممانعت از دسترسی اشخاص خارج از توافق", available: true, provisionId: `${ARTICLE_44_ID}:clause-7` },
-  { slug: "note", shortLabel: "تبصره", title: "قراردادهای کارگری و کارفرمایی", description: "قلمرو استثنا و ارتباط آن با قانون کار", available: false, provisionId: `${ARTICLE_44_ID}:note` },
+  { slug: "note", shortLabel: "تبصره", title: "قراردادهای کارگری و کارفرمایی", description: "قلمرو استثنا و ارتباط آن با قانون کار", available: true, provisionId: `${ARTICLE_44_ID}:note` },
 ];
 
 export const article44Provisions: Provision[] = [
