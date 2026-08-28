@@ -4,6 +4,11 @@ import {
   article44Provisions,
   provisionIdByCommentarySlug,
 } from "./article44";
+import {
+  article45Commentaries,
+  article45Provisions,
+  article45ProvisionIdBySlug,
+} from "./article45";
 import type {
   InstitutionalDomain,
   Institution,
@@ -92,8 +97,8 @@ export const legalSources: LegalSource[] = [
   },
 ];
 
-export const provisions = article44Provisions;
-export const commentaries = article44Commentaries;
+export const provisions = [...article44Provisions, ...article45Provisions];
+export const commentaries = [...article44Commentaries, ...article45Commentaries];
 
 export const topics: Topic[] = [
   { id: "anti-competitive-coordination", slug: "anti-competitive-coordination", title: "توافق و هماهنگی ضدرقابتی", description: "مفهوم توافق، تفاهم، تبانی و رفتار هماهنگ موضوع ماده ۴۴", route: "/topics/anti-competitive-coordination", status: "published" },
@@ -154,6 +159,7 @@ type DecisionInput = {
   markets: string[];
   additionalTopics?: string[];
   relation?: string;
+  article45Parts?: string[];
 };
 
 function decision(input: DecisionInput): KnowledgeDocument {
@@ -167,7 +173,13 @@ function decision(input: DecisionInput): KnowledgeDocument {
     route: `/decisions/${input.slug}`,
     files: input.files,
     issuerIds: input.issuerIds ?? ["competition-council"],
-    provisionLinks: includeInArticle44 ? links(parts) : [],
+    provisionLinks: [
+      ...(includeInArticle44 ? links(parts) : []),
+      ...(input.article45Parts ?? []).map((part) => ({
+        provisionId: article45ProvisionIdBySlug[part],
+        relation: "applies" as const,
+      })),
+    ],
     topicIds: includeInArticle44 ? topicIds(parts, input.additionalTopics) : (input.additionalTopics ?? []),
     marketIds: input.markets,
     documentLinks: [],
@@ -199,7 +211,7 @@ export const documents: KnowledgeDocument[] = [
   decision({ slug: "437", title: "شکایت از ایرانسل بابت امتناع از همکاری", files: ["437.txt"], parts: ["clause-2"], markets: ["communications"], relation: "رد تبانی و تفکیک رفتار هماهنگ از استنکاف یک‌جانبه" }),
   decision({ slug: "429", title: "قدرت مسلط و قیمت‌گذاری تهاجمی در خرید توتون", files: ["429.txt"], parts: ["clause-1", "clause-2"], markets: ["agriculture-food"] }),
   decision({ slug: "421", title: "ظرفیت وکالت و دامنه ماده ۷", files: ["421.txt"], parts: ["clause-2", "clause-7"], markets: ["professional-services"] }),
-  decision({ slug: "403", title: "قراردادهای جایگاه‌داری سوخت", files: ["403.txt"], includeInArticle44: false, markets: ["energy"] }),
+  decision({ slug: "403", title: "قراردادهای جایگاه‌داری سوخت", files: ["403.txt"], includeInArticle44: false, article45Parts: ["clause-vav-2", "clause-ta-2"], markets: ["energy"], additionalTopics: ["third-party-dealing"], relation: "احراز تحمیل معامله با شخص ثالث و شرایط قراردادی غیرمنصفانه در قراردادهای جایگاه‌داری" }),
   decision({ slug: "354", title: "تبعیض در مزایده تبلیغات شهری", files: ["354.txt"], parts: ["clause-3"], markets: ["public-local-markets"] }),
   decision({ slug: "sugar", title: "بازار شکر و انحصار واردات", files: ["sugar-296.txt", "sugar-appeal.txt"], parts: ["clause-6"], issuerIds: ["competition-council", "competition-appeal-board"], markets: ["agriculture-food"], relation: "نمونه تعارض تحلیلی میان تصمیم بدوی و رأی هیئت تجدیدنظر" }),
   decision({ slug: "270", title: "پرونده جامع بازار فولاد", files: ["270.txt"], parts: ["clause-5"], markets: ["industry"] }),

@@ -379,7 +379,7 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
         {active === "decisions" ? <Decisions /> : null}
       </section>
 
-      <nav className="law-pagination" aria-label="حرکت میان مواد"><span>ماده پیشین</span><Link href="/laws/general-policies-44">بازگشت به مجموعه قانون</Link><span>ماده بعدی</span></nav>
+      <nav className="law-pagination" aria-label="حرکت میان مواد"><span>ماده پیشین</span><Link href="/laws/general-policies-44">بازگشت به مجموعه قانون</Link><Link href="/laws/article-45">ماده ۴۵</Link></nav>
     </>
   );
 }

@@ -288,6 +288,18 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
 .clickable-law li { padding:0; }
 .clickable-law li>.law-unit { padding:15px 4px 15px 0; display:block; }
 .clickable-law .law-note { display:block; }
+.article-45-sections { display:grid; gap:28px; }
+.article-45-section { overflow:hidden; background:rgba(4,16,25,.28); border:1px solid rgba(255,255,255,.075); }
+.article-45-section-head { padding:21px 24px; display:block; color:#e3e9eb; background:rgba(201,164,104,.045); font-size:var(--font-body); line-height:2; }
+.article-45-section-head>span>strong { color:var(--gold-light); }
+.article-45-section-head em { margin-top:12px; display:block; color:#b8c5ca; font-size:.9375rem; font-style:normal; line-height:2.05; }
+.article-45-items { margin:0!important; padding:0!important; }
+.article-45-items li { padding:0!important; border-bottom:1px solid rgba(255,255,255,.065); counter-increment:none; }
+.article-45-items li:last-child { border-bottom:0; }
+.article-45-items li::before { display:none; }
+.article-45-items .law-unit { padding:17px 24px!important; display:block; }
+.article-45-items .law-unit b { margin-left:7px; color:var(--gold); font-weight:500; }
+.article-45-note { margin:0; border-top:1px solid rgba(201,164,104,.18); }
 .commentary-layout { display:grid; grid-template-columns:250px minmax(0,760px); justify-content:center; gap:70px; align-items:start; }
 .commentary-toc { position:sticky; top:30px; padding:25px 23px; background:#0c1d2a; border:1px solid rgba(255,255,255,.08); }
 .commentary-toc>p { margin:0 0 17px; color:var(--gold); font-size:var(--font-caption); }
@@ -343,6 +355,12 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
 .part-card b { margin-top:auto; padding-top:20px; position:relative; color:#91a2ab; font-size:var(--font-caption); font-weight:400; }
 .part-card.available b { color:var(--gold-light); }
 .read-all-commentary { width:max-content; margin-top:30px; padding-bottom:6px; display:block; color:var(--gold-light); border-bottom:1px solid rgba(201,164,104,.55); font-size:var(--font-small); }
+.article-45-commentary-group { margin-top:52px; }
+.article-45-commentary-group>h3,.article-45-commentary-heading h3 { margin:0 0 20px; color:#e4eaec; font-size:24px; font-weight:520; }
+.article-45-commentary-heading { margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,.09); }
+.article-45-commentary-heading small { display:block; margin-bottom:7px; color:var(--gold); font-size:var(--font-caption); }
+.article-45-commentary-heading h3 { margin:0; }
+.part-grid-single { grid-template-columns:minmax(0,350px); }
 .part-layout { grid-template-columns:285px minmax(0,760px); }
 .parts-nav { position:sticky; top:28px; background:#091a27; border:1px solid rgba(255,255,255,.08); }
 .parts-nav>p { margin:0; padding:20px 21px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.08); font-size:var(--font-caption); }
@@ -485,6 +503,7 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
   .footnotes { padding:24px 18px 8px!important; }.footnotes-heading { align-items:start; flex-direction:column; gap:7px; }.footnotes li { grid-template-columns:25px 1fr; }.footnote-back { grid-column:2; }
   .part-grid { grid-template-columns:1fr; }.part-card { min-height:205px; }.parts-nav ol { grid-template-columns:1fr; }.parts-nav li:nth-child(odd) { border-left:0; }.commentary-on-page ol { columns:1; }.part-pagination { margin-top:40px; }.part-pagination strong { font-size:var(--font-caption); }
   .law-unit>small { opacity:1; transform:none; }.clickable-law .law-lead { margin-inline:-10px; padding-inline:10px; }
+  .article-45-section-head,.article-45-items .law-unit { padding-inline:17px!important; }
   .decision-cards { grid-template-columns:1fr; }.decision-reference { min-height:155px; }.law-pagination { padding-inline:18px; }.law-pagination>span { display:none; }
   .legal-footer { min-height:110px; padding-inline:20px; }.decision-stage { padding:28px 20px; }.stage-label { margin:-29px 0 26px; }
   .knowledge-connections { padding:24px 20px; }.knowledge-summary-grid { margin-bottom:50px; }

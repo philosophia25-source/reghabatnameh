@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/laws",
     "/laws/article-44/commentary",
     "/laws/article-44/decisions",
+    "/laws/article-45/commentary",
+    "/laws/article-45/decisions",
     "/decisions",
     "/institutions",
     "/topics",

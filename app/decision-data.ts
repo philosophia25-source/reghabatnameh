@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { documents } from "@/lib/knowledge/registry";
 import { ARTICLE_44_ID } from "@/lib/knowledge/article44";
+import { ARTICLE_45_ID } from "@/lib/knowledge/article45";
 import type { KnowledgeDocument } from "@/lib/knowledge/types";
 import {
   institutionById,
@@ -80,6 +81,10 @@ export const decisionIndexRecords = decisionDocuments.map((document) => {
 
 export const article44DecisionIndexRecords = decisionIndexRecords.filter((decision) =>
   decision.provisionLinks.some((link) => link.provisionId === ARTICLE_44_ID || link.provisionId.startsWith(`${ARTICLE_44_ID}:`)),
+);
+
+export const article45DecisionIndexRecords = decisionIndexRecords.filter((decision) =>
+  decision.provisionLinks.some((link) => link.provisionId === ARTICLE_45_ID || link.provisionId.startsWith(`${ARTICLE_45_ID}:`)),
 );
 
 function faDigits(value: string) {
