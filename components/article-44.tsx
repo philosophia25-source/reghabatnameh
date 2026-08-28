@@ -35,6 +35,26 @@ function plainHeading(text: string) {
   return toFaDigits(clean(text).replace(/\[\\?\[(\d+)\\?\]\]\(#_ftn\d+\)/g, "").trim());
 }
 
+function isCommentaryHeading(line: string) {
+  return /^\*\*[^*]+\*\*$/.test(line.trim()) || /^\d+\.\s+\*\*[^*]+\*\*$/.test(line.trim());
+}
+
+function commentarySections(commentary: string) {
+  const sections: string[] = [];
+  let current: string[] = [];
+
+  commentary.split("\n").forEach((line) => {
+    if (isCommentaryHeading(line) && current.length) {
+      sections.push(current.join("\n").trim());
+      current = [];
+    }
+    current.push(line);
+  });
+
+  if (current.length) sections.push(current.join("\n").trim());
+  return sections.filter(Boolean);
+}
+
 function linkedText(text: string) {
   const mentions = Object.keys(decisionRouteByMention).sort((a, b) => b.length - a.length);
   const normalized = clean(text).replace(/\[\\?\[(\d+)\\?\]\]\(#_ftn\d+\)/g, "[[FN:$1]]");
@@ -142,7 +162,7 @@ function CommentaryBody({ slug }: { slug: string }) {
   if (!part) return null;
   const commentary = readFileSync(join(process.cwd(), "content", commentaryFile(slug)), "utf8");
   const [commentaryMain, commentaryFootnotes = ""] = commentary.split(/\n---\n/, 2);
-  const sections = commentaryMain.split(/\n(?=\*\*\d+\.)/).map((section) => section.trim()).filter(Boolean);
+  const sections = commentarySections(commentaryMain);
   const tocSections = sections.slice(1, 11);
   const footnotes = Array.from(commentaryFootnotes.matchAll(/\[\\?\[(\d+)\\?\]\]\(#_ftnref\d+\)\s*([\s\S]*?)(?=\n\n\[\\?\[\d+|$)/g)).map((match) => ({
     number: match[1],
@@ -181,9 +201,9 @@ function CommentaryBody({ slug }: { slug: string }) {
       {tocSections.length ? <details className="commentary-on-page">
         <summary>فهرست مطالب این شرح</summary>
         <ol>
-          {tocSections.map((section) => {
+          {tocSections.map((section, tocIndex) => {
             const heading = clean(section.split("\n")[0]);
-            const id = `section-${heading.match(/^\d+/)?.[0] ?? "intro"}`;
+            const id = `section-${heading.match(/^\d+/)?.[0] ?? tocIndex + 1}`;
             return <li key={id}><a href={`#${id}`}>{plainHeading(heading.replace(/^\d+\.\s*/, ""))}</a></li>;
           })}
         </ol>
@@ -191,7 +211,7 @@ function CommentaryBody({ slug }: { slug: string }) {
       {sections.map((section, index) => {
         const lines = section.split("\n").filter((line) => line.trim());
         const headingLine = lines[0];
-        const hasHeading = /^\*\*/.test(headingLine);
+        const hasHeading = isCommentaryHeading(headingLine);
         const heading = hasHeading ? clean(headingLine) : "شرح صدر ماده ۴۴";
         const id = index === 0 ? "commentary-start" : `section-${heading.match(/^\d+/)?.[0] ?? index}`;
         const paragraphs = (hasHeading ? lines.slice(1) : lines).filter((line) => line !== "---");
