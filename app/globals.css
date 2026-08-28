@@ -44,9 +44,13 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .search-icon span { width:15px; height:15px; display:block; border:1.5px solid white; border-radius:50%; }
 .search-icon span::after { content:""; position:absolute; width:7px; height:1px; background:white; transform:rotate(45deg); left:3px; bottom:5px; }
 
-.hero { min-height:100svh; position:relative; overflow:hidden; isolation:isolate; background-color:#111; background-position:center; background-size:cover; background-repeat:no-repeat; }
-.hero::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(3,7,9,.04) 0%,rgba(3,7,9,.1) 38%,rgba(3,7,9,.66) 67%,rgba(3,7,9,.91) 100%),linear-gradient(0deg,rgba(3,7,9,.65),transparent 35%); }
-.hero-shade { position:absolute; inset:0; z-index:-1; box-shadow:inset 0 0 180px rgba(0,0,0,.32); }
+.hero { min-height:100svh; position:relative; overflow:hidden; isolation:isolate; background-color:#111; }
+.hero-backdrop { position:absolute; z-index:0; inset:-4%; background-position:center; background-size:cover; background-repeat:no-repeat; transform:scale(1.015); animation:hero-breathe 26s ease-in-out infinite alternate; will-change:transform; }
+.hero-backdrop::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 31% 42%,rgba(221,191,134,.16),transparent 38%); opacity:.28; animation:hero-light 13s ease-in-out infinite alternate; }
+.hero::before { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(90deg,rgba(3,7,9,.04) 0%,rgba(3,7,9,.1) 38%,rgba(3,7,9,.66) 67%,rgba(3,7,9,.91) 100%),linear-gradient(0deg,rgba(3,7,9,.65),transparent 35%); }
+.hero-shade { position:absolute; inset:0; z-index:1; box-shadow:inset 0 0 180px rgba(0,0,0,.32); }
+@keyframes hero-breathe { to { transform:scale(1.06) translate3d(-.6%,.35%,0); } }
+@keyframes hero-light { to { opacity:.58; } }
 .hero-content { width:min(660px,48vw); margin-right:clamp(46px,8vw,135px); padding-top:clamp(210px,27vh,310px); position:relative; z-index:2; }
 .hero-kicker { margin:0 0 22px; display:flex; align-items:center; gap:13px; color:rgba(255,255,255,.68); font-size:var(--font-caption); }
 .hero-kicker::before { content:""; width:34px; height:1px; background:var(--gold); }
@@ -214,7 +218,8 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
   .shell { width:calc(100% - 36px); }.site-header { height:78px; padding-inline:18px; display:flex; }.brand small { display:none; }.brand strong { font-size:1.125rem; }
   .site-header .main-nav { width:100%; height:44px; padding-inline:18px; position:absolute; right:0; top:78px; justify-content:flex-start; gap:24px; overflow-x:auto; color:rgba(255,255,255,.78); background:rgba(5,13,19,.92); border-bottom:1px solid rgba(255,255,255,.08); font-size:var(--font-caption); scrollbar-width:none; }
   .site-header .main-nav::-webkit-scrollbar { display:none; }.site-header .main-nav a { padding:14px 0 12px; }
-  .brand-seal { width:36px; height:36px; }.hero { min-height:100svh; background-position:18% center; }
+  .brand-seal { width:36px; height:36px; }.hero { min-height:100svh; }
+  .hero-backdrop { background-position:18% center; }
   .hero::before { background:linear-gradient(0deg,rgba(3,7,9,.92),rgba(3,7,9,.18) 72%),linear-gradient(90deg,rgba(3,7,9,.08),rgba(3,7,9,.62)); }
   .hero-content { width:auto; margin:0; padding:220px 24px 265px; }.hero-content h1 { font-size:64px; }.hero-content h2 { margin-top:24px; font-size:20px; }
   .hero-content>p:not(.hero-kicker) { font-size:.9375rem; }.scroll-cue { display:none; }
@@ -239,7 +244,7 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
   .article-image { height:190px; }
 }
 
-@media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; }.scroll-cue i { animation:none; } }
+@media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; }.scroll-cue i,.hero-backdrop,.hero-backdrop::after { animation:none; } }
 /* پایگاه حقوقی */
 .legal-site { min-height:100svh; background:#071522; color:#edf1f3; }
 .legal-header { height:92px; padding-inline:clamp(22px,6vw,92px); display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,.09); background:rgba(5,16,26,.94); }

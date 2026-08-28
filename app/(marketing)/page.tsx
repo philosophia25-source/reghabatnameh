@@ -63,7 +63,8 @@ const articles = [
 export default function HomePage() {
   return (
     <>
-      <section className="hero" id="top" style={{ backgroundImage: `url(${heroImage.src})` }}>
+      <section className="hero" id="top">
+        <div className="hero-backdrop" aria-hidden="true" style={{ backgroundImage: `url(${heroImage.src})` }} />
         <div className="hero-shade" />
         <div className="hero-content">
           <p className="hero-kicker">پایگاه تحلیلی حقوق رقابت و تنظیم‌گری</p>
