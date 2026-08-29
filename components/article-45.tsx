@@ -11,9 +11,11 @@ import { Article45Commentary } from "@/components/article-45-commentary";
 
 type Tab = "text" | "commentary" | "decisions";
 
+const publishedCommentaryCount = article45CommentaryParts.filter((part) => part.available).length;
+
 const tabs: { key: Tab; label: string; href: string; count?: string }[] = [
   { key: "text", label: "متن ماده", href: "/laws/general-policies-44/article-45" },
-  { key: "commentary", label: "شرح", href: "/laws/general-policies-44/article-45/commentary", count: toFaDigits(article45CommentaryParts.length) },
+  { key: "commentary", label: "شرح", href: "/laws/general-policies-44/article-45/commentary", count: toFaDigits(publishedCommentaryCount) },
   { key: "decisions", label: "آرای ماده ۴۵", href: "/laws/general-policies-44/article-45/decisions", count: toFaDigits(article45DecisionIndexRecords.length) },
 ];
 
@@ -92,8 +94,8 @@ function CommentaryIndex() {
   return <div className="commentary-index article-45-commentary-index">
     <div className="index-intro">
       <p className="eyebrow">شرح جزءبه‌جزء</p>
-      <h2>نقشه شرح ماده ۴۵ در ۳۶ بخش</h2>
-      <p>صدر ماده، یازده بند، بیست‌وسه جزء و تبصره بند «د» هرکدام جای مستقل دارند. صفحه هر شرح فقط پس از ورود متن واقعی منتشر می‌شود.</p>
+      <h2>نقشه شرح ماده ۴۵</h2>
+      <p>ساختار ماده در قالب صدر، بندها، اجزا و تبصره نمایش داده شده است. صفحه مستقل هر بخش پس از تکمیل محشی و احراز استقلال تحلیلی آن منتشر می‌شود.</p>
     </div>
     <section className="article-45-commentary-group">
       <h3>صدر ماده</h3>
@@ -137,7 +139,7 @@ export function Article45({ active, commentaryPart }: { active: Tab; commentaryP
       <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>
       <h1>ماده ۴۵</h1>
       <p>اعمال یک‌جانبه اخلال‌گر در رقابت</p>
-      <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>اجزای شرح <b>۳۶ بخش</b></span></div>
+      <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>شرح منتشرشده <b>{toFaDigits(publishedCommentaryCount)} بخش</b></span></div>
     </section>
     <nav className="legal-tabs" aria-label="بخش‌های ماده ۴۵">
       {tabs.map((tab) => <Link className={active === tab.key ? "active" : ""} href={tab.href} key={tab.key}>{tab.label}{tab.count ? <small>{tab.count}</small> : null}</Link>)}

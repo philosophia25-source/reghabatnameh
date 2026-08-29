@@ -201,7 +201,7 @@ export const article45CommentaryParts: Article45Part[] = [
       shortLabel: `جزء ${item.number} بند ${section.letter}`,
       title: descriptions[item.slug],
       description: item.text,
-      available: false,
+      available: item.slug === "clause-alef-1",
       provisionId: provisionId(item.slug),
       parentSlug: section.slug,
     }));

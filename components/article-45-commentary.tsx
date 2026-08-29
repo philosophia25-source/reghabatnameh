@@ -19,6 +19,10 @@ function plainHeading(text: string) {
   return toFaDate(clean(text).replace(/\[\\?\[(\d+)\\?\]\]\(#_ftn\d+\)/g, "").trim());
 }
 
+function withoutBookNumber(text: string) {
+  return text.replace(/^[۰-۹0-9]+(?:ـ[۰-۹0-9]+)?\.\s*/, "");
+}
+
 function isHeading(line: string) {
   return /^\*\*[^*]+\*\*$/.test(line.trim()) || /^\d+\.\s+\*\*[^*]+\*\*$/.test(line.trim());
 }
@@ -113,7 +117,7 @@ export function Article45Commentary({ slug }: { slug: string }) {
         {tocSections.length ? <details className="commentary-on-page"><summary>فهرست مطالب این شرح</summary><ol>{tocSections.map((section, tocIndex) => {
           const heading = clean(section.split("\n")[0]);
           const id = `section-${heading.match(/^\d+/)?.[0] ?? tocIndex + 1}`;
-          return <li key={id}><a href={`#${id}`}>{plainHeading(heading.replace(/^\d+\.\s*/, ""))}</a></li>;
+          return <li key={id}><a href={`#${id}`}>{plainHeading(withoutBookNumber(heading))}</a></li>;
         })}</ol></details> : null}
         {sections.map((section, sectionIndex) => {
           const lines = section.split("\n").filter((line) => line.trim());
@@ -122,14 +126,14 @@ export function Article45Commentary({ slug }: { slug: string }) {
           const heading = hasHeading ? clean(headingLine) : displayTitle;
           const id = sectionIndex === 0 ? "commentary-start" : `section-${heading.match(/^\d+/)?.[0] ?? sectionIndex}`;
           const paragraphs = (hasHeading ? lines.slice(1) : lines).filter((line) => line !== "---");
-          return <section id={id} key={id}>{sectionIndex > 0 ? <h2>{linkedText(heading.replace(/^\d+\.\s*/, ""))}</h2> : null}{paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{linkedText(paragraph)}</p>)}</section>;
+          return <section id={id} key={id}>{sectionIndex > 0 ? <h2>{linkedText(withoutBookNumber(heading))}</h2> : null}{paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{linkedText(paragraph)}</p>)}</section>;
         })}
         {footnotes.length ? <section className="footnotes" aria-labelledby="footnotes-title"><div className="footnotes-heading"><span>ارجاعات</span><h2 id="footnotes-title">یادداشت‌ها و منابع</h2></div><ol>{footnotes.map((footnote) => <li id={`footnote-${footnote.number}`} key={footnote.number}><span className="footnote-number">{toFaDigits(footnote.number)}</span><p>{linkedText(footnote.text)}</p><a className="footnote-back" href={`#footnote-ref-${footnote.number}`}>بازگشت ↑</a></li>)}</ol></section> : null}
       </article>
     </div>
     <nav className="part-pagination" aria-label="حرکت میان اجزای شرح">
       {previous ? <Link href={`/laws/general-policies-44/article-45/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}
-      <Link className="parts-home" href="/laws/general-policies-44/article-45/commentary">فهرست ۳۶ بخش</Link>
+      <Link className="parts-home" href="/laws/general-policies-44/article-45/commentary">نقشه شرح ماده ۴۵</Link>
       {next ? <Link href={`/laws/general-policies-44/article-45/commentary/${next.slug}`}><small>بخش بعدی</small><strong>{next.shortLabel}</strong></Link> : <span />}
     </nav>
   </>;
