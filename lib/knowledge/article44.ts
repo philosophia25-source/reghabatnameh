@@ -45,7 +45,7 @@ export const article44Provisions: Provision[] = [
     label: "ماده ۴۴",
     title: "توافق‌ها و هماهنگی‌های اخلال‌گر در رقابت",
     description: "متن ماده، شرح جزءبه‌جزء و آرای منتخب مرتبط",
-    route: "/laws/article-44",
+    route: "/laws/general-policies-44/article-44",
     status: "published",
   },
   ...commentaryParts.map((part) => ({
@@ -56,7 +56,7 @@ export const article44Provisions: Provision[] = [
     label: part.shortLabel,
     title: part.title,
     description: part.description,
-    route: `/laws/article-44/commentary/${part.slug}`,
+    route: `/laws/general-policies-44/article-44/commentary/${part.slug}`,
     status: (part.available ? "published" : "draft") as "published" | "draft",
   })),
 ];
@@ -65,7 +65,7 @@ export const article44Commentaries: CommentaryRecord[] = commentaryParts.map((pa
   id: `commentary:${part.provisionId}`,
   provisionId: part.provisionId,
   title: part.title,
-  route: `/laws/article-44/commentary/${part.slug}`,
+  route: `/laws/general-policies-44/article-44/commentary/${part.slug}`,
   contentFile: part.available ? (part.slug === "chapeau" ? "commentary44.md" : `commentary44-${part.slug}.md`) : undefined,
   updatedAt: part.available ? CONTENT_UPDATED_ISO : undefined,
   status: part.available ? "published" : "draft",

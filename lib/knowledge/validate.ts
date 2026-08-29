@@ -3,6 +3,7 @@ import type {
   InstitutionalDomain,
   Institution,
   KnowledgeArticle,
+  KnowledgeCase,
   KnowledgeDocument,
   LegalSource,
   Market,
@@ -19,6 +20,7 @@ type Registry = {
   topics: Topic[];
   markets: Market[];
   documents: KnowledgeDocument[];
+  cases: KnowledgeCase[];
   articles: KnowledgeArticle[];
 };
 
@@ -50,12 +52,18 @@ export function validateKnowledgeRegistry(registry: Registry) {
     [registry.topics, "topic id"],
     [registry.markets, "market id"],
     [registry.documents, "document id"],
+    [registry.cases, "case id"],
     [registry.articles, "article id"],
   ] as const;
 
   collections.forEach(([items, label]) => assertUnique(items.map((item) => item.id), label));
   assertUnique(registry.documents.map((item) => item.slug), "document slug");
   assertUnique(registry.documents.map((item) => item.route), "document route");
+  assertUnique(registry.cases.map((item) => item.route), "case route");
+  assertUnique(
+    [...registry.documents.flatMap((item) => item.legacyRoutes), ...registry.cases.flatMap((item) => item.legacyRoutes)],
+    "legacy route",
+  );
   assertUnique(registry.institutions.map((item) => item.route), "institution route");
   assertUnique(registry.topics.map((item) => item.route), "topic route");
   assertUnique(registry.markets.map((item) => item.route), "market route");
@@ -74,6 +82,9 @@ export function validateKnowledgeRegistry(registry: Registry) {
     assertReferences(document.topicIds, topicIds, `topic for document ${document.id}`);
     assertReferences(document.marketIds, marketIds, `market for document ${document.id}`);
     assertReferences(document.documentLinks.map((link) => link.targetDocumentId), documentIds, `related document for ${document.id}`);
+  });
+  registry.cases.forEach((caseRecord) => {
+    assertReferences(caseRecord.documentIds, documentIds, `document for case ${caseRecord.id}`);
   });
   registry.articles.forEach((article) => {
     assertReferences(article.institutionIds, institutionIds, `institution for article ${article.id}`);

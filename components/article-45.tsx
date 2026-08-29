@@ -12,9 +12,9 @@ import { Article45Commentary } from "@/components/article-45-commentary";
 type Tab = "text" | "commentary" | "decisions";
 
 const tabs: { key: Tab; label: string; href: string; count?: string }[] = [
-  { key: "text", label: "متن ماده", href: "/laws/article-45" },
-  { key: "commentary", label: "شرح", href: "/laws/article-45/commentary", count: toFaDigits(article45CommentaryParts.length) },
-  { key: "decisions", label: "آرای ماده ۴۵", href: "/laws/article-45/decisions", count: toFaDigits(article45DecisionIndexRecords.length) },
+  { key: "text", label: "متن ماده", href: "/laws/general-policies-44/article-45" },
+  { key: "commentary", label: "شرح", href: "/laws/general-policies-44/article-45/commentary", count: toFaDigits(article45CommentaryParts.length) },
+  { key: "decisions", label: "آرای ماده ۴۵", href: "/laws/general-policies-44/article-45/decisions", count: toFaDigits(article45DecisionIndexRecords.length) },
 ];
 
 function partBySlug(slug: string) {
@@ -24,7 +24,7 @@ function partBySlug(slug: string) {
 function LawUnit({ part, children, className = "" }: { part: Article45Part; children: React.ReactNode; className?: string }) {
   const classes = `law-unit ${className} ${part.available ? "" : "unavailable"}`.trim();
   if (part.available) {
-    return <Link className={classes} href={`/laws/article-45/commentary/${part.slug}`}>
+    return <Link className={classes} href={`/laws/general-policies-44/article-45/commentary/${part.slug}`}>
       <span>{children}</span>
       <small>مطالعه شرح {part.shortLabel} ←</small>
     </Link>;
@@ -82,7 +82,7 @@ function PartCard({ part, index }: { part: Article45Part; index: number }) {
     <b>{part.available ? "مطالعه شرح ←" : "شرح هنوز منتشر نشده است"}</b>
   </>;
   return part.available
-    ? <Link className="part-card available" href={`/laws/article-45/commentary/${part.slug}`}>{content}</Link>
+    ? <Link className="part-card available" href={`/laws/general-policies-44/article-45/commentary/${part.slug}`}>{content}</Link>
     : <article className="part-card" aria-disabled="true">{content}</article>;
 }
 
@@ -148,6 +148,6 @@ export function Article45({ active, commentaryPart }: { active: Tab; commentaryP
       {active === "commentary" && commentaryPart ? <Article45Commentary slug={commentaryPart} /> : null}
       {active === "decisions" ? <Decisions /> : null}
     </section>
-    <nav className="law-pagination" aria-label="حرکت میان مواد"><Link href="/laws/article-44">ماده ۴۴</Link><Link href="/laws/general-policies-44">بازگشت به مجموعه قانون</Link><span>ماده بعدی</span></nav>
+    <nav className="law-pagination" aria-label="حرکت میان مواد"><Link href="/laws/general-policies-44/article-44">ماده ۴۴</Link><Link href="/laws/general-policies-44">بازگشت به مجموعه قانون</Link><span>ماده بعدی</span></nav>
   </>;
 }

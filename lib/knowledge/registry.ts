@@ -13,6 +13,7 @@ import type {
   InstitutionalDomain,
   Institution,
   KnowledgeArticle,
+  KnowledgeCase,
   KnowledgeDocument,
   LegalSource,
   Market,
@@ -160,19 +161,25 @@ type DecisionInput = {
   additionalTopics?: string[];
   relation?: string;
   article45Parts?: string[];
+  year: string;
+  numberSlug?: string;
+  legacyRoutes?: string[];
+  documentLinks?: KnowledgeDocument["documentLinks"];
 };
 
 function decision(input: DecisionInput): KnowledgeDocument {
   const parts = input.parts ?? [];
   const includeInArticle44 = input.includeInArticle44 ?? true;
+  const issuerIds = input.issuerIds ?? ["competition-council"];
   return {
     id: `decision:${input.slug}`,
     slug: input.slug,
     title: input.title,
     documentType: "decision",
-    route: `/decisions/${input.slug}`,
+    route: `/decisions/${issuerIds[0]}/${input.year}/${input.numberSlug ?? input.slug}`,
+    legacyRoutes: input.legacyRoutes ?? [`/decisions/${input.slug}`],
     files: input.files,
-    issuerIds: input.issuerIds ?? ["competition-council"],
+    issuerIds,
     provisionLinks: [
       ...(includeInArticle44 ? links(parts) : []),
       ...(input.article45Parts ?? []).map((part) => ({
@@ -182,7 +189,7 @@ function decision(input: DecisionInput): KnowledgeDocument {
     ],
     topicIds: includeInArticle44 ? topicIds(parts, input.additionalTopics) : (input.additionalTopics ?? []),
     marketIds: input.markets,
-    documentLinks: [],
+    documentLinks: input.documentLinks ?? [],
     relation: input.relation ?? "متن کامل تصمیم، مشخصات پرونده و جایگاه آن در شبکه حقوق رقابت",
     curated: true,
     updatedAt: CONTENT_UPDATED_ISO,
@@ -191,32 +198,46 @@ function decision(input: DecisionInput): KnowledgeDocument {
 }
 
 export const documents: KnowledgeDocument[] = [
-  decision({ slug: "821", title: "الزام سایپا به قرارداد با شرکت منتخب پسماند", files: ["821.txt"], parts: ["clause-4", "clause-6", "clause-7"], markets: ["industry", "public-local-markets"] }),
-  decision({ slug: "779", title: "عرضه مجدد برند در پلتفرم ترب", files: ["779.txt"], markets: ["digital-markets"] }),
-  decision({ slug: "776", title: "انحصار تهیه طرح‌های توجیهی بانکی", files: ["776.txt"], parts: ["clause-6", "clause-7"], markets: ["finance-insurance"] }),
-  decision({ slug: "722", title: "امتناع اپراتورها از ارائه بستر خدمات صوتی", files: ["722.txt"], parts: ["clause-2"], markets: ["communications"] }),
-  decision({ slug: "641", title: "محدودیت مهندسان ناظر جدیدالورود", files: ["641.txt"], parts: ["clause-6"], markets: ["professional-services"] }),
-  decision({ slug: "624", title: "سهمیه‌بندی بازار نصب آسانسور", files: ["624.txt"], parts: ["clause-2", "clause-6"], markets: ["professional-services", "industry"] }),
-  decision({ slug: "appeal-162-02", title: "محدودیت واردات قطعات آسانسور", files: ["appeal-162-02.txt"], parts: ["clause-2"], issuerIds: ["competition-appeal-board"], markets: ["industry"] }),
-  decision({ slug: "606", title: "سقف حق‌التحریر دفاتر اسناد رسمی", files: ["606.txt"], markets: ["professional-services"] }),
-  decision({ slug: "599", title: "لزوم انتساب رفتار به بنگاه مسلط", files: ["599.txt"], parts: ["clause-7"], markets: ["digital-markets"] }),
-  decision({ slug: "580", title: "انحصار واردات نهاده‌های دامی", files: ["580.txt"], parts: ["clause-7"], markets: ["agriculture-food"] }),
-  decision({ slug: "562", title: "رد شکایت سامانه سوئیچ بیمه", files: ["562.txt"], markets: ["finance-insurance", "digital-markets"] }),
-  decision({ slug: "522", title: "واگذاری طرح‌های پژوهشی صنعت نفت", files: ["522.txt"], parts: ["clause-7"], markets: ["energy"] }),
-  decision({ slug: "631", title: "تفاهم انحصاری در زنجیره نخ تایر", files: ["631.txt"], parts: ["clause-7"], markets: ["industry"], relation: "احراز توافق محدودکننده و بررسی رابطه شرکت مادر و شرکت‌های وابسته" }),
-  decision({ slug: "504", title: "تعیین قیمت و سهمیه لباس مدارس", files: ["504.txt"], parts: ["clause-1", "clause-6"], markets: ["public-local-markets"] }),
-  decision({ slug: "476", title: "ارجاع کار مهندسی در استان سمنان", files: ["476.txt"], parts: ["chapeau", "clause-2", "clause-6"], markets: ["professional-services"] }),
-  decision({ slug: "466", title: "انحصار نرم‌افزار LIMS آزمایشگاهی", files: ["466.txt"], parts: ["clause-7"], markets: ["digital-markets"] }),
-  decision({ slug: "445", title: "امحای جوجه یک‌روزه برای کنترل قیمت", files: ["445.txt"], parts: ["clause-2"], markets: ["agriculture-food"] }),
-  decision({ slug: "437", title: "شکایت از ایرانسل بابت امتناع از همکاری", files: ["437.txt"], parts: ["clause-2"], markets: ["communications"], relation: "رد تبانی و تفکیک رفتار هماهنگ از استنکاف یک‌جانبه" }),
-  decision({ slug: "429", title: "قدرت مسلط و قیمت‌گذاری تهاجمی در خرید توتون", files: ["429.txt"], parts: ["clause-1", "clause-2"], markets: ["agriculture-food"] }),
-  decision({ slug: "421", title: "ظرفیت وکالت و دامنه ماده ۷", files: ["421.txt"], parts: ["clause-2", "clause-7"], markets: ["professional-services"] }),
-  decision({ slug: "403", title: "قراردادهای جایگاه‌داری سوخت", files: ["403.txt"], includeInArticle44: false, article45Parts: ["clause-vav-2", "clause-ta-2"], markets: ["energy"], additionalTopics: ["third-party-dealing"], relation: "احراز تحمیل معامله با شخص ثالث و شرایط قراردادی غیرمنصفانه در قراردادهای جایگاه‌داری" }),
-  decision({ slug: "354", title: "تبعیض در مزایده تبلیغات شهری", files: ["354.txt"], parts: ["clause-3"], markets: ["public-local-markets"] }),
-  decision({ slug: "sugar", title: "بازار شکر و انحصار واردات", files: ["sugar-296.txt", "sugar-appeal.txt"], parts: ["clause-6"], issuerIds: ["competition-council", "competition-appeal-board"], markets: ["agriculture-food"], relation: "نمونه تعارض تحلیلی میان تصمیم بدوی و رأی هیئت تجدیدنظر" }),
-  decision({ slug: "270", title: "پرونده جامع بازار فولاد", files: ["270.txt"], parts: ["clause-5"], markets: ["industry"] }),
-  decision({ slug: "236", title: "پرونده ارزی ۶۵۰ میلیون یورویی", files: ["236.txt"], parts: ["clause-3", "clause-7"], markets: ["finance-insurance"] }),
-  decision({ slug: "232", title: "تعیین قیمت صنفی لوح فشرده", files: ["232.txt"], parts: ["clause-2", "clause-6", "clause-7"], markets: ["industry"] }),
+  decision({ slug: "821", year: "1404", title: "الزام سایپا به قرارداد با شرکت منتخب پسماند", files: ["821.txt"], parts: ["clause-4", "clause-6", "clause-7"], markets: ["industry", "public-local-markets"] }),
+  decision({ slug: "779", year: "1404", title: "عرضه مجدد برند در پلتفرم ترب", files: ["779.txt"], markets: ["digital-markets"] }),
+  decision({ slug: "776", year: "1404", title: "انحصار تهیه طرح‌های توجیهی بانکی", files: ["776.txt"], parts: ["clause-6", "clause-7"], markets: ["finance-insurance"] }),
+  decision({ slug: "722", year: "1403", title: "امتناع اپراتورها از ارائه بستر خدمات صوتی", files: ["722.txt"], parts: ["clause-2"], markets: ["communications"] }),
+  decision({ slug: "641", year: "1402", title: "محدودیت مهندسان ناظر جدیدالورود", files: ["641.txt"], parts: ["clause-6"], markets: ["professional-services"] }),
+  decision({ slug: "624", year: "1402", title: "سهمیه‌بندی بازار نصب آسانسور", files: ["624.txt"], parts: ["clause-2", "clause-6"], markets: ["professional-services", "industry"] }),
+  decision({ slug: "appeal-162-02", year: "1402", numberSlug: "162-02", title: "محدودیت واردات قطعات آسانسور", files: ["appeal-162-02.txt"], parts: ["clause-2"], issuerIds: ["competition-appeal-board"], markets: ["industry"] }),
+  decision({ slug: "606", year: "1402", title: "سقف حق‌التحریر دفاتر اسناد رسمی", files: ["606.txt"], markets: ["professional-services"] }),
+  decision({ slug: "599", year: "1402", title: "لزوم انتساب رفتار به بنگاه مسلط", files: ["599.txt"], parts: ["clause-7"], markets: ["digital-markets"] }),
+  decision({ slug: "580", year: "1402", title: "انحصار واردات نهاده‌های دامی", files: ["580.txt"], parts: ["clause-7"], markets: ["agriculture-food"] }),
+  decision({ slug: "562", year: "1402", title: "رد شکایت سامانه سوئیچ بیمه", files: ["562.txt"], markets: ["finance-insurance", "digital-markets"] }),
+  decision({ slug: "522", year: "1401", title: "واگذاری طرح‌های پژوهشی صنعت نفت", files: ["522.txt"], parts: ["clause-7"], markets: ["energy"] }),
+  decision({ slug: "631", year: "1401", title: "تفاهم انحصاری در زنجیره نخ تایر", files: ["631.txt"], parts: ["clause-7"], markets: ["industry"], relation: "احراز توافق محدودکننده و بررسی رابطه شرکت مادر و شرکت‌های وابسته" }),
+  decision({ slug: "504", year: "1401", title: "تعیین قیمت و سهمیه لباس مدارس", files: ["504.txt"], parts: ["clause-1", "clause-6"], markets: ["public-local-markets"] }),
+  decision({ slug: "476", year: "1400", title: "ارجاع کار مهندسی در استان سمنان", files: ["476.txt"], parts: ["chapeau", "clause-2", "clause-6"], markets: ["professional-services"] }),
+  decision({ slug: "466", year: "1400", title: "انحصار نرم‌افزار LIMS آزمایشگاهی", files: ["466.txt"], parts: ["clause-7"], markets: ["digital-markets"] }),
+  decision({ slug: "445", year: "1399", title: "امحای جوجه یک‌روزه برای کنترل قیمت", files: ["445.txt"], parts: ["clause-2"], markets: ["agriculture-food"] }),
+  decision({ slug: "437", year: "1399", title: "شکایت از ایرانسل بابت امتناع از همکاری", files: ["437.txt"], parts: ["clause-2"], markets: ["communications"], relation: "رد تبانی و تفکیک رفتار هماهنگ از استنکاف یک‌جانبه" }),
+  decision({ slug: "429", year: "1399", title: "قدرت مسلط و قیمت‌گذاری تهاجمی در خرید توتون", files: ["429.txt"], parts: ["clause-1", "clause-2"], markets: ["agriculture-food"] }),
+  decision({ slug: "421", year: "1399", title: "ظرفیت وکالت و دامنه ماده ۷", files: ["421.txt"], parts: ["clause-2", "clause-7"], markets: ["professional-services"] }),
+  decision({ slug: "403", year: "1398", title: "قراردادهای جایگاه‌داری سوخت", files: ["403.txt"], includeInArticle44: false, article45Parts: ["clause-vav-2", "clause-ta-2"], markets: ["energy"], additionalTopics: ["third-party-dealing"], relation: "احراز تحمیل معامله با شخص ثالث و شرایط قراردادی غیرمنصفانه در قراردادهای جایگاه‌داری" }),
+  decision({ slug: "354", year: "1397", title: "تبعیض در مزایده تبلیغات شهری", files: ["354.txt"], parts: ["clause-3"], markets: ["public-local-markets"] }),
+  decision({ slug: "sugar-296", year: "1396", numberSlug: "296", title: "بازار شکر و مجوز واردات", files: ["sugar-296.txt"], parts: ["clause-6"], markets: ["agriculture-food"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:sugar-appeal", relation: "related" }], relation: "تصمیم بدوی درباره تبانی، تبعیض و تقسیم بازار در اعطای مجوز واردات شکر" }),
+  decision({ slug: "sugar-appeal", year: "1396", numberSlug: "29-96", title: "انحصار واردات شکر در تجدیدنظر", files: ["sugar-appeal.txt"], parts: ["clause-6"], issuerIds: ["competition-appeal-board"], markets: ["agriculture-food"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:sugar-296", relation: "appeals" }], relation: "نقض تصمیم ۲۹۶ شورا و الزام به رفع انحصار واردات شکر" }),
+  decision({ slug: "270", year: "1395", title: "پرونده جامع بازار فولاد", files: ["270.txt"], parts: ["clause-5"], markets: ["industry"] }),
+  decision({ slug: "236", year: "1394", title: "پرونده ارزی ۶۵۰ میلیون یورویی", files: ["236.txt"], parts: ["clause-3", "clause-7"], markets: ["finance-insurance"] }),
+  decision({ slug: "232", year: "1394", title: "تعیین قیمت صنفی لوح فشرده", files: ["232.txt"], parts: ["clause-2", "clause-6", "clause-7"], markets: ["industry"] }),
+];
+
+export const cases: KnowledgeCase[] = [
+  {
+    id: "case:sugar-import-market",
+    slug: "sugar-import-market",
+    title: "پرونده بازار شکر و انحصار واردات",
+    description: "زنجیره تصمیم ۲۹۶ شورای رقابت و رأی ۲۹/۹۶/هـ‌ت هیئت تجدیدنظر درباره مجوز و انحصار واردات شکر",
+    route: "/cases/sugar-import-market",
+    legacyRoutes: ["/decisions/sugar"],
+    documentIds: ["decision:sugar-296", "decision:sugar-appeal"],
+    status: "published",
+  },
 ];
 
 export const articles: KnowledgeArticle[] = [];
@@ -230,5 +251,6 @@ validateKnowledgeRegistry({
   topics,
   markets,
   documents,
+  cases,
   articles,
 });

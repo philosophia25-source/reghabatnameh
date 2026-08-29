@@ -111,6 +111,7 @@ export type KnowledgeDocument = {
   title: string;
   documentType: "decision" | "resolution" | "regulation" | "directive" | "article";
   route: string;
+  legacyRoutes: string[];
   files: string[];
   issuerIds: string[];
   provisionLinks: ProvisionLink[];
@@ -120,6 +121,17 @@ export type KnowledgeDocument = {
   relation: string;
   curated: boolean;
   updatedAt?: string;
+  status: PublicationStatus;
+};
+
+export type KnowledgeCase = {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  route: string;
+  legacyRoutes: string[];
+  documentIds: string[];
   status: PublicationStatus;
 };
 

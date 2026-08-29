@@ -19,9 +19,9 @@ function commentaryFile(slug: string) {
 type Tab = "text" | "commentary" | "decisions";
 
 const tabs: { key: Tab; label: string; href: string; count?: string }[] = [
-  { key: "text", label: "متن ماده", href: "/laws/article-44" },
-  { key: "commentary", label: "شرح", href: "/laws/article-44/commentary", count: "۹" },
-  { key: "decisions", label: "آرای ماده ۴۴", href: "/laws/article-44/decisions", count: toFaDigits(article44DecisionIndexRecords.length) },
+  { key: "text", label: "متن ماده", href: "/laws/general-policies-44/article-44" },
+  { key: "commentary", label: "شرح", href: "/laws/general-policies-44/article-44/commentary", count: "۹" },
+  { key: "decisions", label: "آرای ماده ۴۴", href: "/laws/general-policies-44/article-44/decisions", count: toFaDigits(article44DecisionIndexRecords.length) },
 ];
 
 function clean(text: string) {
@@ -142,7 +142,7 @@ function PartsNav({ current }: { current?: string }) {
       <ol>
         {commentaryParts.map((part, index) => (
           <li className={current === part.slug ? "active" : ""} key={part.slug}>
-            {part.available ? <Link className="parts-nav-link" href={`/laws/article-44/commentary/${part.slug}`}>
+            {part.available ? <Link className="parts-nav-link" href={`/laws/general-policies-44/article-44/commentary/${part.slug}`}>
               <span>{toFaDigits(index + 1)}</span>
               <div><small>{part.shortLabel}</small><strong>{part.title}</strong></div>
             </Link> : <span className="parts-nav-link unavailable" aria-disabled="true">
@@ -178,7 +178,7 @@ function CommentaryBody({ slug }: { slug: string }) {
         <h2>{displayTitle}</h2>
         <p>{part.title}، {part.description}</p>
       </div>
-      <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/article-44/commentary/${slug}`} />
+      <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/general-policies-44/article-44/commentary/${slug}`} />
       {decisionReferences.length ? <details className="commentary-decision-count">
         <summary>
           <span>آرا و پرونده‌های مورد بررسی در این شرح</span>
@@ -258,11 +258,11 @@ function CommentaryIndex() {
             <b>{part.available ? "مطالعه شرح ←" : "شرح هنوز منتشر نشده است"}</b>
           </>;
           return part.available
-            ? <Link className="part-card available" href={`/laws/article-44/commentary/${part.slug}`} key={part.slug}>{content}</Link>
+            ? <Link className="part-card available" href={`/laws/general-policies-44/article-44/commentary/${part.slug}`} key={part.slug}>{content}</Link>
             : <article className="part-card" aria-disabled="true" key={part.slug}>{content}</article>;
         })}
       </div>
-      <Link className="read-all-commentary" href="/laws/article-44/commentary/chapeau">شروع مطالعه از صدر ماده ←</Link>
+      <Link className="read-all-commentary" href="/laws/general-policies-44/article-44/commentary/chapeau">شروع مطالعه از صدر ماده ←</Link>
     </div>
   );
 }
@@ -281,9 +281,9 @@ function CommentaryPart({ slug }: { slug: string }) {
         <CommentaryBody slug={slug} />
       </div>
       <nav className="part-pagination" aria-label="حرکت میان اجزای شرح">
-        {previous ? <Link href={`/laws/article-44/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}
-        <Link className="parts-home" href="/laws/article-44/commentary">فهرست ۹ بخش</Link>
-        {next ? <Link href={`/laws/article-44/commentary/${next.slug}`}><small>بخش بعدی</small><strong>{next.shortLabel}</strong></Link> : <span />}
+        {previous ? <Link href={`/laws/general-policies-44/article-44/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}
+        <Link className="parts-home" href="/laws/general-policies-44/article-44/commentary">فهرست ۹ بخش</Link>
+        {next ? <Link href={`/laws/general-policies-44/article-44/commentary/${next.slug}`}><small>بخش بعدی</small><strong>{next.shortLabel}</strong></Link> : <span />}
       </nav>
     </>
   );
@@ -296,13 +296,13 @@ function LawText() {
     <article className="law-text-card clickable-law">
       <div className="law-number">۴۴</div>
       <div>
-        <Link className="law-unit law-lead" href="/laws/article-44/commentary/chapeau">
+        <Link className="law-unit law-lead" href="/laws/general-policies-44/article-44/commentary/chapeau">
           <span><strong>ماده ۴۴</strong> ـ {article44Paragraphs[0]}</span><small>مطالعه شرح صدر ماده ←</small>
         </Link>
         <ol>
           {article44Paragraphs.slice(1).map((paragraph, index) => (
             <li key={paragraph}>
-              {commentaryParts.find((part) => part.slug === `clause-${index + 1}`)?.available ? <Link className="law-unit" href={`/laws/article-44/commentary/clause-${index + 1}`}>
+              {commentaryParts.find((part) => part.slug === `clause-${index + 1}`)?.available ? <Link className="law-unit" href={`/laws/general-policies-44/article-44/commentary/clause-${index + 1}`}>
                 <span>{toFaDigits(paragraph.replace(/^[۰-۹0-9]+ـ\s*/, ""))}</span><small>مطالعه شرح بند {toFaDigits(index + 1)} ←</small>
               </Link> : <span className="law-unit unavailable" aria-disabled="true">
                 <span>{toFaDigits(paragraph.replace(/^[۰-۹0-9]+ـ\s*/, ""))}</span><small>شرح این بند هنوز منتشر نشده است</small>
@@ -310,7 +310,7 @@ function LawText() {
             </li>
           ))}
         </ol>
-        {noteAvailable ? <Link className="law-unit law-note" href="/laws/article-44/commentary/note">
+        {noteAvailable ? <Link className="law-unit law-note" href="/laws/general-policies-44/article-44/commentary/note">
           <span><strong>تبصره</strong> ـ {article44Note}</span><small>مطالعه شرح تبصره ←</small>
         </Link> : <div className="law-unit law-note unavailable" aria-disabled="true">
           <span><strong>تبصره</strong> ـ {article44Note}</span><small>شرح تبصره هنوز منتشر نشده است</small>
@@ -355,10 +355,10 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
         description: currentPart.description,
         inLanguage: "fa-IR",
         dateModified: CONTENT_UPDATED_ISO,
-        mainEntityOfPage: `${SITE_URL}/laws/article-44/commentary/${currentPart.slug}`,
+        mainEntityOfPage: `${SITE_URL}/laws/general-policies-44/article-44/commentary/${currentPart.slug}`,
         author: { "@id": `${SITE_URL}/about#person` },
         publisher: { "@type": "Person", name: AUTHOR.name },
-        isPartOf: { "@type": "CreativeWork", name: "شرح ماده ۴۴ قانون اجرای سیاست‌های کلی اصل چهل‌وچهار", url: `${SITE_URL}/laws/article-44` },
+        isPartOf: { "@type": "CreativeWork", name: "شرح ماده ۴۴ قانون اجرای سیاست‌های کلی اصل چهل‌وچهار", url: `${SITE_URL}/laws/general-policies-44/article-44` },
       }} /> : null}
       <section className="legal-hero">
         <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span><b>ماده ۴۴</b></div>
@@ -379,7 +379,7 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
         {active === "decisions" ? <Decisions /> : null}
       </section>
 
-      <nav className="law-pagination" aria-label="حرکت میان مواد"><span>ماده پیشین</span><Link href="/laws/general-policies-44">بازگشت به مجموعه قانون</Link><Link href="/laws/article-45">ماده ۴۵</Link></nav>
+      <nav className="law-pagination" aria-label="حرکت میان مواد"><span>ماده پیشین</span><Link href="/laws/general-policies-44">بازگشت به مجموعه قانون</Link><Link href="/laws/general-policies-44/article-45">ماده ۴۵</Link></nav>
     </>
   );
 }

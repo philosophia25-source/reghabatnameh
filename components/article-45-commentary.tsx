@@ -62,7 +62,7 @@ function PartsNav({ current }: { current: string }) {
     <p>اجزای ماده ۴۵</p>
     <ol>
       {article45CommentaryParts.map((part, index) => <li className={current === part.slug ? "active" : ""} key={part.slug}>
-        {part.available ? <Link className="parts-nav-link" href={`/laws/article-45/commentary/${part.slug}`}>
+        {part.available ? <Link className="parts-nav-link" href={`/laws/general-policies-44/article-45/commentary/${part.slug}`}>
           <span>{toFaDigits(index + 1)}</span><div><small>{part.shortLabel}</small><strong>{part.title}</strong></div>
         </Link> : <span className="parts-nav-link unavailable" aria-disabled="true">
           <span>{toFaDigits(index + 1)}</span><div><small>{part.shortLabel}</small><strong>{part.title}</strong></div><i>به‌زودی</i>
@@ -108,7 +108,7 @@ export function Article45Commentary({ slug }: { slug: string }) {
       <PartsNav current={slug} />
       <article className="commentary-body">
         <div className="commentary-title-row"><p className="commentary-kicker">شرح نادر جعفری</p><h2>{displayTitle}</h2><p>{part.title}، {part.description}</p></div>
-        <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/article-45/commentary/${slug}`} />
+        <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/general-policies-44/article-45/commentary/${slug}`} />
         {references.length ? <details className="commentary-decision-count"><summary><span>آرا و پرونده‌های مورد بررسی در این شرح</span><strong>{toFaDigits(references.length)} پرونده</strong><small>مشاهده فهرست و دسترسی به پرونده‌ها</small></summary><div className="commentary-decision-list">{references.map((reference) => <Link href={reference.href} key={reference.href}><small>{reference.detail}</small><strong>{reference.title}</strong><span>مشاهده پرونده ←</span></Link>)}</div></details> : null}
         {tocSections.length ? <details className="commentary-on-page"><summary>فهرست مطالب این شرح</summary><ol>{tocSections.map((section, tocIndex) => {
           const heading = clean(section.split("\n")[0]);
@@ -128,9 +128,9 @@ export function Article45Commentary({ slug }: { slug: string }) {
       </article>
     </div>
     <nav className="part-pagination" aria-label="حرکت میان اجزای شرح">
-      {previous ? <Link href={`/laws/article-45/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}
-      <Link className="parts-home" href="/laws/article-45/commentary">فهرست ۳۶ بخش</Link>
-      {next ? <Link href={`/laws/article-45/commentary/${next.slug}`}><small>بخش بعدی</small><strong>{next.shortLabel}</strong></Link> : <span />}
+      {previous ? <Link href={`/laws/general-policies-44/article-45/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}
+      <Link className="parts-home" href="/laws/general-policies-44/article-45/commentary">فهرست ۳۶ بخش</Link>
+      {next ? <Link href={`/laws/general-policies-44/article-45/commentary/${next.slug}`}><small>بخش بعدی</small><strong>{next.shortLabel}</strong></Link> : <span />}
     </nav>
   </>;
 }

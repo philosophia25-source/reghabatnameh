@@ -226,7 +226,7 @@ export const article45Provisions: Provision[] = [
     label: "ماده ۴۵",
     title: "اعمال یک‌جانبه اخلال‌گر در رقابت",
     description: "متن ماده و ساختار شرح جزءبه‌جزء رفتارهای ممنوع",
-    route: "/laws/article-45",
+    route: "/laws/general-policies-44/article-45",
     status: "published",
   },
   ...article45CommentaryParts.map((part) => ({
@@ -237,7 +237,7 @@ export const article45Provisions: Provision[] = [
     label: part.shortLabel,
     title: part.title,
     description: part.description,
-    route: `/laws/article-45/commentary/${part.slug}`,
+    route: `/laws/general-policies-44/article-45/commentary/${part.slug}`,
     status: (part.available ? "published" : "draft") as "published" | "draft",
   })),
 ];
@@ -246,7 +246,7 @@ export const article45Commentaries: CommentaryRecord[] = article45CommentaryPart
   id: `commentary:${part.provisionId}`,
   provisionId: part.provisionId,
   title: part.title,
-  route: `/laws/article-45/commentary/${part.slug}`,
+  route: `/laws/general-policies-44/article-45/commentary/${part.slug}`,
   contentFile: part.available ? (part.slug === "chapeau" ? "commentary45.md" : `commentary45-${part.slug}.md`) : undefined,
   status: part.available ? "published" : "draft",
 }));

@@ -1,48 +1,31 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Article45 } from "@/components/article-45";
+import { LegacyRedirect } from "@/components/legacy-redirect";
 
-const tabMetadata = {
-  commentary: {
-    title: "شرح ماده ۴۵",
-    description: "نقشه جزءبه‌جزء شرح صدر، بندها، اجزا و تبصره ماده ۴۵ قانون اجرای سیاست‌های کلی اصل چهل‌وچهار",
-  },
-  decisions: {
-    title: "آرای مرتبط با ماده ۴۵",
-    description: "آرای شورای رقابت و هیئت تجدیدنظر مرتبط با اعمال یک‌جانبه اخلال‌گر موضوع ماده ۴۵",
-  },
-};
+const tabs = ["commentary", "decisions"] as const;
 
 export function generateStaticParams() {
-  return [{ tab: "commentary" }, { tab: "decisions" }];
+  return tabs.map((tab) => ({ tab }));
 }
 
 export const dynamicParams = false;
 
+function destination(tab: string) {
+  return `/laws/general-policies-44/article-45/${tab}`;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ tab: string }> }): Promise<Metadata> {
   const { tab } = await params;
-  if (tab !== "commentary" && tab !== "decisions") return {};
-  const current = tabMetadata[tab];
-  const canonical = `/laws/article-45/${tab}`;
+  if (!tabs.includes(tab as typeof tabs[number])) return {};
   return {
-    title: current.title,
-    description: current.description,
-    alternates: { canonical },
-    openGraph: {
-      title: `${current.title} | رقابت‌نامه`,
-      description: current.description,
-      url: canonical,
-      siteName: "رقابت‌نامه",
-      locale: "fa_IR",
-      type: "article",
-      images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${current.title} | رقابت‌نامه` }],
-    },
-    twitter: { card: "summary_large_image", title: `${current.title} | رقابت‌نامه`, description: current.description, images: ["/og.jpg"] },
+    title: "انتقال صفحه ماده ۴۵",
+    alternates: { canonical: destination(tab) },
+    robots: { index: false, follow: true },
   };
 }
 
-export default async function Article45TabPage({ params }: { params: Promise<{ tab: string }> }) {
+export default async function LegacyArticle45TabPage({ params }: { params: Promise<{ tab: string }> }) {
   const { tab } = await params;
-  if (tab !== "commentary" && tab !== "decisions") notFound();
-  return <Article45 active={tab} />;
+  if (!tabs.includes(tab as typeof tabs[number])) notFound();
+  return <LegacyRedirect destination={destination(tab)} />;
 }

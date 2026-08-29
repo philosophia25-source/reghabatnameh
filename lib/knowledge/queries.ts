@@ -1,5 +1,6 @@
 import {
   articles,
+  cases,
   commentaries,
   documents,
   institutionalDomains,
@@ -11,6 +12,7 @@ import {
 } from "./registry";
 
 export const publishedDocuments = documents.filter((item) => item.status === "published");
+export const publishedCases = cases.filter((item) => item.status === "published");
 export const publishedArticles = articles.filter((item) => item.status === "published");
 export const publishedLegalSources = legalSources.filter((item) => item.status === "published");
 export const publishedProvisions = provisions.filter((item) => item.status === "published");
@@ -77,6 +79,18 @@ export function marketById(id: string) {
 
 export function marketBySlug(slug: string) {
   return publishedMarkets.find((item) => item.slug === slug);
+}
+
+export function caseBySlug(slug: string) {
+  return publishedCases.find((item) => item.slug === slug);
+}
+
+export function documentsForCase(caseId: string) {
+  const caseRecord = publishedCases.find((item) => item.id === caseId);
+  if (!caseRecord) return [];
+  return caseRecord.documentIds
+    .map((id) => publishedDocuments.find((item) => item.id === id))
+    .filter((item): item is NonNullable<typeof item> => Boolean(item));
 }
 
 export function institutionsForDocument(documentId: string) {

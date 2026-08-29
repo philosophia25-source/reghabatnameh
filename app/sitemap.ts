@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import {
   publishedDocuments,
+  publishedCases,
   publishedInstitutions,
   publishedLegalSources,
   publishedMarkets,
@@ -16,10 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const fixedRoutes = [
     "",
     "/laws",
-    "/laws/article-44/commentary",
-    "/laws/article-44/decisions",
-    "/laws/article-45/commentary",
-    "/laws/article-45/decisions",
+    "/laws/general-policies-44/article-44/commentary",
+    "/laws/general-policies-44/article-44/decisions",
+    "/laws/general-policies-44/article-45/commentary",
+    "/laws/general-policies-44/article-45/decisions",
     "/decisions",
     "/institutions",
     "/topics",
@@ -32,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...publishedLegalSources.map((item) => item.route),
     ...publishedProvisions.map((item) => item.route),
     ...publishedDocuments.map((item) => item.route),
+    ...publishedCases.map((item) => item.route),
     ...publishedInstitutions.map((item) => item.route),
     ...publishedTopics.map((item) => item.route),
     ...publishedMarkets.map((item) => item.route),

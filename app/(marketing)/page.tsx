@@ -38,7 +38,7 @@ const articles = [
     summary: "مرز تبعیض قراردادی با تفاوت موجه و معیار قابلیت اخلال در رقابت",
     type: "شرح ماده",
     status: "منتشر شده",
-    href: "/laws/article-44/commentary/clause-3",
+    href: "/laws/general-policies-44/article-44/commentary/clause-3",
   },
   {
     tone: "arch-two",
@@ -47,7 +47,7 @@ const articles = [
     summary: "تحمیل طرف قرارداد یا شروط قراردادی به دیگران و مرز آن با فشار یک‌جانبه",
     type: "شرح ماده",
     status: "منتشر شده",
-    href: "/laws/article-44/commentary/clause-4",
+    href: "/laws/general-policies-44/article-44/commentary/clause-4",
   },
   {
     tone: "arch-three",
@@ -56,7 +56,7 @@ const articles = [
     summary: "شرط‌کردن قرارداد به پذیرش تعهد اضافی و معیار ارتباط عرفی آن با معامله",
     type: "شرح ماده",
     status: "منتشر شده",
-    href: "/laws/article-44/commentary/clause-5",
+    href: "/laws/general-policies-44/article-44/commentary/clause-5",
   },
 ];
 
@@ -109,9 +109,9 @@ export default function HomePage() {
           <span>متن رأی به‌تنهایی کافی نیست. هر پرونده با کلیدواژه‌ها، سابقه و یادداشت تحلیلی خوانده می‌شود.</span>
         </div>
         <div className="decision-list">
-          <Link href="/decisions/631"><small>رأی شماره ۶۳۱</small><strong>بازار نخ تایر و مسئله توافق رقابتی</strong><span>ماده ۴۴ · توافق و تفاهم</span><Arrow /></Link>
-          <Link href="/decisions/437"><small>رأی شماره ۴۳۷</small><strong>ایرانسل و حدود رفتار ضدرقابتی</strong><span>ماده ۴۵ · رویه یک‌جانبه</span><Arrow /></Link>
-          <Link href="/decisions/sugar"><small>آرای ۲۹۶ و ۲۹/۹۶/هـ‌ت</small><strong>بازار شکر و زنجیره بدوی و تجدیدنظر</strong><span>ماده ۴۴ · ماده ۵۲</span><Arrow /></Link>
+          <Link href="/decisions/competition-council/1401/631"><small>رأی شماره ۶۳۱</small><strong>بازار نخ تایر و مسئله توافق رقابتی</strong><span>ماده ۴۴ · توافق و تفاهم</span><Arrow /></Link>
+          <Link href="/decisions/competition-council/1399/437"><small>رأی شماره ۴۳۷</small><strong>ایرانسل و حدود رفتار ضدرقابتی</strong><span>ماده ۴۵ · رویه یک‌جانبه</span><Arrow /></Link>
+          <Link href="/cases/sugar-import-market"><small>آرای ۲۹۶ و ۲۹/۹۶/هـ‌ت</small><strong>بازار شکر و زنجیره بدوی و تجدیدنظر</strong><span>ماده ۴۴ · ماده ۵۲</span><Arrow /></Link>
         </div>
       </section>
 
@@ -119,7 +119,7 @@ export default function HomePage() {
         <p>پژوهش جاری</p>
         <h2>محشی قانون اجرای سیاست‌های کلی اصل چهل‌وچهار</h2>
         <span>خوانشی ماده‌به‌ماده از حقوق رقابت ایران، با اتصال هر شرح به آرای منتخب، موضوعات و بازارهای مرتبط</span>
-        <Link href="/laws/article-44">مطالعه ماده ۴۴ <Arrow /></Link>
+        <Link href="/laws/general-policies-44/article-44">مطالعه ماده ۴۴ <Arrow /></Link>
       </section>
     </>
   );

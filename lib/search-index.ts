@@ -2,10 +2,12 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { decisionRecords } from "@/app/decision-data";
 import {
+  documentsForCase,
   institutionsForDocument,
   marketsForDocument,
   provisionById,
   publishedCommentaries,
+  publishedCases,
   publishedDocuments,
   publishedInstitutions,
   publishedLegalSources,
@@ -99,6 +101,22 @@ export function buildSearchIndex(): SearchEntry[] {
     };
   });
 
+  const caseEntries = publishedCases.map((caseRecord) => {
+    const relatedDocuments = documentsForCase(caseRecord.id);
+    const relatedText = relatedDocuments.map((document) => {
+      const record = decisionRecords[document.slug];
+      return record.stages.map((stage) => Object.values(stage.meta).join(" ")).join(" ");
+    }).join(" ");
+    return {
+      id: caseRecord.id,
+      title: caseRecord.title,
+      category: "پرونده",
+      href: caseRecord.route,
+      summary: caseRecord.description,
+      searchText: cleanMarkdown(`${caseRecord.title} ${caseRecord.description} ${relatedText}`),
+    };
+  });
+
   const institutionEntries = publishedInstitutions.map((institution) => ({
     id: `institution:${institution.id}`,
     title: institution.name,
@@ -129,6 +147,7 @@ export function buildSearchIndex(): SearchEntry[] {
   return [
     ...commentaryEntries,
     ...decisionEntries,
+    ...caseEntries,
     ...legalSourceEntries,
     ...provisionEntries,
     ...institutionEntries,

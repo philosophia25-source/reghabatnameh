@@ -53,6 +53,42 @@ export const decisionRecords: Record<string, DecisionRecord> = Object.fromEntrie
 
 export const decisionSlugs = decisionDocuments.map((document) => document.slug);
 
+export type DecisionRouteParams = {
+  institution: string;
+  year: string;
+  number: string;
+};
+
+function routeParams(document: KnowledgeDocument): DecisionRouteParams {
+  const [, family, institution, year, number] = document.route.split("/");
+  if (family !== "decisions" || !institution || !year || !number) {
+    throw new Error(`Invalid decision route: ${document.route}`);
+  }
+  return { institution, year, number };
+}
+
+function routeKey(params: DecisionRouteParams) {
+  return `${params.institution}/${params.year}/${params.number}`;
+}
+
+export const decisionStaticParams = decisionDocuments.map(routeParams);
+
+export const decisionRecordsByRoute: Record<string, DecisionRecord> = Object.fromEntries(
+  decisionDocuments.map((document) => [routeKey(routeParams(document)), decisionRecords[document.slug]]),
+);
+
+export function decisionRecordForRoute(params: DecisionRouteParams) {
+  return decisionRecordsByRoute[routeKey(params)];
+}
+
+export const legacyDecisionRoutes = [
+  ...decisionDocuments.flatMap((document) => document.legacyRoutes.map((route) => ({
+    slug: route.replace(/^\/decisions\//, ""),
+    destination: document.route,
+  }))),
+  { slug: "sugar", destination: "/cases/sugar-import-market" },
+];
+
 export const decisionIndexRecords = decisionDocuments.map((document) => {
   const record = decisionRecords[document.slug];
   const first = record.stages[0].meta;
