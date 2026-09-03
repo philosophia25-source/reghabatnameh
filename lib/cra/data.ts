@@ -9,8 +9,23 @@ import type {
 } from "./types";
 import type { KnowledgeDocument } from "@/lib/knowledge/types";
 import { CONTENT_UPDATED_ISO } from "@/lib/site";
+import { craCategories } from "@/lib/cra/categories";
 
 export const craResolutions = rawResolutions as CraResolution[];
+
+const registeredCategoryNames = new Set(craCategories.map((category) => category.name));
+const unknownCategoryNames = Array.from(new Set(
+  craResolutions
+    .map((resolution) => resolution.category)
+    .filter((category) => !registeredCategoryNames.has(category)),
+));
+const emptyCategoryNames = craCategories
+  .filter((category) => !craResolutions.some((resolution) => resolution.category === category.name))
+  .map((category) => category.name);
+
+if (unknownCategoryNames.length || emptyCategoryNames.length) {
+  throw new Error(`CRA category registry mismatch. Unknown: ${unknownCategoryNames.join(", ") || "none"}. Empty: ${emptyCategoryNames.join(", ") || "none"}.`);
+}
 
 export const craResolutionByGuid = new Map(
   craResolutions.map((resolution) => [resolution.guid, resolution]),
@@ -18,6 +33,10 @@ export const craResolutionByGuid = new Map(
 
 export const craResolutionByRoute = new Map(
   craResolutions.map((resolution) => [resolution.route, resolution]),
+);
+
+const craResolutionByPath = new Map(
+  craResolutions.map((resolution) => [`${resolution.year}/${resolution.slug}`, resolution]),
 );
 
 const relationNames: (keyof CraRelations)[] = ["related", "affects", "influencedBy", "versions"];
@@ -147,7 +166,7 @@ export const craKnowledgeDocuments: KnowledgeDocument[] = craResolutions.map((re
   title: resolution.title,
   documentType: "resolution",
   route: resolution.route,
-  legacyRoutes: [],
+  legacyRoutes: [`/resolutions/communications-regulatory-commission/${resolution.year}/${resolution.slug}`],
   files: [resolution.contentFile],
   issuerIds: ["communications-regulatory-commission"],
   provisionLinks: [],
@@ -160,9 +179,8 @@ export const craKnowledgeDocuments: KnowledgeDocument[] = craResolutions.map((re
   status: "published",
 }));
 
-export function craResolutionForRoute(params: { institution: string; year: string; slug: string }) {
-  if (params.institution !== "communications-regulatory-commission") return undefined;
-  return craResolutionByRoute.get(`/resolutions/${params.institution}/${params.year}/${params.slug}`);
+export function craResolutionForPath(params: { year: string; slug: string }) {
+  return craResolutionByPath.get(`${params.year}/${params.slug}`);
 }
 
 export function readCraResolutionHtml(resolution: CraResolution) {

@@ -11,6 +11,12 @@ import {
   craSupplementalTextReferencesFor,
   readCraResolutionHtml,
 } from "@/lib/cra/data";
+import {
+  CRA_ALL_RESOLUTIONS_ROUTE,
+  CRA_ORGANIZATION_ROUTE,
+  craCategoryForName,
+  craCategoryRoute,
+} from "@/lib/cra/categories";
 import type {
   CraRelationTarget,
   CraResolution,
@@ -53,6 +59,8 @@ function TextReferenceLinks({ targets }: { targets: CraTextReferenceTarget[] }) 
 }
 
 export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
+  const category = craCategoryForName(resolution.category);
+  const categoryHref = category ? craCategoryRoute(category) : CRA_ALL_RESOLUTIONS_ROUTE;
   const body = resolution.contentAvailable ? readCraResolutionHtml(resolution) : "";
   const { relations, additions } = craOfficialRelationsFor(resolution);
   const relationGroups = Object.entries(relations)
@@ -81,11 +89,17 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
     <>
       <JsonLd data={jsonLd} />
       <section className="decision-hero resolution-hero">
-        <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/resolutions">مصوبات تنظیم‌گری</Link><span>←</span><b>{resolution.category}</b></div>
+        <div className="breadcrumbs">
+          <Link href="/">خانه</Link><span>←</span>
+          <Link href="/resolutions">مصوبات تنظیم‌گران</Link><span>←</span>
+          <Link href={CRA_ORGANIZATION_ROUTE}>سازمان تنظیم مقررات</Link><span>←</span>
+          <Link href={categoryHref}>{resolution.category}</Link><span>←</span>
+          <b>{toFaDigits(number)}</b>
+        </div>
         <p className="eyebrow">مصوبه کمیسیون تنظیم مقررات ارتباطات</p>
         <h1>{toFaDigits(resolution.title)}</h1>
         <p>{toFaDigits(resolution.code)}</p>
-        <Link className="back-to-commentary" href="/resolutions">بازگشت به فهرست مصوبات ←</Link>
+        <Link className="back-to-commentary" href={categoryHref}>بازگشت به مصوبات {resolution.category} ←</Link>
       </section>
 
       <section className="resolution-content">

@@ -191,7 +191,7 @@ def assign_routes(records: list[dict]) -> None:
             slug += f"-{record['guid'][:8]}"
         used.add(slug)
         record["slug"] = slug.lower()
-        record["route"] = f"/resolutions/communications-regulatory-commission/{year}/{record['slug']}"
+        record["route"] = f"/resolutions/cra/{year}/{record['slug']}"
         record["contentFile"] = f"cra/documents/{record['guid']}.html"
 
 

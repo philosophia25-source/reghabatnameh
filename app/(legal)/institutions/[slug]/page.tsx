@@ -60,9 +60,9 @@ export default async function InstitutionPage({ params }: { params: Promise<{ sl
         ) : null}
         {resolutions.length ? (
           <>
-            <div className="collection-heading"><p className="eyebrow">آرشیو مصوبات</p><h2>تازه‌ترین مصوبات کمیسیون</h2><span>متن کامل آرشیو و روابط ثبت‌شده میان اسناد در صفحه مصوبات در دسترس است.</span></div>
+            <div className="collection-heading"><p className="eyebrow">آرشیو مصوبات</p><h2>تازه‌ترین مصوبات کمیسیون</h2><span>متن کامل آرشیو و روابط ثبت‌شده میان اسناد در دسته‌بندی سازمان تنظیم مقررات در دسترس است.</span></div>
             <ResolutionCollection />
-            <Link className="collection-all-link" href="/resolutions">مشاهده هر {toFaDigits(resolutions.length)} مصوبه ←</Link>
+            <Link className="collection-all-link" href="/resolutions/cra">ورود به دسته‌بندی مصوبات ←</Link>
           </>
         ) : (
           <>

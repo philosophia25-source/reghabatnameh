@@ -33,7 +33,13 @@ function normalize(value: string) {
     .trim();
 }
 
-export function ResolutionExplorer({ items }: { items: ResolutionExplorerItem[] }) {
+export function ResolutionExplorer({
+  items,
+  showCategoryFilter = true,
+}: {
+  items: ResolutionExplorerItem[];
+  showCategoryFilter?: boolean;
+}) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
   const [year, setYear] = useState("");
@@ -61,7 +67,7 @@ export function ResolutionExplorer({ items }: { items: ResolutionExplorerItem[] 
         ...item.keywords,
       ].join(" "));
       return (!needle || haystack.includes(needle))
-        && (!category || item.category === category)
+        && (!showCategoryFilter || !category || item.category === category)
         && (!year || item.year === year)
         && (!readingStatus
           || (readingStatus === "influenced" && item.influenceCount > 0)
@@ -69,7 +75,7 @@ export function ResolutionExplorer({ items }: { items: ResolutionExplorerItem[] 
           || (readingStatus === "text-reference" && item.supplementalReferenceCount > 0)
           || (readingStatus === "table" && item.tableCount > 0));
     });
-  }, [category, items, query, readingStatus, year]);
+  }, [category, items, query, readingStatus, showCategoryFilter, year]);
 
   const updateQuery = (value: string) => {
     setQuery(value);
@@ -82,11 +88,11 @@ export function ResolutionExplorer({ items }: { items: ResolutionExplorerItem[] 
     setReadingStatus("");
     setVisible(40);
   };
-  const hasFilters = Boolean(query || category || year || readingStatus);
+  const hasFilters = Boolean(query || (showCategoryFilter && category) || year || readingStatus);
 
   return (
     <div className="resolution-explorer">
-      <div className="resolution-filters" aria-label="فیلتر مصوبات کمیسیون">
+      <div className={`resolution-filters${showCategoryFilter ? "" : " resolution-filters-without-category"}`} aria-label="فیلتر مصوبات کمیسیون">
         <label className="resolution-query">
           <span>جست‌وجو در مصوبات</span>
           <input
@@ -96,13 +102,15 @@ export function ResolutionExplorer({ items }: { items: ResolutionExplorerItem[] 
             placeholder="عنوان، شماره جلسه، کد یا کلیدواژه"
           />
         </label>
-        <label>
-          <span>حوزه سند</span>
-          <select value={category} onChange={(event) => { setCategory(event.target.value); setVisible(40); }}>
-            <option value="">همه حوزه‌ها</option>
-            {categories.map((value) => <option value={value} key={value}>{value}</option>)}
-          </select>
-        </label>
+        {showCategoryFilter ? (
+          <label>
+            <span>حوزه سند</span>
+            <select value={category} onChange={(event) => { setCategory(event.target.value); setVisible(40); }}>
+              <option value="">همه حوزه‌ها</option>
+              {categories.map((value) => <option value={value} key={value}>{value}</option>)}
+            </select>
+          </label>
+        ) : null}
         <label>
           <span>سال تصویب</span>
           <select value={year} onChange={(event) => { setYear(event.target.value); setVisible(40); }}>

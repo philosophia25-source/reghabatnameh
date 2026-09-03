@@ -8,6 +8,12 @@ import {
   publishedProvisions,
   publishedTopics,
 } from "@/lib/knowledge/queries";
+import {
+  CRA_ALL_RESOLUTIONS_ROUTE,
+  CRA_ORGANIZATION_ROUTE,
+  craCategories,
+  craCategoryRoute,
+} from "@/lib/cra/categories";
 
 const BASE_URL = "https://naderjafari.com";
 
@@ -23,6 +29,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/laws/general-policies-44/article-45/decisions",
     "/decisions",
     "/resolutions",
+    CRA_ORGANIZATION_ROUTE,
+    CRA_ALL_RESOLUTIONS_ROUTE,
+    ...craCategories.map(craCategoryRoute),
     "/institutions",
     "/topics",
     "/markets",

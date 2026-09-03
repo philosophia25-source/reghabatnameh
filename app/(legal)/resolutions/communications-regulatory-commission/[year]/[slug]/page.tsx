@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ResolutionPage } from "@/components/resolution-page";
+import { LegacyRedirect } from "@/components/legacy-redirect";
 import {
-  craResolutionDescription,
-  craResolutionForRoute,
+  craResolutionForPath,
   craResolutions,
 } from "@/lib/cra/data";
 
-type Params = { institution: string; year: string; slug: string };
+type Params = { year: string; slug: string };
 
 export function generateStaticParams(): Params[] {
   return craResolutions.map((resolution) => ({
-    institution: "communications-regulatory-commission",
     year: resolution.year,
     slug: resolution.slug,
   }));
@@ -21,19 +19,18 @@ export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const resolved = await params;
-  const resolution = craResolutionForRoute(resolved);
+  const resolution = craResolutionForPath(resolved);
   if (!resolution) return {};
   return {
-    title: resolution.title,
-    description: craResolutionDescription(resolution),
+    title: "انتقال به نشانی تازه",
     alternates: { canonical: resolution.route },
+    robots: { index: false, follow: true },
   };
 }
 
-export default async function ResolutionRoute({ params }: { params: Promise<Params> }) {
+export default async function LegacyResolutionRoute({ params }: { params: Promise<Params> }) {
   const resolved = await params;
-  const resolution = craResolutionForRoute(resolved);
+  const resolution = craResolutionForPath(resolved);
   if (!resolution) notFound();
-  return <ResolutionPage resolution={resolution} />;
+  return <LegacyRedirect destination={resolution.route} />;
 }
-

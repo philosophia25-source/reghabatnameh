@@ -472,8 +472,18 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
 
 /* آرشیو مصوبات تنظیم‌گری */
 .resolutions-page>.lead { max-width:980px; }
+.resolutions-landing-page>.lead,.resolutions-hub-page>.lead { max-width:900px; }
+.resolution-regulator-grid { max-width:850px; }
+.resolution-regulator-card { min-height:300px; }
+.resolution-hub-subtitle { max-width:900px; margin:-10px 0 18px; color:var(--gold-light); font-size:clamp(20px,2.4vw,30px); line-height:1.8; }
+.cra-category-grid { margin-top:54px; }
+.cra-category-card { min-height:270px; }
+.cra-category-card p { font-size:var(--font-small); }
+.resolution-hub-actions { margin-top:34px; padding-top:28px; border-top:1px solid rgba(255,255,255,.11); }
+.resolution-hub-actions .read-all-commentary { margin-top:0; }
 .resolution-explorer { margin-top:54px; }
 .resolution-filters { padding:22px; display:grid; grid-template-columns:minmax(280px,1.7fr) repeat(3,minmax(150px,1fr)); gap:13px; background:#091b29; border:1px solid rgba(255,255,255,.09); }
+.resolution-filters-without-category { grid-template-columns:minmax(280px,1.7fr) repeat(2,minmax(170px,1fr)); }
 .resolution-filters label { display:flex; flex-direction:column; gap:8px; color:#9badb6; font-size:var(--font-caption); }
 .resolution-filters input,.resolution-filters select { width:100%; min-height:49px; padding:0 14px; color:#edf1f2; background:#07151f; border:1px solid rgba(255,255,255,.12); border-radius:0; font:inherit; font-size:var(--font-ui); outline:none; }
 .resolution-filters input:focus,.resolution-filters select:focus { border-color:rgba(201,164,104,.72); box-shadow:0 0 0 3px rgba(201,164,104,.08); }
