@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { decisionRecords } from "@/app/decision-data";
+import { craResolutions, readCraResolutionHtml } from "@/lib/cra/data";
 import {
   documentsForCase,
   institutionsForDocument,
@@ -38,6 +39,20 @@ function cleanMarkdown(value: string) {
 function concise(value: string, length = 190) {
   const normalized = cleanMarkdown(value);
   return normalized.length > length ? `${normalized.slice(0, length).trim()}…` : normalized;
+}
+
+function cleanHtml(value: string) {
+  return value
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;|&#160;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, "\"")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export function buildSearchIndex(): SearchEntry[] {
@@ -78,7 +93,9 @@ export function buildSearchIndex(): SearchEntry[] {
     };
   });
 
-  const decisionEntries = publishedDocuments.map((document) => {
+  const decisionEntries = publishedDocuments
+    .filter((document) => document.documentType === "decision")
+    .map((document) => {
     const record = decisionRecords[document.slug];
     const stageText = record.stages.map((stage) => [
       ...Object.values(stage.meta),
@@ -98,6 +115,37 @@ export function buildSearchIndex(): SearchEntry[] {
       href: document.route,
       summary: concise(`${first.meta["قاعده/دلیل انتخاب"] ?? document.relation}`),
       searchText: cleanMarkdown(`${document.title} ${document.relation} ${relations} ${stageText}`),
+    };
+    });
+
+  const resolutionEntries = craResolutions.map((resolution) => {
+    const fullText = resolution.contentAvailable
+      ? cleanHtml(readCraResolutionHtml(resolution))
+      : "";
+    const number = resolution.resolutionNumber
+      ? `مصوبه شماره ${resolution.resolutionNumber} جلسه ${resolution.sessionNumber}`
+      : `جلسه ${resolution.sessionNumber}`;
+    const relationText = [
+      ...Object.values(resolution.relations).flat().map((target) => target.title),
+      ...resolution.textReferences.flatMap((target) => [target.title, target.evidence]),
+    ].join(" ");
+    return {
+      id: resolution.id,
+      title: resolution.title,
+      category: "مصوبه تنظیم‌گری",
+      href: resolution.route,
+      summary: `${number}، ${resolution.approvalDate || "تاریخ ثبت نشده"}، ${resolution.category}`,
+      searchText: cleanMarkdown([
+        resolution.title,
+        resolution.code,
+        resolution.sessionNumber,
+        resolution.resolutionNumber,
+        resolution.approvalDate,
+        resolution.category,
+        resolution.keywords.join(" "),
+        relationText,
+        fullText,
+      ].join(" ")),
     };
   });
 
@@ -147,6 +195,7 @@ export function buildSearchIndex(): SearchEntry[] {
   return [
     ...commentaryEntries,
     ...decisionEntries,
+    ...resolutionEntries,
     ...caseEntries,
     ...legalSourceEntries,
     ...provisionEntries,

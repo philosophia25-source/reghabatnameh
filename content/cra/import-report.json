@@ -1,0 +1,29 @@
+{
+  "documents": 558,
+  "convertedAttachmentSections": 654,
+  "contentPages": 556,
+  "categories": {
+    "خدمات ثابت": 214,
+    "مقررات اختصاصی": 48,
+    "مقررات عمومی": 108,
+    "خدمات همراه": 60,
+    "همگرایی خدمات ثابت و همراه": 16,
+    "پست": 68,
+    "ارتباطات رادیویی": 44
+  },
+  "relationCounts": {
+    "related": 1085,
+    "affects": 89,
+    "influencedBy": 89,
+    "versions": 12
+  },
+  "textReferences": 379,
+  "supplementalTextReferences": 80,
+  "missingRelationTargets": {
+    "related": 182,
+    "affects": 8,
+    "influencedBy": 9,
+    "versions": 4
+  },
+  "conversionFailures": {}
+}

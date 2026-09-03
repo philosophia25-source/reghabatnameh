@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { toFaDigits } from "@/app/text";
 import { DecisionCollection } from "@/components/decision-collection";
+import { ResolutionCollection } from "@/components/resolution-collection";
 import {
   documentsForInstitution,
   domainById,
@@ -34,6 +35,8 @@ export default async function InstitutionPage({ params }: { params: Promise<{ sl
   const institution = institutionBySlug(slug);
   if (!institution) notFound();
   const documents = documentsForInstitution(institution.id);
+  const decisions = documents.filter((document) => document.documentType === "decision");
+  const resolutions = documents.filter((document) => document.documentType === "resolution");
   const domain = domainById(institution.domainId);
   const provisions = Array.from(new Set(documents.flatMap((document) => document.provisionLinks.map((link) => link.provisionId))))
     .map(provisionById).filter((item): item is NonNullable<typeof item> => Boolean(item));
@@ -49,12 +52,24 @@ export default async function InstitutionPage({ params }: { params: Promise<{ sl
         <div className="law-meta"><span>حوزه <b>{domain?.name}</b></span><span>اسناد منتشرشده <b>{toFaDigits(documents.length)}</b></span></div>
       </section>
       <section className="shell knowledge-detail">
-        <div className="knowledge-summary-grid">
-          <section><span>مواد مرتبط</span><div>{provisions.map((provision) => provision.status === "published" ? <Link href={provision.route} key={provision.id}>{provision.label}</Link> : <i key={provision.id}>{provision.label}</i>)}</div></section>
-          <section><span>موضوعات پرتکرار</span><div>{topics.map((topic) => <Link href={topic.route} key={topic.id}>{topic.title}</Link>)}</div></section>
-        </div>
-        <div className="collection-heading"><p className="eyebrow">اسناد منتخب</p><h2>آرا و تصمیمات مرتبط</h2><span>این فهرست گزینشی است و فقط اسناد دارای ارزش تحلیلی را در بر می‌گیرد.</span></div>
-        <DecisionCollection documentIds={documents.map((document) => document.id)} />
+        {provisions.length || topics.length ? (
+          <div className="knowledge-summary-grid">
+            <section><span>مواد مرتبط</span><div>{provisions.map((provision) => provision.status === "published" ? <Link href={provision.route} key={provision.id}>{provision.label}</Link> : <i key={provision.id}>{provision.label}</i>)}</div></section>
+            <section><span>موضوعات پرتکرار</span><div>{topics.map((topic) => <Link href={topic.route} key={topic.id}>{topic.title}</Link>)}</div></section>
+          </div>
+        ) : null}
+        {resolutions.length ? (
+          <>
+            <div className="collection-heading"><p className="eyebrow">آرشیو مصوبات</p><h2>تازه‌ترین مصوبات کمیسیون</h2><span>متن کامل آرشیو و روابط ثبت‌شده میان اسناد در صفحه مصوبات در دسترس است.</span></div>
+            <ResolutionCollection />
+            <Link className="collection-all-link" href="/resolutions">مشاهده هر {toFaDigits(resolutions.length)} مصوبه ←</Link>
+          </>
+        ) : (
+          <>
+            <div className="collection-heading"><p className="eyebrow">اسناد منتخب</p><h2>آرا و تصمیمات مرتبط</h2><span>این فهرست گزینشی است و فقط اسناد دارای ارزش تحلیلی را در بر می‌گیرد.</span></div>
+            <DecisionCollection documentIds={decisions.map((document) => document.id)} />
+          </>
+        )}
       </section>
     </>
   );

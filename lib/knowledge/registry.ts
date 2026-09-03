@@ -21,6 +21,7 @@ import type {
 } from "./types";
 import { validateKnowledgeRegistry } from "./validate";
 import { CONTENT_UPDATED_ISO } from "@/lib/site";
+import { craKnowledgeDocuments } from "@/lib/cra/data";
 
 export const institutionalDomains: InstitutionalDomain[] = [
   {
@@ -33,9 +34,9 @@ export const institutionalDomains: InstitutionalDomain[] = [
   {
     id: "communications-regulation",
     name: "تنظیم‌گری ارتباطات",
-    description: "سازمان تنظیم مقررات و ارتباطات رادیویی و کمیسیون تنظیم مقررات ارتباطات",
+    description: "مصوبات کمیسیون تنظیم مقررات ارتباطات و شبکه روابط ثبت‌شده میان آنها در سامانه اسناد سازمان تنظیم مقررات",
     memberIds: ["communications-regulatory-authority", "communications-regulatory-commission"],
-    status: "draft",
+    status: "published",
   },
 ];
 
@@ -80,9 +81,9 @@ export const institutions: Institution[] = [
     shortName: "کمیسیون تنظیم مقررات",
     kind: "regulatory-commission",
     domainId: "communications-regulation",
-    description: "رکن تصویب مصوبات منتخب تنظیم‌گری ارتباطات",
+    description: "مرجع تصویب مقررات ارتباطی با آرشیو کامل مصوبات گردآوری‌شده از سامانه اسناد سازمان تنظیم مقررات",
     route: "/institutions/communications-regulatory-commission",
-    status: "draft",
+    status: "published",
   },
 ];
 
@@ -225,6 +226,7 @@ export const documents: KnowledgeDocument[] = [
   decision({ slug: "270", year: "1395", title: "پرونده جامع بازار فولاد", files: ["270.txt"], parts: ["clause-5"], markets: ["industry"] }),
   decision({ slug: "236", year: "1394", title: "پرونده ارزی ۶۵۰ میلیون یورویی", files: ["236.txt"], parts: ["clause-3", "clause-7"], markets: ["finance-insurance"] }),
   decision({ slug: "232", year: "1394", title: "تعیین قیمت صنفی لوح فشرده", files: ["232.txt"], parts: ["clause-2", "clause-6", "clause-7"], markets: ["industry"] }),
+  ...craKnowledgeDocuments,
 ];
 
 export const cases: KnowledgeCase[] = [

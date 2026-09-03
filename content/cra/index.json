@@ -1,0 +1,414 @@
+[
+  {
+    "id": "resolution:cra:fbfad812-8a64-f111-b985-0050569c58ac",
+    "guid": "fbfad812-8a64-f111-b985-0050569c58ac",
+    "title": "سقف تعرفه حق اشتراک (آبونمان) خدمت مکالمه صوتی مشترکین تلفن ثابت",
+    "code": "CRC-FX-1405-0001-366",
+    "documentType": "مصوبه",
+    "category": "خدمات ثابت",
+    "sessionNumber": "366",
+    "resolutionNumber": "1",
+    "approvalDate": "1405/03/17",
+    "year": "1405",
+    "version": "1",
+    "keywords": [],
+    "sourceUrl": "https://asnad.cra.gov.ir/fa/Public/Documents/Details/fbfad812-8a64-f111-b985-0050569c58ac",
+    "attachments": [
+      {
+        "name": "مصوبه شماره 1 جلسه شماره 366 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "Word",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=35e76e54-5c22-4d12-9805-3bab375d646a"
+      },
+      {
+        "name": "مصوبه شماره 1 جلسه شماره 366 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "PDF",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=9de42c8f-3120-4ba6-87b2-9ec5941a7cc9"
+      }
+    ],
+    "relations": {
+      "related": [
+        {
+          "targetGuid": "ef6a9a8d-1e57-f011-b976-0050569c58ac",
+          "title": "سقف حق اشتراک (آبونمان) خدمت مکالمه صوتی مشترکین تلفن ثابت"
+        }
+      ],
+      "affects": [],
+      "influencedBy": [],
+      "versions": []
+    },
+    "slug": "366-1",
+    "route": "/resolutions/communications-regulatory-commission/1405/366-1",
+    "contentFile": "cra/documents/fbfad812-8a64-f111-b985-0050569c58ac.html",
+    "localAttachmentCount": 1,
+    "contentAvailable": true,
+    "readingMeta": {
+      "wordCount": 228,
+      "tableCount": 0,
+      "imageCount": 0,
+      "attachmentSectionCount": 1
+    },
+    "textReferences": [
+      {
+        "targetGuid": "ef6a9a8d-1e57-f011-b976-0050569c58ac",
+        "title": "سقف حق اشتراک (آبونمان) خدمت مکالمه صوتی مشترکین تلفن ثابت",
+        "evidence": "مصوبه شماره (5) جلسه شماره (361"
+      }
+    ]
+  },
+  {
+    "id": "resolution:cra:3d1ad540-cd00-f111-b97b-0050569c58ac",
+    "guid": "3d1ad540-cd00-f111-b97b-0050569c58ac",
+    "title": "تعرفه ارایه خدمات نام دامنه های کشوری",
+    "code": "CRC-IO-1404-0365-4",
+    "documentType": "مصوبه",
+    "category": "مقررات اختصاصی",
+    "sessionNumber": "365",
+    "resolutionNumber": "4",
+    "approvalDate": "1404/10/16",
+    "year": "1404",
+    "version": "1",
+    "keywords": [],
+    "sourceUrl": "https://asnad.cra.gov.ir/fa/Public/Documents/Details/3d1ad540-cd00-f111-b97b-0050569c58ac",
+    "attachments": [
+      {
+        "name": "مصوبه شماره 4 جلسه شماره 365 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "PDF",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=e80bd41b-9e6f-4a4a-b1e6-fa90e411811e"
+      },
+      {
+        "name": "مصوبه شماره 4 جلسه شماره 365 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "Word",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=7a7dcf15-2f99-4e41-84b0-3b32fdf8e78f"
+      }
+    ],
+    "relations": {
+      "related": [],
+      "affects": [
+        {
+          "targetGuid": "10b576d4-38e1-ef11-b972-0050569c58ac",
+          "title": "دستورالعمل ارایه خدمات نام های دامنه کشوری"
+        }
+      ],
+      "influencedBy": [],
+      "versions": []
+    },
+    "slug": "365-4",
+    "route": "/resolutions/communications-regulatory-commission/1404/365-4",
+    "contentFile": "cra/documents/3d1ad540-cd00-f111-b97b-0050569c58ac.html",
+    "localAttachmentCount": 1,
+    "contentAvailable": true,
+    "readingMeta": {
+      "wordCount": 235,
+      "tableCount": 1,
+      "imageCount": 0,
+      "attachmentSectionCount": 1
+    },
+    "textReferences": [
+      {
+        "targetGuid": "10b576d4-38e1-ef11-b972-0050569c58ac",
+        "title": "دستورالعمل ارایه خدمات نام های دامنه کشوری",
+        "evidence": "مصوبه شماره (3) جلسه شماره (359"
+      }
+    ]
+  },
+  {
+    "id": "resolution:cra:0c0f9654-d000-f111-b97b-0050569c58ac",
+    "guid": "0c0f9654-d000-f111-b97b-0050569c58ac",
+    "title": "استفساریه در مورد مدل محاسبه درآمد از درآمدهای حاصل از ارایه خدمات ارزش افزوده جمع آوری مبالغ نیابتی موضوع مصوبه شماره (2) جلسه شماره (248) مورخ 1395/09/21 کمیسیون تنظیم مقررات ارتباطات",
+    "code": "CRC-GR-1404-0365-5",
+    "documentType": "مصوبه",
+    "category": "مقررات عمومی",
+    "sessionNumber": "365",
+    "resolutionNumber": "5",
+    "approvalDate": "1404/10/16",
+    "year": "1404",
+    "version": "1",
+    "keywords": [],
+    "sourceUrl": "https://asnad.cra.gov.ir/fa/Public/Documents/Details/0c0f9654-d000-f111-b97b-0050569c58ac",
+    "attachments": [
+      {
+        "name": "مصوبه شماره 5 جلسه شماره 365 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "PDF",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=c0c0856a-3ad2-4355-a028-8c5e75814db9"
+      },
+      {
+        "name": "مصوبه شماره 5 جلسه شماره 365 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "Word",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=72e283c2-666f-4779-8a09-de72092a2426"
+      }
+    ],
+    "relations": {
+      "related": [],
+      "affects": [
+        {
+          "targetGuid": "38f14ec0-aed0-e611-80d2-005056875dcc",
+          "title": "اصلاح مدل محاسبه مبالغ تسهیم درآمد دولت از درآمدهای حاصل از ارائه خدمات ارزش افزوده دارندگان پروانه های ارتباطی و فناوری اطلاعات"
+        }
+      ],
+      "influencedBy": [],
+      "versions": []
+    },
+    "slug": "365-5",
+    "route": "/resolutions/communications-regulatory-commission/1404/365-5",
+    "contentFile": "cra/documents/0c0f9654-d000-f111-b97b-0050569c58ac.html",
+    "localAttachmentCount": 1,
+    "contentAvailable": true,
+    "readingMeta": {
+      "wordCount": 193,
+      "tableCount": 0,
+      "imageCount": 0,
+      "attachmentSectionCount": 1
+    },
+    "textReferences": [
+      {
+        "targetGuid": "38f14ec0-aed0-e611-80d2-005056875dcc",
+        "title": "اصلاح مدل محاسبه مبالغ تسهیم درآمد دولت از درآمدهای حاصل از ارائه خدمات ارزش افزوده دارندگان پروانه های ارتباطی و فناوری اطلاعات",
+        "evidence": "مصوبه شماره (2) جلسه شماره (248"
+      }
+    ]
+  },
+  {
+    "id": "resolution:cra:91084a2f-cb00-f111-b97b-0050569c58ac",
+    "guid": "91084a2f-cb00-f111-b97b-0050569c58ac",
+    "title": "اصلاحیه مصوبه شماره (5) جلسه شماره (363) مورخ 1404/04/29 با موضوع «نصاب موضوع تصویب نامه شماره 158949/ت62876 هـ مورخ 1403/10/17 هیئت وزیران",
+    "code": "CRC-FX-1404-0365-2",
+    "documentType": "مصوبه",
+    "category": "خدمات ثابت",
+    "sessionNumber": "365",
+    "resolutionNumber": "2",
+    "approvalDate": "1404/10/16",
+    "year": "1404",
+    "version": "1",
+    "keywords": [],
+    "sourceUrl": "https://asnad.cra.gov.ir/fa/Public/Documents/Details/91084a2f-cb00-f111-b97b-0050569c58ac",
+    "attachments": [
+      {
+        "name": "مصوبه شماره 2 جلسه شماره 365 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "PDF",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=8c640524-7f10-4a03-bf3c-f46d5ffbe939"
+      },
+      {
+        "name": "مصوبه شماره 2 جلسه شماره 365 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "Word",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=281afbc9-a2ce-454f-8e94-ebb24ca8424b"
+      }
+    ],
+    "relations": {
+      "related": [],
+      "affects": [
+        {
+          "targetGuid": "54bc984c-2178-f011-b977-0050569c58ac",
+          "title": "«نصاب موضوع تصویب نامه شماره 158949/ت 62876 هـ مورخ 1403/10/17 هیات وزیران»"
+        }
+      ],
+      "influencedBy": [],
+      "versions": []
+    },
+    "slug": "365-2",
+    "route": "/resolutions/communications-regulatory-commission/1404/365-2",
+    "contentFile": "cra/documents/91084a2f-cb00-f111-b97b-0050569c58ac.html",
+    "localAttachmentCount": 1,
+    "contentAvailable": true,
+    "readingMeta": {
+      "wordCount": 185,
+      "tableCount": 0,
+      "imageCount": 0,
+      "attachmentSectionCount": 1
+    },
+    "textReferences": [
+      {
+        "targetGuid": "54bc984c-2178-f011-b977-0050569c58ac",
+        "title": "«نصاب موضوع تصویب نامه شماره 158949/ت 62876 هـ مورخ 1403/10/17 هیات وزیران»",
+        "evidence": "مصوبه شماره (5) جلسه شماره (363"
+      },
+      {
+        "targetGuid": "7e41d891-420f-ee11-b967-0050569ca4ea",
+        "title": "تعرفه خدمت اتصال و دسترسی پر سرعت مراکز آموزشی، پژوهشی و حوزوی به شبکه ملی اطلاعات بر بستر فیبر نوری",
+        "evidence": "مصوبه شماره (3) جلسه شماره (344"
+      }
+    ]
+  },
+  {
+    "id": "resolution:cra:fa65e3f3-c300-f111-b97b-0050569c58ac",
+    "guid": "fa65e3f3-c300-f111-b97b-0050569c58ac",
+    "title": "به روزرسانی مصوبه شماره (1) جلسه شماره (214) مورخ 1394/02/20 با عنوان تعرفه اتصال به ابر زیرساخت",
+    "code": "CRC-FX-1404-0365-1",
+    "documentType": "مصوبه",
+    "category": "خدمات ثابت",
+    "sessionNumber": "365",
+    "resolutionNumber": "1",
+    "approvalDate": "1404/10/16",
+    "year": "1404",
+    "version": "1",
+    "keywords": [],
+    "sourceUrl": "https://asnad.cra.gov.ir/fa/Public/Documents/Details/fa65e3f3-c300-f111-b97b-0050569c58ac",
+    "attachments": [
+      {
+        "name": "مصوبه شماره 1 جلسه شماره 365 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "PDF",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=080ce2a2-7810-47e7-8225-72b65368a357"
+      },
+      {
+        "name": "مصوبه شماره 1 جلسه شماره 365 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "Word",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=a1cd0adf-42f6-4dc6-b4d8-4ce3ec62891f"
+      }
+    ],
+    "relations": {
+      "related": [],
+      "affects": [
+        {
+          "targetGuid": "1bccb54b-f687-e511-973c-68b599781b58",
+          "title": "تعرفه اتصال به ابر زیرساخت"
+        }
+      ],
+      "influencedBy": [],
+      "versions": []
+    },
+    "slug": "365-1",
+    "route": "/resolutions/communications-regulatory-commission/1404/365-1",
+    "contentFile": "cra/documents/fa65e3f3-c300-f111-b97b-0050569c58ac.html",
+    "localAttachmentCount": 1,
+    "contentAvailable": true,
+    "readingMeta": {
+      "wordCount": 251,
+      "tableCount": 1,
+      "imageCount": 0,
+      "attachmentSectionCount": 1
+    },
+    "textReferences": [
+      {
+        "targetGuid": "1bccb54b-f687-e511-973c-68b599781b58",
+        "title": "تعرفه اتصال به ابر زیرساخت",
+        "evidence": "مصوبه شماره (1) جلسه شماره (214"
+      }
+    ]
+  },
+  {
+    "id": "resolution:cra:1d46a9b9-c9d9-f011-b97b-0050569c58ac",
+    "guid": "1d46a9b9-c9d9-f011-b97b-0050569c58ac",
+    "title": "تعرفه پیامک فارسی و انگلیسی",
+    "code": "CRC-MO-1404-0364-4",
+    "documentType": "مصوبه",
+    "category": "خدمات همراه",
+    "sessionNumber": "364",
+    "resolutionNumber": "4",
+    "approvalDate": "1404/07/29",
+    "year": "1404",
+    "version": "1",
+    "keywords": [],
+    "sourceUrl": "https://asnad.cra.gov.ir/fa/Public/Documents/Details/1d46a9b9-c9d9-f011-b97b-0050569c58ac",
+    "attachments": [
+      {
+        "name": "مصوبه شماره 4 جلسه شماره 364 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "Word",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=697e8451-e172-48fb-9e1f-9a8a352e449f"
+      },
+      {
+        "name": "مصوبه شماره 4 جلسه شماره 364 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "PDF",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=9623420d-42bc-476d-a95b-71d43aa09291"
+      }
+    ],
+    "relations": {
+      "related": [],
+      "affects": [],
+      "influencedBy": [],
+      "versions": []
+    },
+    "slug": "364-4",
+    "route": "/resolutions/communications-regulatory-commission/1404/364-4",
+    "contentFile": "cra/documents/1d46a9b9-c9d9-f011-b97b-0050569c58ac.html",
+    "localAttachmentCount": 1,
+    "contentAvailable": true,
+    "readingMeta": {
+      "wordCount": 184,
+      "tableCount": 0,
+      "imageCount": 0,
+      "attachmentSectionCount": 1
+    },
+    "textReferences": []
+  },
+  {
+    "id": "resolution:cra:80146028-c9d9-f011-b97b-0050569c58ac",
+    "guid": "80146028-c9d9-f011-b97b-0050569c58ac",
+    "title": "تعرفه مکالمه تلفن همراه",
+    "code": "CRC-MO-1404-0364-3",
+    "documentType": "مصوبه",
+    "category": "خدمات همراه",
+    "sessionNumber": "364",
+    "resolutionNumber": "3",
+    "approvalDate": "1404/07/29",
+    "year": "1404",
+    "version": "1",
+    "keywords": [],
+    "sourceUrl": "https://asnad.cra.gov.ir/fa/Public/Documents/Details/80146028-c9d9-f011-b97b-0050569c58ac",
+    "attachments": [
+      {
+        "name": "مصوبه شماره 3 جلسه شماره 364 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "PDF",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=1eb5104e-d541-4e10-8725-b8b7a0f03ddc"
+      },
+      {
+        "name": "مصوبه شماره 3 جلسه شماره 364 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "Word",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=b3c4daf1-5240-4b89-8ca1-4d548d7ce789"
+      }
+    ],
+    "relations": {
+      "related": [],
+      "affects": [],
+      "influencedBy": [],
+      "versions": []
+    },
+    "slug": "364-3",
+    "route": "/resolutions/communications-regulatory-commission/1404/364-3",
+    "contentFile": "cra/documents/80146028-c9d9-f011-b97b-0050569c58ac.html",
+    "localAttachmentCount": 1,
+    "contentAvailable": true,
+    "readingMeta": {
+      "wordCount": 237,
+      "tableCount": 0,
+      "imageCount": 0,
+      "attachmentSectionCount": 1
+    },
+    "textReferences": [
+      {
+        "targetGuid": "d8cbb54b-f687-e511-973c-68b599781b58",
+        "title": "تعرفه مکالمه تلفن ثابت و همراه",
+        "evidence": "مصوبه شماره (3) جلسه شماره (184"
+      }
+    ]
+  },
+  {
+    "id": "resolution:cra:d335e0d3-f4d3-f011-b97b-0050569c58ac",
+    "guid": "d335e0d3-f4d3-f011-b97b-0050569c58ac",
+    "title": "اصلاحیه مصوبه شماره (3) جلسه شماره (359) مورخ 1403/10/16 با موضوع «دستورالعمل ارایه خدمات نام های دامنه کشوری»",
+    "code": "CRC-IO-1404-0364-5",
+    "documentType": "مصوبه",
+    "category": "مقررات اختصاصی",
+    "sessionNumber": "364",
+    "resolutionNumber": "5",
+    "approvalDate": "1404/07/29",
+    "year": "1404",
+    "version": "1",
+    "keywords": [],
+    "sourceUrl": "https://asnad.cra.gov.ir/fa/Public/Documents/Details/d335e0d3-f4d3-f011-b97b-0050569c58ac",
+    "attachments": [
+      {
+        "name": "مصوبه شماره 5 جلسه شماره 364 کمیسیون تنظیم مقررات ارتباطات",
+        "format": "PDF",
+        "url": "https://asnad.cra.gov.ir/fa/File?id=67512c49-681a-4232-a46e-40d7208b5ad8"
+      }
+    ],
+    "relations": {
+      "related": [],
+      "affects": [
+        {
+          "targetGuid": "10b576d4-38e1-ef11-b972-0050569c58ac",
+          "title": "دستورالعمل ارایه خدمات نام های دامنه کشوری"
+        }
+      ],
+      "influencedBy": [],
+      "versions": []
+  

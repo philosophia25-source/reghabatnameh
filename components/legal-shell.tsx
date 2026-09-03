@@ -15,6 +15,7 @@ export function LegalShell({ children }: { children: React.ReactNode }) {
           <Link href="/topics">موضوعات</Link>
           <Link href="/markets">بازارها</Link>
           <Link href="/decisions">آرای منتخب</Link>
+          <Link href="/resolutions">مصوبات</Link>
           <Link href="/search">جست‌وجو</Link>
         </nav>
       </header>

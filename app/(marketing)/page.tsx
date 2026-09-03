@@ -27,7 +27,7 @@ const quickAccess = [
   { label: "قوانین و شرح", detail: "مجموعه‌های قانونی", href: "/laws" },
   { label: "آرای منتخب", detail: "پرونده‌های قاعده‌ساز", href: "/decisions" },
   { label: "نهادها", detail: "مراجع و اسناد", href: "/institutions" },
-  { label: "موضوعات", detail: "شبکه مفهومی", href: "/topics" },
+  { label: "مصوبات تنظیم‌گری", detail: "آرشیو کمیسیون", href: "/resolutions" },
 ];
 
 const articles = [

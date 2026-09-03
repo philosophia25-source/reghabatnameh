@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/laws/general-policies-44/article-45/commentary",
     "/laws/general-policies-44/article-45/decisions",
     "/decisions",
+    "/resolutions",
     "/institutions",
     "/topics",
     "/markets",

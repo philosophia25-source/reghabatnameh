@@ -6,6 +6,7 @@ const nav = [
   ["نهادها", "/institutions"],
   ["موضوعات", "/topics"],
   ["آرای منتخب", "/decisions"],
+  ["مصوبات", "/resolutions"],
   ["جست‌وجو", "/search"],
   ["درباره", "/about"],
   ["ارتباط", "/contact"],
