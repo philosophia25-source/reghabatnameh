@@ -588,6 +588,21 @@ footer p,.copyright { margin:0; color:#969fa3; font-size:var(--font-caption); }
 .resolution-citation summary { padding:18px 0; color:#aab8bf; cursor:pointer; font-size:var(--font-small); }
 .resolution-citation p { padding:0 0 20px; color:#91a4ad; font-size:var(--font-small); line-height:2; }
 
+@media (min-width:901px) {
+  .resolutions-hub-page { padding-top:42px; }
+  .resolutions-hub-page h1 { max-width:none; margin-bottom:12px; font-size:clamp(42px,4.1vw,58px); line-height:1.32; letter-spacing:-.045em; }
+  .resolutions-hub-page>.kicker { margin-bottom:10px; }
+  .resolutions-hub-page>.lead { max-width:1040px; line-height:1.9; }
+  .resolution-hub-subtitle { margin:0 0 8px; font-size:clamp(19px,1.8vw,24px); line-height:1.7; }
+  .cra-category-grid { margin-top:28px; gap:11px; }
+  .cra-category-card { min-height:116px; padding:17px 20px 17px 58px; position:relative; justify-content:center; }
+  .cra-category-card h2 { margin:5px 0 0; font-size:clamp(17px,1.45vw,21px); line-height:1.55; }
+  .cra-category-card p { display:none; }
+  .cra-category-card b { width:25px; margin:0; padding:0; position:absolute; left:20px; top:50%; overflow:hidden; color:transparent; font-size:0; white-space:nowrap; transform:translateY(-50%); }
+  .cra-category-card b::after { content:"←"; color:var(--gold-light); font-size:20px; }
+  .resolution-hub-actions { margin-top:22px; padding-top:20px; }
+}
+
 @media (max-width:900px) {
   .knowledge-card-grid-three { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .resolution-filters { grid-template-columns:1fr 1fr; }
