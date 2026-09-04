@@ -31,7 +31,7 @@ export default function DecisionsPage() {
     marketLabels: decision.marketLabels,
   }));
   return (
-    <section className="shell listing-page">
+    <section className="shell listing-page decisions-index-page">
       <p className="kicker">رویه</p>
       <h1>آرای شورای رقابت</h1>
       <p className="lead">مجموعه‌ای گزینشی از آرای دارای ارزش تحلیلی، با متن کامل، نتیجه، منبع رسمی و پیوند به مواد، موضوعات، بازارها و نهاد صادرکننده.</p>

@@ -14,25 +14,43 @@ import { AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function Stage({ record, index, total }: { record: ParsedDecision; index: number; total: number }) {
   const { meta, body } = record;
+  const fullTextTitleId = `decision-fulltext-${index}`;
+  const hasResearchCaution = Boolean(meta["احتیاط پژوهشی"] && meta["احتیاط پژوهشی"] !== "—");
   return (
     <article className="decision-stage">
       {total > 1 ? <div className="stage-label">{index === 0 ? "مرحله بدوی" : "مرحله تجدیدنظر"}<span>{toFaDigits(index + 1)}</span></div> : null}
-      <div className="decision-facts">
-        <div><small>مرجع</small><strong>{toFaDigits(meta["مرجع"])}</strong></div>
-        <div><small>شماره رأی</small><strong>{toFaDigits(meta["شماره جلسه/رأی"])}</strong></div>
-        <div><small>تاریخ</small><strong>{toFaDate(meta["تاریخ"])}</strong></div>
-        <div><small>نوع تصمیم</small><strong>{toFaDigits(meta["نوع تصمیم"])}</strong></div>
+      <div className="decision-disclosures">
+        <details className="decision-disclosure">
+          <summary>
+            <span>مشخصات رأی</span>
+            <small>{toFaDigits(meta["مرجع"])} · رأی {toFaDigits(meta["شماره جلسه/رأی"])} · {toFaDate(meta["تاریخ"])}</small>
+          </summary>
+          <div className="decision-facts">
+            <div><small>مرجع</small><strong>{toFaDigits(meta["مرجع"])}</strong></div>
+            <div><small>شماره رأی</small><strong>{toFaDigits(meta["شماره جلسه/رأی"])}</strong></div>
+            <div><small>تاریخ</small><strong>{toFaDate(meta["تاریخ"])}</strong></div>
+            <div><small>نوع تصمیم</small><strong>{toFaDigits(meta["نوع تصمیم"])}</strong></div>
+          </div>
+        </details>
+        <details className="decision-disclosure">
+          <summary>
+            <span>خلاصه تحلیلی</span>
+            <small>{hasResearchCaution ? "قاعده، نتیجه و احتیاط پژوهشی" : "قاعده و نتیجه"}</small>
+          </summary>
+          <section className="decision-summary">
+            <div><h2>قاعده و دلیل اهمیت</h2><p>{toFaDigits(meta["قاعده/دلیل انتخاب"])}</p></div>
+            <div><h2>نتیجه</h2><p>{toFaDigits(meta["نتیجه واقعی"])}</p></div>
+            {hasResearchCaution ? <div className="research-caution"><h2>احتیاط پژوهشی</h2><p>{toFaDigits(meta["احتیاط پژوهشی"])}</p></div> : null}
+          </section>
+        </details>
       </div>
-      <section className="decision-summary">
-        <div><h2>قاعده و دلیل اهمیت</h2><p>{toFaDigits(meta["قاعده/دلیل انتخاب"])}</p></div>
-        <div><h2>نتیجه</h2><p>{toFaDigits(meta["نتیجه واقعی"])}</p></div>
-        {meta["احتیاط پژوهشی"] && meta["احتیاط پژوهشی"] !== "—" ? <div className="research-caution"><h2>احتیاط پژوهشی</h2><p>{toFaDigits(meta["احتیاط پژوهشی"])}</p></div> : null}
+      <section className="decision-fulltext" aria-labelledby={fullTextTitleId}>
+        <div className="decision-fulltext-heading">
+          <div><p className="eyebrow">متن رسمی</p><h2 id={fullTextTitleId}>متن کامل رأی</h2></div>
+          {meta["نشانی رسمی"] ? <a className="official-source" href={meta["نشانی رسمی"]} target="_blank" rel="noreferrer">مشاهده منبع رسمی ←</a> : null}
+        </div>
+        <div className="decision-fulltext-body">{body.split(/\n{2,}/).map((paragraph, pIndex) => <p key={pIndex}>{toFaDigits(paragraph)}</p>)}</div>
       </section>
-      <details className="decision-fulltext">
-        <summary>متن کامل تصمیم</summary>
-        <div>{body.split(/\n{2,}/).map((paragraph, pIndex) => <p key={pIndex}>{toFaDigits(paragraph)}</p>)}</div>
-      </details>
-      {meta["نشانی رسمی"] ? <a className="official-source" href={meta["نشانی رسمی"]} target="_blank" rel="noreferrer">مشاهده منبع رسمی ←</a> : null}
     </article>
   );
 }
@@ -88,7 +106,6 @@ export function DecisionPage({ slug }: { slug: string }) {
         <p className="eyebrow">پرونده‌خوانی حقوق رقابت</p>
         <h1>{decision.title}</h1>
         <p>{decision.relation}</p>
-        <Link className="back-to-commentary" href="/decisions">بازگشت به فهرست آرا ←</Link>
       </section>
       <section className="decision-content">
         {decision.stages.map((stage, index) => <Stage record={stage} index={index} total={decision.stages.length} key={`${slug}-${index}`} />)}
