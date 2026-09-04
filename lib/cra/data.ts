@@ -10,6 +10,7 @@ import type {
 import type { KnowledgeDocument } from "@/lib/knowledge/types";
 import { CONTENT_UPDATED_ISO } from "@/lib/site";
 import { craCategories } from "@/lib/cra/categories";
+import { toFaDigits } from "@/app/text";
 
 export const craResolutions = rawResolutions as CraResolution[];
 
@@ -183,8 +184,22 @@ export function craResolutionForPath(params: { year: string; slug: string }) {
   return craResolutionByPath.get(`${params.year}/${params.slug}`);
 }
 
+function localizeCraDocumentText(html: string) {
+  return html
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (part.startsWith("<")) return part;
+      return part
+        .split(/(&#(?:[0-9]+|x[0-9a-f]+);)/gi)
+        .map((text) => text.startsWith("&#") ? text : toFaDigits(text))
+        .join("");
+    })
+    .join("");
+}
+
 export function readCraResolutionHtml(resolution: CraResolution) {
-  return readFileSync(join(process.cwd(), "content", resolution.contentFile), "utf8");
+  const html = readFileSync(join(process.cwd(), "content", resolution.contentFile), "utf8");
+  return localizeCraDocumentText(html);
 }
 
 export function craResolutionDescription(resolution: CraResolution) {
