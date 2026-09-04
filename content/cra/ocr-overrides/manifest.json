@@ -139,6 +139,29 @@
       ],
       "hasEditorialConsolidation": false
     },
+    "eabaf438-cdb8-eb11-9691-0050569b0899": {
+      "route": "/resolutions/cra/1400/317-2",
+      "contentFile": "cra/ocr-overrides/eabaf438-cdb8-eb11-9691-0050569b0899.html",
+      "readingMeta": {
+        "wordCount": 12761,
+        "tableCount": 7,
+        "imageCount": 0,
+        "attachmentSectionCount": 3
+      },
+      "textReferences": [
+        {
+          "targetGuid": "207e7fd8-917f-e911-967b-0050569b0899",
+          "title": "اصول حاکم بر صدور پروانه دفاتر پیشخوان دولت و بخش عمومی غیردولتی و دفاتر ارتباطات و فناوری اطلاعات (ICT) روستایی",
+          "evidence": "مصوبه شماره 3 جلسه شماره 289"
+        },
+        {
+          "targetGuid": "5ae8d8bd-4f1a-ef11-b96c-0050569c58ac",
+          "title": "بازنگری اصول حاکم بر صدور پروانه دفاتر پیشخوان خدمات دولت و بخش عمومی غیردولتی",
+          "evidence": "مصوبه شماره 2 جلسه 353"
+        }
+      ],
+      "hasEditorialConsolidation": false
+    },
     "e1dc7d42-e7ce-ec11-9698-0050569b0899": {
       "route": "/resolutions/cra/1400/329-3",
       "contentFile": "cra/ocr-overrides/e1dc7d42-e7ce-ec11-9698-0050569b0899.html",

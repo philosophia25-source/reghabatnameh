@@ -48,6 +48,7 @@ DUPLICATE_SCAN_ROUTES = {
 
 APPEND_OCR_ROUTES = {
     "/resolutions/cra/1401/335-2",
+    "/resolutions/cra/1400/317-2",
 }
 
 MATH_REPLACEMENT_ROUTES = {
@@ -103,6 +104,16 @@ def route_segments(pandoc_fragment: str) -> dict[str, list[etree._Element]]:
     for node in wrapper:
         compact_text = re.sub(r"\s+", "", "".join(node.itertext()))
         route_match = ROUTE_RE.fullmatch(compact_text)
+        # Word sometimes keeps the next route marker and an editorial note in
+        # the same paragraph. Treat the leading route as the marker and drop
+        # the remainder so work notes cannot enter the public OCR section.
+        if route_match is None:
+            route_match = ROUTE_RE.match(compact_text)
+        if route_match is None:
+            for href in node.xpath(".//a/@href"):
+                route_match = ROUTE_RE.search(href)
+                if route_match is not None:
+                    break
         if route_match:
             current_route = route_match.group(0)
             result[current_route] = []
