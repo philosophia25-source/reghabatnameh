@@ -4,11 +4,11 @@ import { JsonLd } from "@/components/json-ld";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import { ResolutionActions } from "@/components/resolution-actions";
 import {
-  craInfluencePathFor,
-  craNewerVersionFor,
+  craConsolidationFor,
   craOcrOverrideFor,
   craOfficialRelationsFor,
   craResolutionByGuid,
+  craSameSessionResolutionsFor,
   craSupplementalTextBacklinksFor,
   craSupplementalTextReferencesFor,
   readCraResolutionHtml,
@@ -27,18 +27,16 @@ import type {
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const relationLabels = {
-  related: "اسناد مرتبط",
-  affects: "اسناد تاثیرپذیر از این مصوبه",
-  influencedBy: "اسناد تاثیرگذار بر این مصوبه",
-  versions: "نسخه‌های دیگر",
+  related: "اسناد مرتبط در سامانه رسمی",
+  affects: "اسناد تاثیرپذیر در سامانه رسمی",
+  influencedBy: "اسناد تاثیرگذار در سامانه رسمی",
+  versions: "نسخه‌های ثبت‌شده در سامانه رسمی",
 };
 
 function ResolutionTargetLink({ target }: { target: CraRelationTarget }) {
   const local = craResolutionByGuid.get(target.targetGuid);
-  const label = target.title || local?.title || "مشاهده سند در سامانه رسمی";
-  return local
-    ? <Link href={local.route}>{toFaDigits(label)}</Link>
-    : <a href={`https://asnad.cra.gov.ir/fa/Public/Documents/Details/${target.targetGuid}`} target="_blank" rel="noreferrer">{toFaDigits(label)}</a>;
+  if (!local) return null;
+  return <Link href={local.route}>{toFaDigits(target.title || local.title)}</Link>;
 }
 
 function RelationLinks({ targets }: { targets: CraRelationTarget[] }) {
@@ -66,16 +64,30 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   const body = resolution.contentAvailable ? readCraResolutionHtml(resolution) : "";
   const ocrOverride = craOcrOverrideFor(resolution);
   const hasEditorialConsolidation = Boolean(ocrOverride?.hasEditorialConsolidation);
+  const consolidation = craConsolidationFor(resolution);
   const { relations, additions } = craOfficialRelationsFor(resolution);
   const relationGroups = Object.entries(relations)
     .filter(([, targets]) => targets.length) as [keyof typeof relationLabels, CraRelationTarget[]][];
   const reverseAdditionCount = Object.values(additions).reduce((count, targets) => count + targets.length, 0);
   const textReferences = craSupplementalTextReferencesFor(resolution);
   const textBacklinks = craSupplementalTextBacklinksFor(resolution);
-  const influencePath = craInfluencePathFor(resolution);
-  const directInfluenceCount = influencePath.filter((item) => item.direct).length;
-  const newerVersion = craNewerVersionFor(resolution);
-  const hasRelations = Boolean(relationGroups.length || textReferences.length || textBacklinks.length);
+  const sameSession = craSameSessionResolutionsFor(resolution);
+  const sameSessionTargets = sameSession.map((item) => ({ targetGuid: item.guid, title: item.title }));
+  const hasRelations = Boolean(
+    consolidation.hasConsolidatedAttachment
+    || consolidation.amendments.length
+    || consolidation.bases.length
+    || relationGroups.length
+    || textReferences.length
+    || textBacklinks.length
+    || sameSession.length,
+  );
+  const relationSummary = [
+    consolidation.hasConsolidatedAttachment ? "دارای پیوست تنقیحی" : "",
+    consolidation.amendments.length ? `${toFaDigits(consolidation.amendments.length)} اصلاح بعدی` : "",
+    consolidation.bases.length ? `${toFaDigits(consolidation.bases.length)} مصوبه پایه` : "",
+    sameSession.length ? `${toFaDigits(sameSession.length)} مصوبه دیگر در همین جلسه` : "",
+  ].filter(Boolean).join(" · ") || "روابط رسمی، ارجاعات متنی و مصوبات همین جلسه";
   const number = resolution.resolutionNumber ? `مصوبه شماره ${resolution.resolutionNumber}` : "مصوبه";
   const citation = `${number} جلسه شماره ${resolution.sessionNumber} کمیسیون تنظیم مقررات ارتباطات، مصوب ${resolution.approvalDate}، ${SITE_NAME}، ${SITE_URL}${resolution.route}`;
   const jsonLd = {
@@ -136,58 +148,55 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
             </div>
           </details>
 
-          <details className="resolution-disclosure">
+          <details className="resolution-disclosure" id="document-relations">
             <summary>
-              <span>وضعیت و مسیر مطالعه</span>
-              <small>نسخه، اسناد تاثیرگذار، تنقیح و ساختار متن</small>
+              <span>ارتباطات مصوبه</span>
+              <small>{relationSummary}</small>
             </summary>
-            <section className="resolution-overview" aria-labelledby="resolution-overview-title">
-              <div className="knowledge-connections-heading">
-                <p className="eyebrow">در یک نگاه</p>
-                <h2 id="resolution-overview-title">وضعیت مراجعه به سند</h2>
-              </div>
-              <div className="resolution-overview-grid">
-                <div>
-                  <span>وضعیت نسخه</span>
-                  <strong>{newerVersion ? "نسخه جدیدتری در سامانه وجود دارد" : relations.versions.length ? "نسخه جدیدتری شناسایی نشد" : "نسخه دیگری در سامانه ثبت نشده"}</strong>
-                  {newerVersion ? <ResolutionTargetLink target={newerVersion} /> : <small>این عبارت فقط ناظر به نسخه‌های ثبت‌شده در داده منبع است</small>}
+            <section className="resolution-connections" aria-label="روابط قابل اتکای مصوبه">
+              {consolidation.hasConsolidatedAttachment ? (
+                <div className="resolution-consolidated-status">
+                  <strong>پیوست تنقیحی در منبع رسمی موجود است</strong>
+                  <span>{hasEditorialConsolidation
+                    ? "نسخه تنقیحی بازبینی‌شده نیز در ادامه همین صفحه با برچسب جدا نمایش داده می‌شود."
+                    : "این تشخیص از نام رسمی پیوست گرفته شده است."}</span>
                 </div>
-                <div>
-                  <span>اسناد تاثیرگذار</span>
-                  <strong>{influencePath.length ? `${toFaDigits(influencePath.length)} سند در زنجیره تاثیرگذاری` : "سندی ثبت نشده است"}</strong>
-                  <small>{directInfluenceCount ? `${toFaDigits(directInfluenceCount)} رابطه مستقیم و ${toFaDigits(influencePath.length - directInfluenceCount)} رابطه ادامه زنجیره` : "نبود رابطه ثبت‌شده به معنی تایید اعتبار جاری مصوبه نیست"}</small>
-                </div>
-                <div>
-                  <span>ساختار متن</span>
-                  <strong>{resolution.contentAvailable ? `${toFaDigits(resolution.readingMeta.wordCount)} واژه در ${toFaDigits(resolution.readingMeta.attachmentSectionCount)} بخش متنی` : "پیوست متنی در منبع موجود نیست"}</strong>
-                  <small>{`${toFaDigits(resolution.readingMeta.tableCount)} جدول و ${toFaDigits(resolution.readingMeta.imageCount)} تصویر`}</small>
-                </div>
-                <div>
-                  <span>وضعیت تنقیح</span>
-                  <strong>{influencePath.length ? "متن تنقیح‌شده تاییدشده موجود نیست" : "نیاز به تنقیح از داده منبع احراز نشد"}</strong>
-                  <small>{hasEditorialConsolidation ? "نسخه تنقیحی غیررسمی برای مطالعه در ادامه صفحه ارائه شده است" : influencePath.length ? "متن پایه و زنجیره اسناد تاثیرگذار جداگانه ارائه شده‌اند" : "برای استناد حقوقی، بررسی منابع دیگر همچنان لازم است"}</small>
-                </div>
-              </div>
+              ) : null}
 
-              {influencePath.length ? (
-                <div className="resolution-reading-path">
-                  <div>
-                    <h3>مسیر مطالعه برای بررسی آخرین وضعیت</h3>
-                    <p>این مسیر از برچسب «اسناد تاثیرگذار» سامانه CRA ساخته شده است. ترتیب زیر جای متن تنقیح‌شده یا احراز اعتبار حقوقی را نمی‌گیرد.</p>
+              {consolidation.amendments.length || consolidation.bases.length ? (
+                <div className="resolution-relation-groups resolution-curated-relations">
+                  {consolidation.amendments.length ? (
+                    <div><span>این مصوبه به موجب اسناد زیر اصلاح شده است</span><div><RelationLinks targets={consolidation.amendments} /></div></div>
+                  ) : null}
+                  {consolidation.bases.length ? (
+                    <div><span>این مصوبه، اسناد زیر را اصلاح کرده است</span><div><RelationLinks targets={consolidation.bases} /></div></div>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {relationGroups.length ? (
+                <div className="resolution-official-relations">
+                  <p>روابط زیر عیناً از دسته‌بندی سامانه رسمی CRA گرفته شده‌اند و با روابط اصلاحی بالا یکی نیستند.</p>
+                  <div className="resolution-relation-groups">
+                    {relationGroups.map(([relation, targets]) => (
+                      <div key={relation}><span>{relationLabels[relation]}</span><div><RelationLinks targets={targets} /></div></div>
+                    ))}
                   </div>
-                  <ol>
-                    <li className="current"><span>متن پایه</span><strong>{toFaDigits(resolution.title)}</strong><small>{resolution.approvalDate ? toFaDate(resolution.approvalDate) : "تاریخ ثبت نشده"}</small></li>
-                    {influencePath.map((item) => {
-                      const local = craResolutionByGuid.get(item.target.targetGuid);
-                      return (
-                        <li key={item.target.targetGuid}>
-                          <span>{item.direct ? "سند تاثیرگذار مستقیم" : `ادامه زنجیره در سطح ${toFaDigits(item.depth)}`}</span>
-                          <strong><ResolutionTargetLink target={item.target} /></strong>
-                          <small>{local?.approvalDate ? toFaDate(local.approvalDate) : "جزئیات در منبع رسمی"}</small>
-                        </li>
-                      );
-                    })}
-                  </ol>
+                  {reverseAdditionCount ? <p className="resolution-relation-note">{toFaDigits(reverseAdditionCount)} رابطه از سمت دیگر همان رابطه تکمیل شده است.</p> : null}
+                </div>
+              ) : null}
+
+              {textReferences.length || textBacklinks.length ? (
+                <div className="resolution-text-relations">
+                  {textReferences.length ? <div><h3>مصوباتی که در متن این سند نام برده شده‌اند</h3><TextReferenceLinks targets={textReferences} /></div> : null}
+                  {textBacklinks.length ? <div><h3>مصوباتی که در متن خود به این سند اشاره کرده‌اند</h3><TextReferenceLinks targets={textBacklinks} /></div> : null}
+                </div>
+              ) : null}
+
+              {sameSessionTargets.length ? (
+                <div className="resolution-same-session">
+                  <span>سایر مصوبات جلسه {toFaDigits(resolution.sessionNumber)}</span>
+                  <div><RelationLinks targets={sameSessionTargets} /></div>
                 </div>
               ) : null}
             </section>
@@ -216,36 +225,12 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
             <div className="resolution-source-files">
               {resolution.attachments.map((attachment, index) => (
                 <a href={attachment.url} target="_blank" rel="noreferrer" key={attachment.url}>
-                  دریافت پیوست {toFaDigits(index + 1)} · {attachment.format.toLowerCase() === "pdf" ? "فایل PDF" : "فایل Word"}
+                  {/تنقیح/.test(attachment.name) ? "دریافت پیوست تنقیحی" : `دریافت پیوست ${toFaDigits(index + 1)}`} · {attachment.format.toLowerCase() === "pdf" ? "فایل PDF" : "فایل Word"}
                 </a>
               ))}
             </div>
           ) : null}
         </section>
-
-        {hasRelations ? (
-          <section className="resolution-relations" id="document-relations" aria-labelledby="resolution-relations-title">
-            <div className="knowledge-connections-heading">
-              <p className="eyebrow">ارتباطات مصوبات</p>
-              <h2 id="resolution-relations-title">روابط و ارجاعات قابل ردیابی</h2>
-              <p>روابط رسمی از برچسب‌های CRA گرفته شده‌اند. ارجاعات متنی فقط وجود اشاره صریح به شماره مصوبه و جلسه را نشان می‌دهند و نوع اثر حقوقی را تعیین نمی‌کنند.</p>
-            </div>
-            {relationGroups.length ? (
-              <div className="resolution-relation-groups">
-                {relationGroups.map(([relation, targets]) => (
-                  <div key={relation}><span>{relationLabels[relation]}</span><div><RelationLinks targets={targets} /></div></div>
-                ))}
-              </div>
-            ) : null}
-            {reverseAdditionCount ? <p className="resolution-relation-note">{toFaDigits(reverseAdditionCount)} رابطه با خواندن دوسویه صفحات منبع تکمیل شده است.</p> : null}
-            {textReferences.length || textBacklinks.length ? (
-              <div className="resolution-text-relations">
-                {textReferences.length ? <div><h3>ارجاع‌های افزوده‌شده از متن این سند</h3><TextReferenceLinks targets={textReferences} /></div> : null}
-                {textBacklinks.length ? <div><h3>اسنادی که در متن خود به این مصوبه اشاره کرده‌اند</h3><TextReferenceLinks targets={textBacklinks} /></div> : null}
-              </div>
-            ) : null}
-          </section>
-        ) : null}
 
         <details className="resolution-citation"><summary>شیوه استناد به این صفحه</summary><p>{toFaDigits(citation)}</p></details>
       </section>

@@ -574,7 +574,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .not-found-copy>div a { padding:11px 17px; color:#e5ebed; border:1px solid rgba(255,255,255,.16); font-size:var(--font-small); }
 .not-found-copy>div a:first-child { color:#111a20; background:var(--gold-light); border-color:var(--gold-light); }
 .resolution-disclosures { margin-bottom:28px; display:grid; gap:9px; }
-.resolution-disclosure { background:#081722; border:1px solid rgba(255,255,255,.09); }
+.resolution-disclosure { background:#081722; border:1px solid rgba(255,255,255,.09); scroll-margin-top:76px; }
 .resolution-disclosure>summary { min-height:62px; padding:13px 18px; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px 22px; color:#dce4e7; cursor:pointer; list-style:none; }
 .resolution-disclosure>summary::-webkit-details-marker { display:none; }
 .resolution-disclosure>summary::after { content:"＋"; color:var(--gold-light); font-size:1.1rem; font-weight:300; }
@@ -613,6 +613,19 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .resolution-disclosure .resolution-facts { margin:0; border:0; }
 .resolution-disclosure .resolution-keywords { margin:1px 0 0; border-width:1px 0 0; }
 .resolution-disclosure>.resolution-overview { margin:0; border-width:1px 0 0; }
+.resolution-connections { padding:28px; border-top:1px solid rgba(255,255,255,.08); }
+.resolution-consolidated-status { padding:18px 20px; display:flex; flex-direction:column; gap:7px; color:#dfe6e8; background:rgba(201,164,104,.08); border:1px solid rgba(201,164,104,.26); border-right:3px solid var(--gold); }
+.resolution-consolidated-status strong { color:var(--gold-light); font-size:var(--font-ui); font-weight:620; }
+.resolution-consolidated-status span { color:#a8b6bd; font-size:var(--font-caption); line-height:1.9; }
+.resolution-curated-relations { margin-top:24px; }
+.resolution-curated-relations>div { padding:18px; background:#0a1b28; border:1px solid rgba(201,164,104,.18); }
+.resolution-official-relations { margin-top:28px; padding-top:26px; border-top:1px solid rgba(255,255,255,.09); }
+.resolution-official-relations>p { margin:0 0 20px; color:#91a4ad; font-size:var(--font-caption); line-height:1.9; }
+.resolution-official-relations .resolution-relation-note { margin-bottom:0; }
+.resolution-same-session { margin-top:28px; padding-top:26px; border-top:1px solid rgba(255,255,255,.09); }
+.resolution-same-session>span { display:block; margin-bottom:12px; color:#92a4ad; font-size:var(--font-caption); }
+.resolution-same-session>div { display:flex; flex-wrap:wrap; gap:9px; }
+.resolution-same-session a { padding:9px 12px; color:#c8d2d6; background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.09); font-size:var(--font-small); line-height:1.8; }
 .resolution-document { margin-top:30px; scroll-margin-top:80px; }
 .resolution-document-heading { max-width:850px; margin-bottom:26px; }
 .resolution-document-heading h2 { margin:5px 0 10px; font-size:clamp(25px,2.7vw,34px); }
@@ -623,6 +636,8 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-source-label { margin:0 0 34px; padding-bottom:15px; display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; color:#766341; border-bottom:1px solid rgba(20,28,33,.18); font-size:var(--font-caption); }
 .cra-source-label strong { color:#705328; font-weight:650; }
 .cra-source-label span { color:#39444a; overflow-wrap:anywhere; }
+.cra-consolidated-label { padding:13px 15px; color:#5e4723; background:#e4d7bd; border-right:4px solid #9a7538; }
+.cra-consolidated-label strong { color:#5d4218; }
 .cra-source-text p,.cra-source-text li { color:#263137; font-size:var(--font-body); line-height:2.15; text-align:justify; }
 .cra-source-text p { margin:0 0 1.15em; }
 .cra-source-text ol { direction:rtl; list-style-type:persian; }
@@ -741,7 +756,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
   .resolution-row { min-height:0; padding:20px 4px; grid-template-columns:1fr 20px; gap:10px 14px; }.resolution-row:hover,.resolution-row:focus-visible { padding-inline:10px; }
   .resolution-number { min-height:0; padding:0 0 9px; grid-column:1/-1; flex-direction:row; justify-content:flex-start; gap:12px; border-left:0; border-bottom:1px solid rgba(201,164,104,.2); }.resolution-number strong { margin:0; }
   .resolution-row-copy h2 { font-size:var(--font-ui); }.resolution-disclosure>summary { min-height:58px; grid-template-columns:1fr auto; gap:4px 12px; }.resolution-disclosure>summary small { grid-column:1/-1; grid-row:2; }.resolution-facts { grid-template-columns:1fr; }.resolution-facts>div { min-height:auto; }
-  .resolution-overview { padding:25px 20px; }.resolution-overview-grid { grid-template-columns:1fr; }.resolution-overview-grid>div { min-height:auto; }
+  .resolution-overview { padding:25px 20px; }.resolution-overview-grid { grid-template-columns:1fr; }.resolution-overview-grid>div { min-height:auto; }.resolution-connections { padding:22px 16px; }
   .resolution-reading-path { padding:22px 16px; }.resolution-reading-path li { padding-left:4px; grid-template-columns:1fr; }.resolution-reading-path li>small { white-space:normal; }
   .cra-source-text { padding:27px 20px; }.cra-source-text p,.cra-source-text li { font-size:1rem; line-height:2.05; text-align:right; }.cra-source-text h2 { font-size:1.35rem; }.cra-ocr-text math[display="block"] { padding:14px 10px; font-size:.9rem; }
   .resolution-source-box { grid-template-columns:1fr; }.resolution-source-box>a { width:max-content; }.resolution-source-files { grid-column:auto; }
@@ -756,6 +771,6 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
   .decision-disclosure>*:not(summary) { display:block!important; }
   .resolution-disclosure>summary { display:none!important; }
   .resolution-disclosure>*:not(summary) { display:block!important; }
-  .resolution-overview,.resolution-facts,.resolution-relations,.resolution-citation { break-inside:avoid; }
+  .resolution-overview,.resolution-facts,.resolution-relations,.resolution-connections,.resolution-citation { break-inside:avoid; }
   .cra-document-html { box-shadow:none; }
 }

@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import rawResolutions from "@/content/cra/index.json";
 import rawOcrOverrides from "@/content/cra/ocr-overrides/manifest.json";
+import rawRelationshipCuration from "@/content/cra/relationship-curation.json";
 import type {
   CraReadingMeta,
   CraRelationTarget,
@@ -17,7 +18,7 @@ import { toFaDate, toFaDigits } from "@/app/text";
 const craWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])[ \t]*[\u00AD\u200E\u200F\u2060][ \t]*([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 const craEmptyTableNumber = /<td([^>]*)>\s*<ol\b([^>]*)\bstart=(["'])(\d+)\3([^>]*)>\s*<li(?:\s[^>]*)?>\s*(?:<\/li>)?\s*<\/ol>\s*<\/td>/gi;
 const craInlineFormattedDayFirstDate = /(\d{1,2})\/(\d{1,2})\/<(em|strong|b|i|u)(?:\s[^>]*)?>(\d{4})<\/\3>/gi;
-const craSourceLabel = /(<section class="cra-source-text" data-format="([^"]+)">)<div class="cra-source-label">متن پیوست <span>[^<]*<\/span><\/div>/gi;
+const craSourceLabel = /(<section class="cra-source-text" data-format="([^"]+)">)<div class="cra-source-label">متن پیوست <span>([^<]*)<\/span><\/div>/gi;
 const craMarkupNumberSeparator = /([۰-۹])((?:<[^>]+>)*)[,،]((?:<[^>]+>)*)(?=[۰-۹])/g;
 const craMarkupWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])((?:<[^>]+>)*)[\u00AD\u200E\u200F\u2060]((?:<[^>]+>)*)(?=[\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 
@@ -32,6 +33,48 @@ function normalizeCraRelationTarget(target: CraRelationTarget): CraRelationTarge
 }
 
 const sourceCraResolutions = rawResolutions as CraResolution[];
+type CraRelationshipCuration = {
+  aliases: Record<string, string>;
+  ignoredTargets: string[];
+  consolidations: { baseGuid: string; amendmentGuid: string }[];
+};
+
+const sourceCraRelationshipCuration = rawRelationshipCuration as CraRelationshipCuration;
+const sourceCraResolutionByGuid = new Map(
+  sourceCraResolutions.map((resolution) => [resolution.guid, resolution]),
+);
+const ignoredRelationTargetGuids = new Set(sourceCraRelationshipCuration.ignoredTargets);
+
+for (const ignoredGuid of ignoredRelationTargetGuids) {
+  if (sourceCraResolutionByGuid.has(ignoredGuid)) {
+    throw new Error(`CRA ignored relation target is now a local document and needs review: ${ignoredGuid}.`);
+  }
+}
+
+for (const [aliasGuid, canonicalGuid] of Object.entries(sourceCraRelationshipCuration.aliases)) {
+  if (sourceCraResolutionByGuid.has(aliasGuid)) {
+    throw new Error(`CRA relation alias unexpectedly points from a local GUID: ${aliasGuid}.`);
+  }
+  if (!sourceCraResolutionByGuid.has(canonicalGuid)) {
+    throw new Error(`CRA relation alias points to an unknown canonical GUID: ${canonicalGuid}.`);
+  }
+}
+
+function curateRelationTargets(targets: CraRelationTarget[], sourceGuid: string) {
+  const curated: CraRelationTarget[] = [];
+  for (const target of targets) {
+    if (ignoredRelationTargetGuids.has(target.targetGuid)) continue;
+    const targetGuid = sourceCraRelationshipCuration.aliases[target.targetGuid] ?? target.targetGuid;
+    const local = sourceCraResolutionByGuid.get(targetGuid);
+    if (!local || targetGuid === sourceGuid || curated.some((item) => item.targetGuid === targetGuid)) continue;
+    curated.push(normalizeCraRelationTarget({
+      targetGuid,
+      title: local.title || target.title,
+    }));
+  }
+  return curated;
+}
+
 type CraOcrOverride = {
   route: string;
   contentFile: string;
@@ -66,15 +109,20 @@ export const craResolutions: CraResolution[] = sourceCraResolutions.map((resolut
     title: normalizeCraWordArtifacts(resolution.title),
     keywords: resolution.keywords.map(normalizeCraWordArtifacts),
     relations: {
-      related: resolution.relations.related.map(normalizeCraRelationTarget),
-      affects: resolution.relations.affects.map(normalizeCraRelationTarget),
-      influencedBy: resolution.relations.influencedBy.map(normalizeCraRelationTarget),
-      versions: resolution.relations.versions.map(normalizeCraRelationTarget),
+      related: curateRelationTargets(resolution.relations.related, resolution.guid),
+      affects: curateRelationTargets(resolution.relations.affects, resolution.guid),
+      influencedBy: curateRelationTargets(resolution.relations.influencedBy, resolution.guid),
+      versions: curateRelationTargets(resolution.relations.versions, resolution.guid),
     },
-    textReferences: textReferences.map((target) => ({
-      ...normalizeCraRelationTarget(target),
-      evidence: normalizeCraWordArtifacts(target.evidence),
-    })),
+    textReferences: curateRelationTargets(textReferences, resolution.guid).map((target) => {
+      const source = textReferences.find((item) => (
+        (sourceCraRelationshipCuration.aliases[item.targetGuid] ?? item.targetGuid) === target.targetGuid
+      ));
+      return {
+        ...target,
+        evidence: normalizeCraWordArtifacts(source?.evidence ?? ""),
+      };
+    }),
   };
 });
 
@@ -103,6 +151,60 @@ export const craResolutionByGuid = new Map(
 export const craResolutionByRoute = new Map(
   craResolutions.map((resolution) => [resolution.route, resolution]),
 );
+
+const consolidationAmendmentsByBase = new Map<string, CraRelationTarget[]>();
+const consolidationBasesByAmendment = new Map<string, CraRelationTarget[]>();
+
+for (const pair of sourceCraRelationshipCuration.consolidations) {
+  const base = craResolutionByGuid.get(pair.baseGuid);
+  const amendment = craResolutionByGuid.get(pair.amendmentGuid);
+  if (!base || !amendment) {
+    throw new Error(`CRA consolidation points to an unknown document: ${pair.baseGuid} -> ${pair.amendmentGuid}.`);
+  }
+  if (!base.attachments.some((attachment) => /تنقیح/.test(attachment.name))) {
+    throw new Error(`CRA consolidation has no supporting consolidated attachment: ${pair.baseGuid}.`);
+  }
+  const amendments = consolidationAmendmentsByBase.get(base.guid) ?? [];
+  appendUnique(amendments, { targetGuid: amendment.guid, title: amendment.title });
+  consolidationAmendmentsByBase.set(base.guid, amendments);
+
+  const bases = consolidationBasesByAmendment.get(amendment.guid) ?? [];
+  appendUnique(bases, { targetGuid: base.guid, title: base.title });
+  consolidationBasesByAmendment.set(amendment.guid, bases);
+}
+
+export function craConsolidationFor(resolution: CraResolution) {
+  const attachmentNames = resolution.attachments
+    .filter((attachment) => /تنقیح/.test(attachment.name))
+    .map((attachment) => normalizeCraWordArtifacts(attachment.name));
+  return {
+    attachmentNames,
+    hasConsolidatedAttachment: attachmentNames.length > 0,
+    amendments: consolidationAmendmentsByBase.get(resolution.guid) ?? [],
+    bases: consolidationBasesByAmendment.get(resolution.guid) ?? [],
+  };
+}
+
+const craResolutionsBySession = new Map<string, CraResolution[]>();
+for (const resolution of craResolutions) {
+  if (!resolution.sessionNumber) continue;
+  const session = craResolutionsBySession.get(resolution.sessionNumber) ?? [];
+  session.push(resolution);
+  craResolutionsBySession.set(resolution.sessionNumber, session);
+}
+
+for (const session of craResolutionsBySession.values()) {
+  session.sort((first, second) => {
+    const numberDifference = (Number(first.resolutionNumber) || 0) - (Number(second.resolutionNumber) || 0);
+    if (numberDifference) return numberDifference;
+    return (Number(first.version) || 0) - (Number(second.version) || 0);
+  });
+}
+
+export function craSameSessionResolutionsFor(resolution: CraResolution) {
+  return (craResolutionsBySession.get(resolution.sessionNumber) ?? [])
+    .filter((item) => item.guid !== resolution.guid);
+}
 
 const craResolutionByPath = new Map(
   craResolutions.map((resolution) => [`${resolution.year}/${resolution.slug}`, resolution]),
@@ -261,10 +363,13 @@ function localizeCraDocumentText(html: string) {
   let attachmentNumber = 0;
   const withCleanSourceLabels = html.replace(
     craSourceLabel,
-    (_match, sectionStart: string, format: string) => {
+    (_match, sectionStart: string, format: string, sourceName: string) => {
       attachmentNumber += 1;
       const formatLabel = format.toLowerCase() === "pdf" ? "فایل PDF" : "فایل Word";
-      return `${sectionStart}<div class="cra-source-label"><strong>پیوست ${toFaDigits(attachmentNumber)}</strong><span>${formatLabel}</span></div>`;
+      const consolidated = /تنقیح/.test(sourceName);
+      const label = consolidated ? "پیوست تنقیحی" : `پیوست ${toFaDigits(attachmentNumber)}`;
+      const className = consolidated ? "cra-source-label cra-consolidated-label" : "cra-source-label";
+      return `${sectionStart}<div class="${className}"><strong>${label}</strong><span>${formatLabel}</span></div>`;
     },
   );
   const withPlainTableNumbers = withCleanSourceLabels.replace(

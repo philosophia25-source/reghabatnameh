@@ -16,8 +16,10 @@ export type ResolutionExplorerItem = {
   approvalDate: string;
   version: string;
   keywords: string[];
-  influenceCount: number;
-  hasNewerVersion: boolean;
+  hasConsolidatedAttachment: boolean;
+  amendmentCount: number;
+  baseCount: number;
+  officialRelationCount: number;
   supplementalReferenceCount: number;
   tableCount: number;
 };
@@ -59,8 +61,10 @@ export function ResolutionExplorer({
         && (!showCategoryFilter || !category || item.category === category)
         && (!year || item.year === year)
         && (!readingStatus
-          || (readingStatus === "influenced" && item.influenceCount > 0)
-          || (readingStatus === "newer-version" && item.hasNewerVersion)
+          || (readingStatus === "consolidated" && item.hasConsolidatedAttachment)
+          || (readingStatus === "amended" && item.amendmentCount > 0)
+          || (readingStatus === "amending" && item.baseCount > 0)
+          || (readingStatus === "official-relation" && item.officialRelationCount > 0)
           || (readingStatus === "text-reference" && item.supplementalReferenceCount > 0)
           || (readingStatus === "table" && item.tableCount > 0));
     });
@@ -111,9 +115,11 @@ export function ResolutionExplorer({
           <span>وضعیت مراجعه</span>
           <select value={readingStatus} onChange={(event) => { setReadingStatus(event.target.value); setVisible(40); }}>
             <option value="">همه وضعیت‌ها</option>
-            <option value="influenced">دارای سند تاثیرگذار</option>
-            <option value="newer-version">دارای نسخه جدیدتر</option>
-            <option value="text-reference">دارای ارجاع متنی افزوده</option>
+            <option value="consolidated">دارای پیوست تنقیحی</option>
+            <option value="amended">اصلاح‌شده به موجب مصوبه دیگر</option>
+            <option value="amending">اصلاح‌کننده مصوبه دیگر</option>
+            <option value="official-relation">دارای رابطه ثبت‌شده در CRA</option>
+            <option value="text-reference">دارای ارجاع متنی</option>
             <option value="table">دارای جدول</option>
           </select>
         </label>
@@ -136,9 +142,9 @@ export function ResolutionExplorer({
                 <div className="resolution-row-copy">
                   <div className="resolution-row-badges">
                     <span>{resolution.category}</span>
-                    {resolution.hasNewerVersion ? <i>نسخه جدیدتر</i> : null}
-                    {resolution.influenceCount ? <i>دارای سند تاثیرگذار</i> : null}
-                    {resolution.supplementalReferenceCount ? <i>ارجاع متنی افزوده</i> : null}
+                    {resolution.amendmentCount ? <i>اصلاح‌شده</i> : resolution.hasConsolidatedAttachment ? <i>دارای پیوست تنقیحی</i> : null}
+                    {resolution.baseCount ? <i>اصلاح‌کننده</i> : null}
+                    {resolution.supplementalReferenceCount ? <i>ارجاع متنی</i> : null}
                   </div>
                   <h2>{toFaDigits(resolution.title)}</h2>
                   <p>{toFaDigits(resolution.code)} · {resolution.approvalDate ? toFaDate(resolution.approvalDate) : "تاریخ ثبت نشده"}{resolution.version !== "1" ? ` · نسخه ${toFaDigits(resolution.version)}` : ""}</p>
