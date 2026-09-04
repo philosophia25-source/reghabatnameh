@@ -1,7 +1,9 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import rawResolutions from "@/content/cra/index.json";
+import rawOcrOverrides from "@/content/cra/ocr-overrides/manifest.json";
 import type {
+  CraReadingMeta,
   CraRelationTarget,
   CraRelations,
   CraResolution,
@@ -30,22 +32,55 @@ function normalizeCraRelationTarget(target: CraRelationTarget): CraRelationTarge
 }
 
 const sourceCraResolutions = rawResolutions as CraResolution[];
+type CraOcrOverride = {
+  route: string;
+  contentFile: string;
+  readingMeta: CraReadingMeta;
+  textReferences: CraTextReferenceTarget[];
+  hasEditorialConsolidation?: boolean;
+};
 
-export const craResolutions: CraResolution[] = sourceCraResolutions.map((resolution) => ({
-  ...resolution,
-  title: normalizeCraWordArtifacts(resolution.title),
-  keywords: resolution.keywords.map(normalizeCraWordArtifacts),
-  relations: {
-    related: resolution.relations.related.map(normalizeCraRelationTarget),
-    affects: resolution.relations.affects.map(normalizeCraRelationTarget),
-    influencedBy: resolution.relations.influencedBy.map(normalizeCraRelationTarget),
-    versions: resolution.relations.versions.map(normalizeCraRelationTarget),
-  },
-  textReferences: resolution.textReferences.map((target) => ({
-    ...normalizeCraRelationTarget(target),
-    evidence: normalizeCraWordArtifacts(target.evidence),
-  })),
-}));
+const sourceCraOcrOverrides = (rawOcrOverrides as {
+  items: Record<string, CraOcrOverride>;
+}).items;
+const sourceCraResolutionGuids = new Set(sourceCraResolutions.map((resolution) => resolution.guid));
+const unknownOcrOverrideGuids = Object.keys(sourceCraOcrOverrides)
+  .filter((guid) => !sourceCraResolutionGuids.has(guid));
+
+if (unknownOcrOverrideGuids.length) {
+  throw new Error(`CRA OCR override points to unknown GUIDs: ${unknownOcrOverrideGuids.join(", ")}.`);
+}
+
+export const craResolutions: CraResolution[] = sourceCraResolutions.map((resolution) => {
+  const ocrOverride = sourceCraOcrOverrides[resolution.guid];
+  if (ocrOverride && ocrOverride.route !== resolution.route) {
+    throw new Error(`CRA OCR route mismatch for ${resolution.guid}.`);
+  }
+  const textReferences = ocrOverride?.textReferences ?? resolution.textReferences;
+
+  return {
+    ...resolution,
+    contentFile: ocrOverride?.contentFile ?? resolution.contentFile,
+    contentAvailable: ocrOverride ? true : resolution.contentAvailable,
+    readingMeta: ocrOverride?.readingMeta ?? resolution.readingMeta,
+    title: normalizeCraWordArtifacts(resolution.title),
+    keywords: resolution.keywords.map(normalizeCraWordArtifacts),
+    relations: {
+      related: resolution.relations.related.map(normalizeCraRelationTarget),
+      affects: resolution.relations.affects.map(normalizeCraRelationTarget),
+      influencedBy: resolution.relations.influencedBy.map(normalizeCraRelationTarget),
+      versions: resolution.relations.versions.map(normalizeCraRelationTarget),
+    },
+    textReferences: textReferences.map((target) => ({
+      ...normalizeCraRelationTarget(target),
+      evidence: normalizeCraWordArtifacts(target.evidence),
+    })),
+  };
+});
+
+export function craOcrOverrideFor(resolution: CraResolution) {
+  return sourceCraOcrOverrides[resolution.guid];
+}
 
 const registeredCategoryNames = new Set(craCategories.map((category) => category.name));
 const unknownCategoryNames = Array.from(new Set(

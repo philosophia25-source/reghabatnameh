@@ -6,6 +6,7 @@ import { ResolutionActions } from "@/components/resolution-actions";
 import {
   craInfluencePathFor,
   craNewerVersionFor,
+  craOcrOverrideFor,
   craOfficialRelationsFor,
   craResolutionByGuid,
   craSupplementalTextBacklinksFor,
@@ -63,6 +64,8 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   const category = craCategoryForName(resolution.category);
   const categoryHref = category ? craCategoryRoute(category) : CRA_ALL_RESOLUTIONS_ROUTE;
   const body = resolution.contentAvailable ? readCraResolutionHtml(resolution) : "";
+  const ocrOverride = craOcrOverrideFor(resolution);
+  const hasEditorialConsolidation = Boolean(ocrOverride?.hasEditorialConsolidation);
   const { relations, additions } = craOfficialRelationsFor(resolution);
   const relationGroups = Object.entries(relations)
     .filter(([, targets]) => targets.length) as [keyof typeof relationLabels, CraRelationTarget[]][];
@@ -156,13 +159,13 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
                 </div>
                 <div>
                   <span>ساختار متن</span>
-                  <strong>{resolution.contentAvailable ? `${toFaDigits(resolution.readingMeta.wordCount)} واژه در ${toFaDigits(resolution.readingMeta.attachmentSectionCount)} پیوست` : "پیوست متنی در منبع موجود نیست"}</strong>
+                  <strong>{resolution.contentAvailable ? `${toFaDigits(resolution.readingMeta.wordCount)} واژه در ${toFaDigits(resolution.readingMeta.attachmentSectionCount)} بخش متنی` : "پیوست متنی در منبع موجود نیست"}</strong>
                   <small>{`${toFaDigits(resolution.readingMeta.tableCount)} جدول و ${toFaDigits(resolution.readingMeta.imageCount)} تصویر`}</small>
                 </div>
                 <div>
                   <span>وضعیت تنقیح</span>
                   <strong>{influencePath.length ? "متن تنقیح‌شده تاییدشده موجود نیست" : "نیاز به تنقیح از داده منبع احراز نشد"}</strong>
-                  <small>{influencePath.length ? "متن پایه و زنجیره اسناد تاثیرگذار جداگانه ارائه شده‌اند" : "برای استناد حقوقی، بررسی منابع دیگر همچنان لازم است"}</small>
+                  <small>{hasEditorialConsolidation ? "نسخه تنقیحی غیررسمی برای مطالعه در ادامه صفحه ارائه شده است" : influencePath.length ? "متن پایه و زنجیره اسناد تاثیرگذار جداگانه ارائه شده‌اند" : "برای استناد حقوقی، بررسی منابع دیگر همچنان لازم است"}</small>
                 </div>
               </div>
 
@@ -193,9 +196,13 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
 
         <article className="resolution-document" id="official-text">
           <div className="resolution-document-heading">
-            <p className="eyebrow">متن رسمی</p>
+            <p className="eyebrow">{hasEditorialConsolidation ? "متن‌های سند" : "متن رسمی"}</p>
             <h2>متن مصوبه و پیوست‌ها</h2>
-            <span>متن زیر بدون بازنویسی محتوایی از فایل‌های منتشرشده در سامانه رسمی استخراج شده است.</span>
+            <span>{hasEditorialConsolidation
+              ? "متن‌های رسمی از فایل‌های منبع استخراج شده‌اند. نسخه تنقیحی غیررسمی جداگانه و با برچسب مشخص ارائه شده است."
+              : ocrOverride
+                ? "متن از فایل‌های منتشرشده در سامانه رسمی استخراج شده و تصاویر متن‌دار با نسخه متنی جایگزین شده‌اند."
+                : "متن زیر بدون بازنویسی محتوایی از فایل‌های منتشرشده در سامانه رسمی استخراج شده است."}</span>
           </div>
           {body
             ? <div className="cra-document-html" dangerouslySetInnerHTML={{ __html: body }} />

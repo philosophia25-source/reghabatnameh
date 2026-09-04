@@ -638,6 +638,12 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-source-text th { background:#ded7c9; font-weight:650; }
 .cra-source-text td p,.cra-source-text th p { margin:0; font-size:inherit; line-height:inherit; text-align:inherit; }
 .cra-source-text img { max-width:100%; height:auto!important; margin:20px auto; display:block; }
+.cra-ocr-text math { font-family:"Vazirmatn Variable",sans-serif; }
+.cra-ocr-text math[display="block"] { width:100%; max-width:100%; margin:24px 0; padding:18px 14px; display:block; direction:ltr; overflow-x:auto; overflow-y:hidden; color:#17262e; background:#e8e3d9; border:1px solid rgba(24,37,44,.16); font-size:clamp(.85rem,1.35vw,1.05rem); text-align:center; unicode-bidi:isolate; }
+.cra-ocr-text math[display="inline"] { direction:ltr; font-size:1em; unicode-bidi:isolate; }
+.cra-ocr-text mtext { direction:rtl; unicode-bidi:isolate; }
+.cra-consolidated-text { background:#f7f2e7; }
+.cra-editorial-note { margin:20px 0 30px!important; padding:16px 18px; color:#453a29!important; background:#e9dfc9; border-right:4px solid #9a7538; text-align:right!important; }
 .cra-source-text a { color:#705328; border-bottom:1px solid rgba(112,83,40,.35); }
 .cra-source-text .footnotes { color:#263137; background:#e8e3d9; border-color:rgba(24,37,44,.18)!important; }
 .cra-source-text .footnotes p { color:#263137!important; }
@@ -737,7 +743,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
   .resolution-row-copy h2 { font-size:var(--font-ui); }.resolution-disclosure>summary { min-height:58px; grid-template-columns:1fr auto; gap:4px 12px; }.resolution-disclosure>summary small { grid-column:1/-1; grid-row:2; }.resolution-facts { grid-template-columns:1fr; }.resolution-facts>div { min-height:auto; }
   .resolution-overview { padding:25px 20px; }.resolution-overview-grid { grid-template-columns:1fr; }.resolution-overview-grid>div { min-height:auto; }
   .resolution-reading-path { padding:22px 16px; }.resolution-reading-path li { padding-left:4px; grid-template-columns:1fr; }.resolution-reading-path li>small { white-space:normal; }
-  .cra-source-text { padding:27px 20px; }.cra-source-text p,.cra-source-text li { font-size:1rem; line-height:2.05; text-align:right; }.cra-source-text h2 { font-size:1.35rem; }
+  .cra-source-text { padding:27px 20px; }.cra-source-text p,.cra-source-text li { font-size:1rem; line-height:2.05; text-align:right; }.cra-source-text h2 { font-size:1.35rem; }.cra-ocr-text math[display="block"] { padding:14px 10px; font-size:.9rem; }
   .resolution-source-box { grid-template-columns:1fr; }.resolution-source-box>a { width:max-content; }.resolution-source-files { grid-column:auto; }
   .resolution-relations { padding:25px 20px; }
 }

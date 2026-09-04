@@ -1,0 +1,243 @@
+{
+  "source": "New Microsoft Word Document.docx",
+  "sourceSha256": "e7e9f667d2cd8237a5577620e869f61b2b350a7b96b187f6294ac04601f3f22e",
+  "items": {
+    "d0cab54b-f687-e511-973c-68b599781b58": {
+      "route": "/resolutions/cra/1385/17-1",
+      "contentFile": "cra/ocr-overrides/d0cab54b-f687-e511-973c-68b599781b58.html",
+      "readingMeta": {
+        "wordCount": 612,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false
+    },
+    "30cbb54b-f687-e511-973c-68b599781b58": {
+      "route": "/resolutions/cra/1389/107-1",
+      "contentFile": "cra/ocr-overrides/30cbb54b-f687-e511-973c-68b599781b58.html",
+      "readingMeta": {
+        "wordCount": 2026,
+        "tableCount": 9,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false
+    },
+    "cc8944fa-7567-ea11-9682-0050569b0899": {
+      "route": "/resolutions/cra/1393/191-3",
+      "contentFile": "cra/ocr-overrides/cc8944fa-7567-ea11-9682-0050569b0899.html",
+      "readingMeta": {
+        "wordCount": 203,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false
+    },
+    "aff77742-b148-e611-80c8-005056874efe": {
+      "route": "/resolutions/cra/1395/237-3",
+      "contentFile": "cra/ocr-overrides/aff77742-b148-e611-80c8-005056874efe.html",
+      "readingMeta": {
+        "wordCount": 457,
+        "tableCount": 1,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false
+    },
+    "f306b1dd-8d7f-e911-967b-0050569b0899": {
+      "route": "/resolutions/cra/1397/289-2-v1",
+      "contentFile": "cra/ocr-overrides/f306b1dd-8d7f-e911-967b-0050569b0899.html",
+      "readingMeta": {
+        "wordCount": 1388,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [
+        {
+          "targetGuid": "efcbb54b-f687-e511-973c-68b599781b58",
+          "title": "مقررات تعیین سهم شرکت ارتباطات زیرساخت و دارندگان پروانه از درآمد مکالمات بین الملل صادره و وارده",
+          "evidence": "مصوبه شماره 2 جلسه شماره 193"
+        },
+        {
+          "targetGuid": "0168a9bd-7e25-e611-80c3-005056873801",
+          "title": "اصلاح مصوبه شماره 1 جلسه شماره 190 موضوع دستورالعمل پیشگیری، شناسایی و پیگرد مرتکبان برقراری مبادله و انتقال غیرمجاز ارتباطات مخابراتی و رایانه ای",
+          "evidence": "مصوبه شماره 1 جلسه شماره 223"
+        }
+      ],
+      "hasEditorialConsolidation": false
+    },
+    "83c22198-4fd8-e911-967d-0050569b0899": {
+      "route": "/resolutions/cra/1398/292-1",
+      "contentFile": "cra/ocr-overrides/83c22198-4fd8-e911-967d-0050569b0899.html",
+      "readingMeta": {
+        "wordCount": 373,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false
+    },
+    "3bc84710-d309-ea11-967e-0050569b0899": {
+      "route": "/resolutions/cra/1398/296-4-v1",
+      "contentFile": "cra/ocr-overrides/3bc84710-d309-ea11-967e-0050569b0899.html",
+      "readingMeta": {
+        "wordCount": 131,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [
+        {
+          "targetGuid": "13ccb54b-f687-e511-973c-68b599781b58",
+          "title": "اصول حاکم بر پروانه فعالیت اپراتورهای مجازی تلفن همراه",
+          "evidence": "مصوبه شماره 2 جلسه 210"
+        }
+      ],
+      "hasEditorialConsolidation": false
+    },
+    "c7de4167-9749-eb11-968e-0050569b0899": {
+      "route": "/resolutions/cra/1399/310-5-v1",
+      "contentFile": "cra/ocr-overrides/c7de4167-9749-eb11-968e-0050569b0899.html",
+      "readingMeta": {
+        "wordCount": 147,
+        "tableCount": 1,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [
+        {
+          "targetGuid": "78c6d245-3124-f011-b973-0050569c58ac",
+          "title": "تعرفه اتصال متقابل خدمت مکالمه بین شبکه های ارتباطات ثابت",
+          "evidence": "مصوبه شماره 1 جلسه شماره 356"
+        }
+      ],
+      "hasEditorialConsolidation": false
+    },
+    "e1dc7d42-e7ce-ec11-9698-0050569b0899": {
+      "route": "/resolutions/cra/1400/329-3",
+      "contentFile": "cra/ocr-overrides/e1dc7d42-e7ce-ec11-9698-0050569b0899.html",
+      "readingMeta": {
+        "wordCount": 2499,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 4
+      },
+      "textReferences": [
+        {
+          "targetGuid": "2c3d1364-8225-e611-80c3-005056873801",
+          "title": "مقررات ارایه و استفاده از امکانات پایه ای شرکت مخابرات ایران",
+          "evidence": "مصوبه شماره 3 جلسه شماره 230"
+        }
+      ],
+      "hasEditorialConsolidation": true
+    },
+    "a80419f5-e3bf-ed11-b965-0050569ca4ea": {
+      "route": "/resolutions/cra/1401/335-2",
+      "contentFile": "cra/ocr-overrides/a80419f5-e3bf-ed11-b965-0050569ca4ea.html",
+      "readingMeta": {
+        "wordCount": 1831,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 2
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false
+    },
+    "99a61a19-08d3-ee11-b96a-0050569c58ac": {
+      "route": "/resolutions/cra/1402/352-3",
+      "contentFile": "cra/ocr-overrides/99a61a19-08d3-ee11-b96a-0050569c58ac.html",
+      "readingMeta": {
+        "wordCount": 210,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false
+    },
+    "929e627a-6fee-ee11-b96a-0050569c58ac": {
+      "route": "/resolutions/cra/1402/353-1",
+      "contentFile": "cra/ocr-overrides/929e627a-6fee-ee11-b96a-0050569c58ac.html",
+      "readingMeta": {
+        "wordCount": 613,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [
+        {
+          "targetGuid": "2c3d1364-8225-e611-80c3-005056873801",
+          "title": "مقررات ارایه و استفاده از امکانات پایه ای شرکت مخابرات ایران",
+          "evidence": "مصوبه شماره 3 جلسه شماره 230"
+        },
+        {
+          "targetGuid": "26cacda4-f0f8-eb11-9693-0050569b0899",
+          "title": "به روز رسانی بند 11 مصوبه شماره 1 جلسه شماره 237 مورخ 1395/03/22 کمیسیون تنظیم مقررات ارتباطات (تعرفه دایر کردن (رانژه) و تخلیه (درانژه) خطوط مشترکین)",
+          "evidence": "مصوبه شماره 2 جلسه شماره 323"
+        },
+        {
+          "targetGuid": "32b43eb7-b048-e611-80c8-005056874efe",
+          "title": "تعرفه خدمات اینترنت پرسرعت از طریق فناوری ADSL و اینترنت مبتنی بر فناوریWiFi به صورت برون ساختمانی",
+          "evidence": "مصوبه شماره 1 جلسه شماره 237"
+        }
+      ],
+      "hasEditorialConsolidation": false
+    },
+    "285b70ad-20b8-ee11-b96a-0050569c58ac": {
+      "route": "/resolutions/cra/1402/7-350",
+      "contentFile": "cra/ocr-overrides/285b70ad-20b8-ee11-b96a-0050569c58ac.html",
+      "readingMeta": {
+        "wordCount": 762,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [
+        {
+          "targetGuid": "a8221e63-2a26-e611-80c3-005056873801",
+          "title": "ضوابط و چارچوب واگذاری خدمات ارسال پیام محتوایی بدون نمایش شماره",
+          "evidence": "مصوبه شماره 1 جلسه 227"
+        }
+      ],
+      "hasEditorialConsolidation": false
+    },
+    "9bae72bc-ca78-ef11-b96e-0050569c58ac": {
+      "route": "/resolutions/cra/1403/357-2",
+      "contentFile": "cra/ocr-overrides/9bae72bc-ca78-ef11-b96e-0050569c58ac.html",
+      "readingMeta": {
+        "wordCount": 204,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false
+    },
+    "d335e0d3-f4d3-f011-b97b-0050569c58ac": {
+      "route": "/resolutions/cra/1404/364-5",
+      "contentFile": "cra/ocr-overrides/d335e0d3-f4d3-f011-b97b-0050569c58ac.html",
+      "readingMeta": {
+        "wordCount": 99,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [
+        {
+          "targetGuid": "10b576d4-38e1-ef11-b972-0050569c58ac",
+          "title": "دستورالعمل ارایه خدمات نام های دامنه کشوری",
+          "evidence": "مصوبه شماره (3) جلسه شماره (359"
+        }
+      ],
+      "hasEditorialConsolidation": false
+    }
+  }
+}
