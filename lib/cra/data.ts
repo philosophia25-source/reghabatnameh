@@ -10,10 +10,11 @@ import type {
 import type { KnowledgeDocument } from "@/lib/knowledge/types";
 import { CONTENT_UPDATED_ISO } from "@/lib/site";
 import { craCategories } from "@/lib/cra/categories";
-import { toFaDigits } from "@/app/text";
+import { toFaDate, toFaDigits } from "@/app/text";
 
 const craWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])[ \t]*[\u00AD\u200E\u200F\u2060][ \t]*([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 const craEmptyTableNumber = /<td([^>]*)>\s*<ol\b([^>]*)\bstart=(["'])(\d+)\3([^>]*)>\s*<li(?:\s[^>]*)?>\s*(?:<\/li>)?\s*<\/ol>\s*<\/td>/gi;
+const craInlineFormattedDayFirstDate = /(\d{1,2})\/(\d{1,2})\/<(em|strong|b|i|u)(?:\s[^>]*)?>(\d{4})<\/\3>/gi;
 const craMarkupNumberSeparator = /([۰-۹])((?:<[^>]+>)*)[,،]((?:<[^>]+>)*)(?=[۰-۹])/g;
 const craMarkupWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])((?:<[^>]+>)*)[\u00AD\u200E\u200F\u2060]((?:<[^>]+>)*)(?=[\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 
@@ -216,7 +217,7 @@ export function craResolutionForPath(params: { year: string; slug: string }) {
 }
 
 function localizeCraTextNode(text: string) {
-  return normalizeCraWordArtifacts(toFaDigits(text))
+  return normalizeCraWordArtifacts(toFaDate(text))
     .replace(/([۰-۹])[,،](?=[۰-۹])/g, "$1٬");
 }
 
@@ -227,8 +228,12 @@ function localizeCraDocumentText(html: string) {
       `<td${cellAttributes}><span class="cra-row-number">${toFaDigits(start)}</span></td>`
     ),
   );
+  const withUnifiedDates = withPlainTableNumbers.replace(
+    craInlineFormattedDayFirstDate,
+    "$4/$2/$1",
+  );
 
-  const localized = withPlainTableNumbers
+  const localized = withUnifiedDates
     .split(/(<[^>]+>)/g)
     .map((part) => {
       if (part.startsWith("<")) return part;
