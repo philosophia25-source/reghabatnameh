@@ -50,6 +50,24 @@
       "textReferences": [],
       "hasEditorialConsolidation": false
     },
+    "7a789af9-d20b-e711-80d5-005056875dcc": {
+      "route": "/resolutions/cra/1395/254-5",
+      "contentFile": "cra/ocr-overrides/7a789af9-d20b-e711-80d5-005056875dcc.html",
+      "readingMeta": {
+        "wordCount": 1724,
+        "tableCount": 2,
+        "imageCount": 0,
+        "attachmentSectionCount": 3
+      },
+      "textReferences": [
+        {
+          "targetGuid": "aff77742-b148-e611-80c8-005056874efe",
+          "title": "تعرفه خدمات انتقال نقطه به نقطه اختصاصی(لایه 2) برای سرعت 100Mbps و بالاتر",
+          "evidence": "مصوبه شماره 3 جلسه شماره 237"
+        }
+      ],
+      "hasEditorialConsolidation": false
+    },
     "f306b1dd-8d7f-e911-967b-0050569b0899": {
       "route": "/resolutions/cra/1397/289-2-v1",
       "contentFile": "cra/ocr-overrides/f306b1dd-8d7f-e911-967b-0050569b0899.html",
@@ -239,5 +257,11 @@
       ],
       "hasEditorialConsolidation": false
     }
-  }
+  },
+  "supplementalSources": [
+    {
+      "source": "2.docx",
+      "sourceSha256": "5391b17e81442708868a783390fd4ffb86633215833dc27e2fc82c40c4f2a62d"
+    }
+  ]
 }

@@ -52,6 +52,7 @@ APPEND_OCR_ROUTES = {
 
 MATH_REPLACEMENT_ROUTES = {
     "/resolutions/cra/1395/237-3",
+    "/resolutions/cra/1395/254-5",
     "/resolutions/cra/1402/353-1",
 }
 
@@ -239,9 +240,13 @@ def math_replacement_override(base_html: str, nodes: list[etree._Element], route
     if len(math_paragraphs) != 1:
         raise ValueError(f"{route}: exactly one OCR math paragraph was expected")
     image_paragraphs = wrapper.xpath(".//p[.//img]")
-    if len(image_paragraphs) != 1:
-        raise ValueError(f"{route}: exactly one image paragraph was expected")
-    image_paragraphs[0].getparent().replace(image_paragraphs[0], copy.deepcopy(math_paragraphs[0]))
+    if not image_paragraphs:
+        raise ValueError(f"{route}: at least one image paragraph was expected")
+    # A resolution can expose the same formula in more than one official
+    # attachment. Replace every image occurrence so no scanned formula remains
+    # while preserving each attachment's surrounding text and tables.
+    for image_paragraph in image_paragraphs:
+        image_paragraph.getparent().replace(image_paragraph, copy.deepcopy(math_paragraphs[0]))
     return serialize_children(wrapper)
 
 
