@@ -12,7 +12,38 @@ import { CONTENT_UPDATED_ISO } from "@/lib/site";
 import { craCategories } from "@/lib/cra/categories";
 import { toFaDigits } from "@/app/text";
 
-export const craResolutions = rawResolutions as CraResolution[];
+const craWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])[ \t]*[\u00AD\u200E\u200F\u2060][ \t]*([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
+const craEmptyTableNumber = /<td([^>]*)>\s*<ol\b([^>]*)\bstart=(["'])(\d+)\3([^>]*)>\s*<li(?:\s[^>]*)?>\s*(?:<\/li>)?\s*<\/ol>\s*<\/td>/gi;
+const craMarkupNumberSeparator = /([۰-۹])((?:<[^>]+>)*)[,،]((?:<[^>]+>)*)(?=[۰-۹])/g;
+const craMarkupWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])((?:<[^>]+>)*)[\u00AD\u200E\u200F\u2060]((?:<[^>]+>)*)(?=[\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
+
+function normalizeCraWordArtifacts(text: string) {
+  return text
+    .replace(craWordJoinArtifact, "$1‌$2")
+    .replace(/\u00AD/g, "‌");
+}
+
+function normalizeCraRelationTarget(target: CraRelationTarget): CraRelationTarget {
+  return { ...target, title: normalizeCraWordArtifacts(target.title) };
+}
+
+const sourceCraResolutions = rawResolutions as CraResolution[];
+
+export const craResolutions: CraResolution[] = sourceCraResolutions.map((resolution) => ({
+  ...resolution,
+  title: normalizeCraWordArtifacts(resolution.title),
+  keywords: resolution.keywords.map(normalizeCraWordArtifacts),
+  relations: {
+    related: resolution.relations.related.map(normalizeCraRelationTarget),
+    affects: resolution.relations.affects.map(normalizeCraRelationTarget),
+    influencedBy: resolution.relations.influencedBy.map(normalizeCraRelationTarget),
+    versions: resolution.relations.versions.map(normalizeCraRelationTarget),
+  },
+  textReferences: resolution.textReferences.map((target) => ({
+    ...normalizeCraRelationTarget(target),
+    evidence: normalizeCraWordArtifacts(target.evidence),
+  })),
+}));
 
 const registeredCategoryNames = new Set(craCategories.map((category) => category.name));
 const unknownCategoryNames = Array.from(new Set(
@@ -184,17 +215,33 @@ export function craResolutionForPath(params: { year: string; slug: string }) {
   return craResolutionByPath.get(`${params.year}/${params.slug}`);
 }
 
+function localizeCraTextNode(text: string) {
+  return normalizeCraWordArtifacts(toFaDigits(text))
+    .replace(/([۰-۹])[,،](?=[۰-۹])/g, "$1٬");
+}
+
 function localizeCraDocumentText(html: string) {
-  return html
+  const withPlainTableNumbers = html.replace(
+    craEmptyTableNumber,
+    (_match, cellAttributes: string, _beforeStart: string, _quote: string, start: string) => (
+      `<td${cellAttributes}><span class="cra-row-number">${toFaDigits(start)}</span></td>`
+    ),
+  );
+
+  const localized = withPlainTableNumbers
     .split(/(<[^>]+>)/g)
     .map((part) => {
       if (part.startsWith("<")) return part;
       return part
         .split(/(&#(?:[0-9]+|x[0-9a-f]+);)/gi)
-        .map((text) => text.startsWith("&#") ? text : toFaDigits(text))
+        .map((text) => text.startsWith("&#") ? text : localizeCraTextNode(text))
         .join("");
     })
     .join("");
+
+  return localized
+    .replace(craMarkupNumberSeparator, "$1$2٬$3")
+    .replace(craMarkupWordJoinArtifact, "$1$2‌$3");
 }
 
 export function readCraResolutionHtml(resolution: CraResolution) {
