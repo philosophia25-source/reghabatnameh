@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { toFaDate, toFaDigits } from "@/app/text";
+import { normalizeSearchText } from "@/lib/search-normalize";
 
 export type ResolutionExplorerItem = {
   href: string;
@@ -20,18 +21,6 @@ export type ResolutionExplorerItem = {
   supplementalReferenceCount: number;
   tableCount: number;
 };
-
-function normalize(value: string) {
-  return value
-    .toLocaleLowerCase("fa")
-    .replace(/[يى]/g, "ی")
-    .replace(/ك/g, "ک")
-    .replace(/[َُِّْٰ]/g, "")
-    .replace(/[۰-۹]/g, (digit) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)))
-    .replace(/\u200c/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 export function ResolutionExplorer({
   items,
@@ -55,9 +44,9 @@ export function ResolutionExplorer({
     [items],
   );
   const results = useMemo(() => {
-    const needle = normalize(query);
+    const needle = normalizeSearchText(query);
     return items.filter((item) => {
-      const haystack = normalize([
+      const haystack = normalizeSearchText([
         item.title,
         item.code,
         item.sessionNumber,
@@ -92,7 +81,7 @@ export function ResolutionExplorer({
 
   return (
     <div className="resolution-explorer">
-      <div className={`resolution-filters${showCategoryFilter ? "" : " resolution-filters-without-category"}`} aria-label="فیلتر مصوبات کمیسیون">
+      <div className={`resolution-filters${showCategoryFilter ? "" : " resolution-filters-without-category"}`} role="group" aria-label="فیلتر مصوبات کمیسیون">
         <label className="resolution-query">
           <span>جست‌وجو در مصوبات</span>
           <input

@@ -20,21 +20,37 @@ export type DecisionRecord = KnowledgeDocument & {
   stages: ParsedDecision[];
 };
 
-function parseDecision(raw: string): ParsedDecision {
+const REQUIRED_DECISION_META = [
+  "مرجع",
+  "شماره جلسه/رأی",
+  "تاریخ",
+  "نوع تصمیم",
+  "قاعده/دلیل انتخاب",
+  "نتیجه واقعی",
+  "نشانی رسمی",
+] as const;
+
+function parseDecision(raw: string, sourceName: string): ParsedDecision {
   const [head, ...bodyParts] = raw.replace(/^﻿/, "").split(/={20,}/);
   const meta: Record<string, string> = {};
-  head.split("\n").forEach((line) => {
+  (head ?? "").split("\n").forEach((line) => {
     const separator = line.indexOf(":");
     if (separator > 0) meta[line.slice(0, separator).trim()] = line.slice(separator + 1).trim();
   });
+  const missing = REQUIRED_DECISION_META.filter((key) => !meta[key]?.trim());
+  if (missing.length) {
+    throw new Error(`Missing required decision metadata in ${sourceName}: ${missing.join(", ")}`);
+  }
+  const body = bodyParts.join("\n").replace(/^\s*متن کامل موضوع\s*/m, "").trim();
+  if (!body) throw new Error(`Decision body is empty in ${sourceName}`);
   return {
     meta,
-    body: bodyParts.join("\n").replace(/^\s*متن کامل موضوع\s*/m, "").trim(),
+    body,
   };
 }
 
 function readDecision(name: string) {
-  return parseDecision(readFileSync(join(process.cwd(), "content/decisions", name), "utf8"));
+  return parseDecision(readFileSync(join(process.cwd(), "content/decisions", name), "utf8"), name);
 }
 
 const decisionDocuments = documents.filter(

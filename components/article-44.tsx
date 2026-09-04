@@ -18,9 +18,12 @@ function commentaryFile(slug: string) {
 
 type Tab = "text" | "commentary" | "decisions";
 
+const commentaryPartCount = commentaryParts.length;
+const publishedCommentaryCount = commentaryParts.filter((part) => part.available).length;
+
 const tabs: { key: Tab; label: string; href: string; count?: string }[] = [
   { key: "text", label: "متن ماده", href: "/laws/general-policies-44/article-44" },
-  { key: "commentary", label: "شرح", href: "/laws/general-policies-44/article-44/commentary", count: "۹" },
+  { key: "commentary", label: "شرح", href: "/laws/general-policies-44/article-44/commentary", count: toFaDigits(publishedCommentaryCount) },
   { key: "decisions", label: "آرای ماده ۴۴", href: "/laws/general-policies-44/article-44/decisions", count: toFaDigits(article44DecisionIndexRecords.length) },
 ];
 
@@ -141,7 +144,7 @@ function PartsNav({ current }: { current?: string }) {
       <p>اجزای ماده ۴۴</p>
       <ol>
         {commentaryParts.map((part, index) => (
-          <li className={current === part.slug ? "active" : ""} key={part.slug}>
+          <li className={current === part.slug ? "active" : ""} aria-current={current === part.slug ? "page" : undefined} key={part.slug}>
             {part.available ? <Link className="parts-nav-link" href={`/laws/general-policies-44/article-44/commentary/${part.slug}`}>
               <span>{toFaDigits(index + 1)}</span>
               <div><small>{part.shortLabel}</small><strong>{part.title}</strong></div>
@@ -245,7 +248,7 @@ function CommentaryIndex() {
     <div className="commentary-index">
       <div className="index-intro">
         <p className="eyebrow">شرح جزءبه‌جزء</p>
-        <h2>شرح ماده ۴۴ در ۹ بخش</h2>
+        <h2>شرح ماده ۴۴ در {toFaDigits(commentaryPartCount)} بخش</h2>
         <p>صدر ماده، هفت بند و تبصره هرکدام صفحه مستقل دارند. این تفکیک امکان ارجاع مستقیم به هر بخش و اتصال دقیق آرا را فراهم می‌کند.</p>
       </div>
       <div className="part-grid">
@@ -282,7 +285,7 @@ function CommentaryPart({ slug }: { slug: string }) {
       </div>
       <nav className="part-pagination" aria-label="حرکت میان اجزای شرح">
         {previous ? <Link href={`/laws/general-policies-44/article-44/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}
-        <Link className="parts-home" href="/laws/general-policies-44/article-44/commentary">فهرست ۹ بخش</Link>
+        <Link className="parts-home" href="/laws/general-policies-44/article-44/commentary">فهرست {toFaDigits(commentaryPartCount)} بخش</Link>
         {next ? <Link href={`/laws/general-policies-44/article-44/commentary/${next.slug}`}><small>بخش بعدی</small><strong>{next.shortLabel}</strong></Link> : <span />}
       </nav>
     </>
@@ -365,11 +368,11 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
         <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>
         <h1>ماده ۴۴</h1>
         <p>توافق‌ها و هماهنگی‌های اخلال‌گر در رقابت</p>
-        <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>اجزای شرح <b>۹ بخش</b></span></div>
+        <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>اجزای شرح <b>{toFaDigits(commentaryPartCount)} بخش</b></span></div>
       </section>
 
       <nav className="legal-tabs" aria-label="بخش‌های ماده ۴۴">
-        {tabs.map((tab) => <Link className={active === tab.key ? "active" : ""} href={tab.href} key={tab.key}>{tab.label}{tab.count ? <small>{tab.count}</small> : null}</Link>)}
+        {tabs.map((tab) => <Link className={active === tab.key ? "active" : ""} aria-current={active === tab.key ? "page" : undefined} href={tab.href} key={tab.key}>{tab.label}{tab.count ? <small>{tab.count}</small> : null}</Link>)}
       </nav>
 
       <section className="legal-content">

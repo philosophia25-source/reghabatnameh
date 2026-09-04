@@ -49,7 +49,7 @@ function linkedText(text: string) {
   const pattern = new RegExp(`(\\[\\[FN:\\d+\\]\\]|${markdownLink}|${escapedMentions.join("|")})`, "g");
   return normalized.split(pattern).map((part, index) => {
     const footnote = part.match(/^\[\[FN:(\d+)\]\]$/);
-    if (footnote) return <sup className="footnote-ref" id={`footnote-ref-${footnote[1]}`} key={`${part}-${index}`}><a href={`#footnote-${footnote[1]}`}>{toFaDigits(footnote[1])}</a></sup>;
+    if (footnote) return <sup className="footnote-ref" id={`footnote-ref-${footnote[1]}`} key={`${part}-${index}`}><a href={`#footnote-${footnote[1]}`} aria-label={`رفتن به زیرنویس ${toFaDigits(footnote[1])}`}>{toFaDigits(footnote[1])}</a></sup>;
     const source = part.match(/^\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s)]+)\)$/);
     if (source) {
       return source[2].startsWith("/")
@@ -65,7 +65,7 @@ function PartsNav({ current }: { current: string }) {
   return <aside className="parts-nav">
     <p>اجزای ماده ۴۵</p>
     <ol>
-      {article45CommentaryParts.map((part, index) => <li className={current === part.slug ? "active" : ""} key={part.slug}>
+      {article45CommentaryParts.map((part, index) => <li className={current === part.slug ? "active" : ""} aria-current={current === part.slug ? "page" : undefined} key={part.slug}>
         {part.available ? <Link className="parts-nav-link" href={`/laws/general-policies-44/article-45/commentary/${part.slug}`}>
           <span>{toFaDigits(index + 1)}</span><div><small>{part.shortLabel}</small><strong>{part.title}</strong></div>
         </Link> : <span className="parts-nav-link unavailable" aria-disabled="true">
@@ -128,7 +128,7 @@ export function Article45Commentary({ slug }: { slug: string }) {
           const paragraphs = (hasHeading ? lines.slice(1) : lines).filter((line) => line !== "---");
           return <section id={id} key={id}>{sectionIndex > 0 ? <h2>{linkedText(withoutBookNumber(heading))}</h2> : null}{paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{linkedText(paragraph)}</p>)}</section>;
         })}
-        {footnotes.length ? <section className="footnotes" aria-labelledby="footnotes-title"><div className="footnotes-heading"><span>ارجاعات</span><h2 id="footnotes-title">یادداشت‌ها و منابع</h2></div><ol>{footnotes.map((footnote) => <li id={`footnote-${footnote.number}`} key={footnote.number}><span className="footnote-number">{toFaDigits(footnote.number)}</span><p>{linkedText(footnote.text)}</p><a className="footnote-back" href={`#footnote-ref-${footnote.number}`}>بازگشت ↑</a></li>)}</ol></section> : null}
+        {footnotes.length ? <section className="footnotes" aria-labelledby="footnotes-title"><div className="footnotes-heading"><span>ارجاعات</span><h2 id="footnotes-title">یادداشت‌ها و منابع</h2></div><ol>{footnotes.map((footnote) => <li id={`footnote-${footnote.number}`} key={footnote.number}><span className="footnote-number">{toFaDigits(footnote.number)}</span><p>{linkedText(footnote.text)}</p><a className="footnote-back" href={`#footnote-ref-${footnote.number}`} aria-label={`بازگشت از زیرنویس ${toFaDigits(footnote.number)} به متن`}>بازگشت ↑</a></li>)}</ol></section> : null}
       </article>
     </div>
     <nav className="part-pagination" aria-label="حرکت میان اجزای شرح">

@@ -40,6 +40,28 @@ RELATION_PANELS = {
     "collapseVersion": "versions",
 }
 
+ALLOWED_FRAGMENT_TAGS = {
+    "a", "aside", "blockquote", "br", "col", "colgroup", "del", "div",
+    "em", "figure", "h2", "h3", "h4", "h5", "hr", "img", "li", "mark",
+    "ol", "p", "section", "span", "strong", "sub", "sup", "table", "tbody",
+    "td", "th", "thead", "tr", "u", "ul",
+}
+DROP_WITH_CONTENT_TAGS = {"script", "style", "iframe", "object", "form"}
+GLOBAL_FRAGMENT_ATTRIBUTES = {"class", "data-format", "dir", "id", "role", "style"}
+TAG_FRAGMENT_ATTRIBUTES = {
+    "a": {"href"},
+    "col": {"span"},
+    "img": {"alt", "loading", "src"},
+    "li": {"value"},
+    "ol": {"start", "type"},
+    "td": {"colspan", "rowspan"},
+    "th": {"colspan", "rowspan", "scope"},
+}
+SAFE_STYLE_RE = re.compile(
+    r"^(?:width|height)\s*:\s*(?:auto|\d+(?:\.\d+)?(?:px|in|cm|mm|pt|pc|em|rem|%))$",
+    re.IGNORECASE,
+)
+
 
 def normalized_text(value: str | None) -> str:
     return SPACE_RE.sub(" ", value or "").strip()
@@ -242,8 +264,8 @@ def sanitize_fragment(raw_fragment: str, guid: str, attachment_index: int, temp_
             node.tag = f"h{min(level + 1, 5)}"
     for image_index, image in enumerate(wrapper.xpath(".//img"), start=1):
         raw_src = image.get("src", "")
-        source_image = temp_dir / raw_src
-        if not source_image.exists():
+        source_image = (temp_dir / raw_src).resolve()
+        if not source_image.is_relative_to(temp_dir.resolve()) or not source_image.is_file():
             image.drop_tree()
             continue
         extension = source_image.suffix.lower()
@@ -263,8 +285,34 @@ def sanitize_fragment(raw_fragment: str, guid: str, attachment_index: int, temp_
             shutil.copy2(source_image, destination)
         image.set("src", f"/cra-media/{guid}/{destination_name}")
         image.set("loading", "lazy")
-    for node in wrapper.xpath(".//script|.//style"):
-        node.drop_tree()
+    for node in list(wrapper.iterdescendants()):
+        if not isinstance(node.tag, str):
+            continue
+        tag = node.tag.lower()
+        if tag in DROP_WITH_CONTENT_TAGS:
+            node.drop_tree()
+        elif tag not in ALLOWED_FRAGMENT_TAGS:
+            node.drop_tag()
+
+    for node in wrapper.iterdescendants():
+        if not isinstance(node.tag, str):
+            continue
+        tag = node.tag.lower()
+        allowed_attributes = GLOBAL_FRAGMENT_ATTRIBUTES | TAG_FRAGMENT_ATTRIBUTES.get(tag, set())
+        for attribute in list(node.attrib):
+            if attribute.lower().startswith("on") or attribute.lower() not in allowed_attributes:
+                del node.attrib[attribute]
+        if "href" in node.attrib:
+            href = node.get("href", "").strip()
+            if not (href.startswith("#") or href.lower().startswith(("http://", "https://"))):
+                del node.attrib["href"]
+        if "style" in node.attrib:
+            declarations = [item.strip() for item in node.get("style", "").split(";") if item.strip()]
+            safe_declarations = [item for item in declarations if SAFE_STYLE_RE.fullmatch(item)]
+            if safe_declarations:
+                node.set("style", ";".join(safe_declarations))
+            else:
+                del node.attrib["style"]
     return "".join(html.tostring(child, encoding="unicode", method="html") for child in wrapper)
 
 

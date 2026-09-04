@@ -1,23 +1,16 @@
 import Link from "next/link";
+import { SiteNavigation } from "@/components/site-navigation";
+import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 
 export function LegalShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="legal-site">
       <header className="legal-header">
         <Link className="brand" href="/" aria-label="رقابت‌نامه، صفحه اصلی">
-          <span className="brand-seal">ر</span>
+          <span className="brand-seal"><img src="/mark.svg" alt="" /></span>
           <span><strong>رقابت‌نامه</strong><small>حقوق رقابت و تنظیم‌گری ایران</small></span>
         </Link>
-        <nav aria-label="ناوبری پایگاه حقوقی">
-          <Link href="/">خانه</Link>
-          <Link href="/laws">قوانین و شرح</Link>
-          <Link href="/institutions">نهادها</Link>
-          <Link href="/topics">موضوعات</Link>
-          <Link href="/markets">بازارها</Link>
-          <Link href="/decisions">آرای منتخب</Link>
-          <Link href="/resolutions">مصوبات</Link>
-          <Link href="/search">جست‌وجو</Link>
-        </nav>
+        <SiteNavigation items={PRIMARY_NAV_ITEMS} label="ناوبری پایگاه حقوقی" />
       </header>
       <main id="main-content">{children}</main>
       <footer className="legal-footer">

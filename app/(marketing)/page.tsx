@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import heroImage from "../../public/hero-tehran.jpg";
+import { decisionIndexRecords } from "@/app/decision-data";
+import { toFaDigits } from "@/app/text";
+import { commentaryParts } from "@/lib/knowledge/article44";
+import { documentsForCase, publishedCases } from "@/lib/knowledge/queries";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -30,35 +34,47 @@ const quickAccess = [
   { label: "مصوبات تنظیم‌گری", detail: "آرشیو کمیسیون", href: "/resolutions" },
 ];
 
-const articles = [
-  {
-    tone: "arch-one",
-    category: "شرح بند ۳",
-    title: "شرایط تبعیض‌آمیز در معاملات همسان",
-    summary: "مرز تبعیض قراردادی با تفاوت موجه و معیار قابلیت اخلال در رقابت",
+const articleTones = ["arch-one", "arch-two", "arch-three"];
+const articles = ["clause-3", "clause-4", "clause-5"].flatMap((slug, index) => {
+  const part = commentaryParts.find((item) => item.slug === slug && item.available);
+  return part ? [{
+    tone: articleTones[index],
+    category: `شرح ${part.shortLabel}`,
+    title: part.title,
+    summary: part.description,
     type: "شرح ماده",
     status: "منتشر شده",
-    href: "/laws/general-policies-44/article-44/commentary/clause-3",
-  },
-  {
-    tone: "arch-two",
-    category: "شرح بند ۴",
-    title: "الزام به معامله با شخص ثالث",
-    summary: "تحمیل طرف قرارداد یا شروط قراردادی به دیگران و مرز آن با فشار یک‌جانبه",
-    type: "شرح ماده",
-    status: "منتشر شده",
-    href: "/laws/general-policies-44/article-44/commentary/clause-4",
-  },
-  {
-    tone: "arch-three",
-    category: "شرح بند ۵",
-    title: "تعهدات تکمیلی نامرتبط",
-    summary: "شرط‌کردن قرارداد به پذیرش تعهد اضافی و معیار ارتباط عرفی آن با معامله",
-    type: "شرح ماده",
-    status: "منتشر شده",
-    href: "/laws/general-policies-44/article-44/commentary/clause-5",
-  },
-];
+    href: `/laws/general-policies-44/article-44/commentary/${part.slug}`,
+  }] : [];
+});
+
+const featuredDecisions = ["631", "437"].flatMap((slug) => {
+  const decision = decisionIndexRecords.find((item) => item.slug === slug);
+  return decision ? [{
+    href: decision.href,
+    label: `رأی شماره ${toFaDigits(decision.number)}`,
+    title: decision.title,
+    detail: decision.provisionLabels.slice(0, 2).join(" · ") || decision.authority,
+  }] : [];
+});
+
+const featuredCase = publishedCases.find((item) => item.slug === "sugar-import-market");
+const featuredCaseDecisions = featuredCase
+  ? documentsForCase(featuredCase.id).flatMap((document) => {
+      const decision = decisionIndexRecords.find((item) => item.id === document.id);
+      return decision ? [decision] : [];
+    })
+  : [];
+const featuredCaseNumbers = featuredCaseDecisions
+  .map((decision) => decision.number.replace(/^رأی\s*/u, ""))
+  .join(" و ");
+const featuredCaseItem = featuredCase && featuredCaseNumbers ? {
+  href: featuredCase.route,
+  label: `آرای ${toFaDigits(featuredCaseNumbers)}`,
+  title: featuredCase.title,
+  detail: Array.from(new Set(featuredCaseDecisions.flatMap((decision) => decision.provisionLabels))).join(" · "),
+} : undefined;
+const decisionFeatures = [...featuredDecisions, ...(featuredCaseItem ? [featuredCaseItem] : [])];
 
 export default function HomePage() {
   return (
@@ -109,9 +125,9 @@ export default function HomePage() {
           <span>متن رأی به‌تنهایی کافی نیست. هر پرونده با کلیدواژه‌ها، سابقه و یادداشت تحلیلی خوانده می‌شود.</span>
         </div>
         <div className="decision-list">
-          <Link href="/decisions/competition-council/1401/631"><small>رأی شماره ۶۳۱</small><strong>بازار نخ تایر و مسئله توافق رقابتی</strong><span>ماده ۴۴ · توافق و تفاهم</span><Arrow /></Link>
-          <Link href="/decisions/competition-council/1399/437"><small>رأی شماره ۴۳۷</small><strong>ایرانسل و حدود رفتار ضدرقابتی</strong><span>ماده ۴۵ · رویه یک‌جانبه</span><Arrow /></Link>
-          <Link href="/cases/sugar-import-market"><small>آرای ۲۹۶ و ۲۹/۹۶/هـ‌ت</small><strong>بازار شکر و زنجیره بدوی و تجدیدنظر</strong><span>ماده ۴۴ · ماده ۵۲</span><Arrow /></Link>
+          {decisionFeatures.map((item) => (
+            <Link href={item.href} key={item.href}><small>{item.label}</small><strong>{item.title}</strong><span>{item.detail}</span><Arrow /></Link>
+          ))}
         </div>
       </section>
 

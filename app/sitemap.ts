@@ -14,8 +14,7 @@ import {
   craCategories,
   craCategoryRoute,
 } from "@/lib/cra/categories";
-
-const BASE_URL = "https://naderjafari.com";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -50,6 +49,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return Array.from(new Set([...fixedRoutes, ...contentRoutes])).map((route) => ({
-    url: `${BASE_URL}${route}`,
+    url: `${SITE_URL}${route}`,
   }));
 }

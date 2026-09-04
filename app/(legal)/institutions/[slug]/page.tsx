@@ -42,6 +42,9 @@ export default async function InstitutionPage({ params }: { params: Promise<{ sl
     .map(provisionById).filter((item): item is NonNullable<typeof item> => Boolean(item));
   const topics = Array.from(new Set(documents.flatMap((document) => document.topicIds)))
     .map(topicById).filter((item): item is NonNullable<typeof item> => Boolean(item));
+  const resolutionArchiveRoute = institution.id === "communications-regulatory-commission"
+    ? "/resolutions/cra"
+    : "/resolutions";
   return (
     <>
       <section className="decision-hero knowledge-hero">
@@ -60,16 +63,17 @@ export default async function InstitutionPage({ params }: { params: Promise<{ sl
         ) : null}
         {resolutions.length ? (
           <>
-            <div className="collection-heading"><p className="eyebrow">آرشیو مصوبات</p><h2>تازه‌ترین مصوبات کمیسیون</h2><span>متن کامل آرشیو و روابط ثبت‌شده میان اسناد در دسته‌بندی سازمان تنظیم مقررات در دسترس است.</span></div>
-            <ResolutionCollection />
-            <Link className="collection-all-link" href="/resolutions/cra">ورود به دسته‌بندی مصوبات ←</Link>
+            <div className="collection-heading"><p className="eyebrow">آرشیو مصوبات</p><h2>تازه‌ترین مصوبات این نهاد</h2><span>متن کامل مصوبات و روابط ثبت‌شده میان اسناد در آرشیو تنظیم‌گری در دسترس است.</span></div>
+            <ResolutionCollection documentIds={resolutions.map((document) => document.id)} />
+            <Link className="collection-all-link" href={resolutionArchiveRoute}>ورود به آرشیو مصوبات ←</Link>
           </>
-        ) : (
+        ) : null}
+        {decisions.length ? (
           <>
             <div className="collection-heading"><p className="eyebrow">اسناد منتخب</p><h2>آرا و تصمیمات مرتبط</h2><span>این فهرست گزینشی است و فقط اسناد دارای ارزش تحلیلی را در بر می‌گیرد.</span></div>
             <DecisionCollection documentIds={decisions.map((document) => document.id)} />
           </>
-        )}
+        ) : null}
       </section>
     </>
   );

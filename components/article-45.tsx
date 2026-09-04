@@ -142,7 +142,7 @@ export function Article45({ active, commentaryPart }: { active: Tab; commentaryP
       <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>شرح منتشرشده <b>{toFaDigits(publishedCommentaryCount)} بخش</b></span></div>
     </section>
     <nav className="legal-tabs" aria-label="بخش‌های ماده ۴۵">
-      {tabs.map((tab) => <Link className={active === tab.key ? "active" : ""} href={tab.href} key={tab.key}>{tab.label}{tab.count ? <small>{tab.count}</small> : null}</Link>)}
+      {tabs.map((tab) => <Link className={active === tab.key ? "active" : ""} aria-current={active === tab.key ? "page" : undefined} href={tab.href} key={tab.key}>{tab.label}{tab.count ? <small>{tab.count}</small> : null}</Link>)}
     </nav>
     <section className="legal-content">
       {active === "text" ? <LawText /> : null}

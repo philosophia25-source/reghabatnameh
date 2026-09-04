@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { decisionRecords } from "@/app/decision-data";
 import { craResolutions, readCraResolutionHtml } from "@/lib/cra/data";
+import { compactSearchText, normalizeSearchText } from "@/lib/search-normalize";
 import {
   documentsForCase,
   institutionsForDocument,
@@ -24,6 +25,7 @@ export type SearchEntry = {
   category: string;
   href: string;
   summary: string;
+  titleSearchText: string;
   searchText: string;
 };
 
@@ -192,7 +194,7 @@ export function buildSearchIndex(): SearchEntry[] {
     searchText: `${market.title} ${market.description}`,
   }));
 
-  return [
+  const entries = [
     ...commentaryEntries,
     ...decisionEntries,
     ...resolutionEntries,
@@ -203,4 +205,10 @@ export function buildSearchIndex(): SearchEntry[] {
     ...topicEntries,
     ...marketEntries,
   ];
+
+  return entries.map((entry) => ({
+    ...entry,
+    titleSearchText: normalizeSearchText(entry.title),
+    searchText: compactSearchText(`${entry.title} ${entry.summary} ${entry.searchText}`),
+  }));
 }

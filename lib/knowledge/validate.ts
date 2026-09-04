@@ -42,6 +42,7 @@ export function validateKnowledgeRegistry(registry: Registry) {
   const topicIds = new Set(registry.topics.map((item) => item.id));
   const marketIds = new Set(registry.markets.map((item) => item.id));
   const documentIds = new Set(registry.documents.map((item) => item.id));
+  const documentById = new Map(registry.documents.map((item) => [item.id, item]));
 
   const collections = [
     [registry.institutionalDomains, "institutional domain id"],
@@ -85,6 +86,12 @@ export function validateKnowledgeRegistry(registry: Registry) {
   });
   registry.cases.forEach((caseRecord) => {
     assertReferences(caseRecord.documentIds, documentIds, `document for case ${caseRecord.id}`);
+    const unsupported = caseRecord.documentIds.filter(
+      (documentId) => documentById.get(documentId)?.documentType !== "decision",
+    );
+    if (unsupported.length) {
+      throw new Error(`Case ${caseRecord.id} contains non-decision documents: ${unsupported.join(", ")}`);
+    }
   });
   registry.articles.forEach((article) => {
     assertReferences(article.institutionIds, institutionIds, `institution for article ${article.id}`);

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { toFaDate, toFaDigits } from "@/app/text";
+import { normalizeSearchText } from "@/lib/search-normalize";
 
 export type DecisionExplorerItem = {
   href: string;
@@ -15,16 +16,6 @@ export type DecisionExplorerItem = {
   topicLabels: string[];
   marketLabels: string[];
 };
-
-function normalize(value: string) {
-  return value
-    .toLocaleLowerCase("fa")
-    .replace(/[يى]/g, "ی")
-    .replace(/ك/g, "ک")
-    .replace(/\u200c/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 function options(items: DecisionExplorerItem[], key: "authority" | "type" | "provisionLabels" | "topicLabels" | "marketLabels") {
   return Array.from(new Set(items.flatMap((item) => {
@@ -50,9 +41,9 @@ export function DecisionExplorer({ items }: { items: DecisionExplorerItem[] }) {
   }), [items]);
 
   const results = useMemo(() => {
-    const needle = normalize(query);
+    const needle = normalizeSearchText(query);
     return items.filter((item) => {
-      const haystack = normalize([
+      const haystack = normalizeSearchText([
         item.title,
         item.number,
         item.authority,
@@ -82,7 +73,7 @@ export function DecisionExplorer({ items }: { items: DecisionExplorerItem[] }) {
 
   return (
     <div className="decision-explorer">
-      <div className="decision-filters" aria-label="فیلتر آرای منتخب">
+      <div className="decision-filters" role="group" aria-label="فیلتر آرای منتخب">
         <label className="decision-query"><span>جست‌وجو در فهرست</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="شماره رأی یا عبارت کلیدی" /></label>
         <label><span>مرجع</span><select value={authority} onChange={(event) => setAuthority(event.target.value)}><option value="">همه مراجع</option>{filters.authorities.map((value) => <option value={value} key={value}>{value}</option>)}</select></label>
         <label><span>ماده یا جزء</span><select value={provision} onChange={(event) => setProvision(event.target.value)}><option value="">همه مواد</option>{filters.provisions.map((value) => <option value={value} key={value}>{value}</option>)}</select></label>
