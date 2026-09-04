@@ -15,6 +15,7 @@ import { toFaDate, toFaDigits } from "@/app/text";
 const craWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])[ \t]*[\u00AD\u200E\u200F\u2060][ \t]*([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 const craEmptyTableNumber = /<td([^>]*)>\s*<ol\b([^>]*)\bstart=(["'])(\d+)\3([^>]*)>\s*<li(?:\s[^>]*)?>\s*(?:<\/li>)?\s*<\/ol>\s*<\/td>/gi;
 const craInlineFormattedDayFirstDate = /(\d{1,2})\/(\d{1,2})\/<(em|strong|b|i|u)(?:\s[^>]*)?>(\d{4})<\/\3>/gi;
+const craSourceLabel = /(<section class="cra-source-text" data-format="([^"]+)">)<div class="cra-source-label">متن پیوست <span>[^<]*<\/span><\/div>/gi;
 const craMarkupNumberSeparator = /([۰-۹])((?:<[^>]+>)*)[,،]((?:<[^>]+>)*)(?=[۰-۹])/g;
 const craMarkupWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])((?:<[^>]+>)*)[\u00AD\u200E\u200F\u2060]((?:<[^>]+>)*)(?=[\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 
@@ -222,7 +223,16 @@ function localizeCraTextNode(text: string) {
 }
 
 function localizeCraDocumentText(html: string) {
-  const withPlainTableNumbers = html.replace(
+  let attachmentNumber = 0;
+  const withCleanSourceLabels = html.replace(
+    craSourceLabel,
+    (_match, sectionStart: string, format: string) => {
+      attachmentNumber += 1;
+      const formatLabel = format.toLowerCase() === "pdf" ? "فایل PDF" : "فایل Word";
+      return `${sectionStart}<div class="cra-source-label"><strong>پیوست ${toFaDigits(attachmentNumber)}</strong><span>${formatLabel}</span></div>`;
+    },
+  );
+  const withPlainTableNumbers = withCleanSourceLabels.replace(
     craEmptyTableNumber,
     (_match, cellAttributes: string, _beforeStart: string, _quote: string, start: string) => (
       `<td${cellAttributes}><span class="cra-row-number">${toFaDigits(start)}</span></td>`

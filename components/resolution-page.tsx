@@ -107,75 +107,89 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
         <p className="eyebrow">مصوبه کمیسیون تنظیم مقررات ارتباطات</p>
         <h1>{toFaDigits(resolution.title)}</h1>
         <p>{toFaDigits(resolution.code)}</p>
-        <Link className="back-to-commentary" href={categoryHref}>بازگشت به مصوبات {resolution.category} ←</Link>
       </section>
 
       <section className="resolution-content">
         <ResolutionActions citation={toFaDigits(citation)} hasRelations={hasRelations} />
 
-        <div className="resolution-facts">
-          <div><small>شماره جلسه</small><strong>{toFaDigits(resolution.sessionNumber)}</strong></div>
-          <div><small>شماره مصوبه</small><strong>{resolution.resolutionNumber ? toFaDigits(resolution.resolutionNumber) : "ثبت نشده"}</strong></div>
-          <div><small>تاریخ تصویب</small><strong>{resolution.approvalDate ? toFaDate(resolution.approvalDate) : "ثبت نشده"}</strong></div>
-          <div><small>نسخه</small><strong>{toFaDigits(resolution.version)}</strong></div>
-          <div><small>حوزه سند</small><strong>{resolution.category}</strong></div>
-          <div><small>کد رسمی</small><strong>{toFaDigits(resolution.code)}</strong></div>
-        </div>
-
-        <section className="resolution-overview" aria-labelledby="resolution-overview-title">
-          <div className="knowledge-connections-heading">
-            <p className="eyebrow">در یک نگاه</p>
-            <h2 id="resolution-overview-title">وضعیت مراجعه به سند</h2>
-          </div>
-          <div className="resolution-overview-grid">
-            <div>
-              <span>وضعیت نسخه</span>
-              <strong>{newerVersion ? "نسخه جدیدتری در سامانه وجود دارد" : relations.versions.length ? "نسخه جدیدتری شناسایی نشد" : "نسخه دیگری در سامانه ثبت نشده"}</strong>
-              {newerVersion ? <ResolutionTargetLink target={newerVersion} /> : <small>این عبارت فقط ناظر به نسخه‌های ثبت‌شده در داده منبع است</small>}
-            </div>
-            <div>
-              <span>اسناد تاثیرگذار</span>
-              <strong>{influencePath.length ? `${toFaDigits(influencePath.length)} سند در زنجیره تاثیرگذاری` : "سندی ثبت نشده است"}</strong>
-              <small>{directInfluenceCount ? `${toFaDigits(directInfluenceCount)} رابطه مستقیم و ${toFaDigits(influencePath.length - directInfluenceCount)} رابطه ادامه زنجیره` : "نبود رابطه ثبت‌شده به معنی تایید اعتبار جاری مصوبه نیست"}</small>
-            </div>
-            <div>
-              <span>ساختار متن</span>
-              <strong>{resolution.contentAvailable ? `${toFaDigits(resolution.readingMeta.wordCount)} واژه در ${toFaDigits(resolution.readingMeta.attachmentSectionCount)} پیوست` : "پیوست متنی در منبع موجود نیست"}</strong>
-              <small>{`${toFaDigits(resolution.readingMeta.tableCount)} جدول و ${toFaDigits(resolution.readingMeta.imageCount)} تصویر`}</small>
-            </div>
-            <div>
-              <span>وضعیت تنقیح</span>
-              <strong>{influencePath.length ? "متن تنقیح‌شده تاییدشده موجود نیست" : "نیاز به تنقیح از داده منبع احراز نشد"}</strong>
-              <small>{influencePath.length ? "متن پایه و زنجیره اسناد تاثیرگذار جداگانه ارائه شده‌اند" : "برای استناد حقوقی، بررسی منابع دیگر همچنان لازم است"}</small>
-            </div>
-          </div>
-
-          {influencePath.length ? (
-            <div className="resolution-reading-path">
-              <div>
-                <h3>مسیر مطالعه برای بررسی آخرین وضعیت</h3>
-                <p>این مسیر از برچسب «اسناد تاثیرگذار» سامانه CRA ساخته شده است. ترتیب زیر جای متن تنقیح‌شده یا احراز اعتبار حقوقی را نمی‌گیرد.</p>
+        <div className="resolution-disclosures">
+          <details className="resolution-disclosure">
+            <summary>
+              <span>مشخصات مصوبه</span>
+              <small>جلسه {toFaDigits(resolution.sessionNumber)} · {resolution.resolutionNumber ? `مصوبه ${toFaDigits(resolution.resolutionNumber)}` : "شماره مصوبه ثبت نشده"} · {resolution.approvalDate ? toFaDate(resolution.approvalDate) : "تاریخ ثبت نشده"}</small>
+            </summary>
+            <div className="resolution-disclosure-body">
+              <div className="resolution-facts">
+                <div><small>شماره جلسه</small><strong>{toFaDigits(resolution.sessionNumber)}</strong></div>
+                <div><small>شماره مصوبه</small><strong>{resolution.resolutionNumber ? toFaDigits(resolution.resolutionNumber) : "ثبت نشده"}</strong></div>
+                <div><small>تاریخ تصویب</small><strong>{resolution.approvalDate ? toFaDate(resolution.approvalDate) : "ثبت نشده"}</strong></div>
+                <div><small>نسخه</small><strong>{toFaDigits(resolution.version)}</strong></div>
+                <div><small>حوزه سند</small><strong>{resolution.category}</strong></div>
+                <div><small>کد رسمی</small><strong>{toFaDigits(resolution.code)}</strong></div>
               </div>
-              <ol>
-                <li className="current"><span>متن پایه</span><strong>{toFaDigits(resolution.title)}</strong><small>{resolution.approvalDate ? toFaDate(resolution.approvalDate) : "تاریخ ثبت نشده"}</small></li>
-                {influencePath.map((item) => {
-                  const local = craResolutionByGuid.get(item.target.targetGuid);
-                  return (
-                    <li key={item.target.targetGuid}>
-                      <span>{item.direct ? "سند تاثیرگذار مستقیم" : `ادامه زنجیره در سطح ${toFaDigits(item.depth)}`}</span>
-                      <strong><ResolutionTargetLink target={item.target} /></strong>
-                      <small>{local?.approvalDate ? toFaDate(local.approvalDate) : "جزئیات در منبع رسمی"}</small>
-                    </li>
-                  );
-                })}
-              </ol>
+              {resolution.keywords.length ? (
+                <div className="resolution-keywords"><span>کلیدواژه‌های منبع</span><div>{resolution.keywords.map((keyword) => <i key={keyword}>{toFaDigits(keyword)}</i>)}</div></div>
+              ) : null}
             </div>
-          ) : null}
-        </section>
+          </details>
 
-        {resolution.keywords.length ? (
-          <div className="resolution-keywords"><span>کلیدواژه‌های منبع</span><div>{resolution.keywords.map((keyword) => <i key={keyword}>{toFaDigits(keyword)}</i>)}</div></div>
-        ) : null}
+          <details className="resolution-disclosure">
+            <summary>
+              <span>وضعیت و مسیر مطالعه</span>
+              <small>نسخه، اسناد تاثیرگذار، تنقیح و ساختار متن</small>
+            </summary>
+            <section className="resolution-overview" aria-labelledby="resolution-overview-title">
+              <div className="knowledge-connections-heading">
+                <p className="eyebrow">در یک نگاه</p>
+                <h2 id="resolution-overview-title">وضعیت مراجعه به سند</h2>
+              </div>
+              <div className="resolution-overview-grid">
+                <div>
+                  <span>وضعیت نسخه</span>
+                  <strong>{newerVersion ? "نسخه جدیدتری در سامانه وجود دارد" : relations.versions.length ? "نسخه جدیدتری شناسایی نشد" : "نسخه دیگری در سامانه ثبت نشده"}</strong>
+                  {newerVersion ? <ResolutionTargetLink target={newerVersion} /> : <small>این عبارت فقط ناظر به نسخه‌های ثبت‌شده در داده منبع است</small>}
+                </div>
+                <div>
+                  <span>اسناد تاثیرگذار</span>
+                  <strong>{influencePath.length ? `${toFaDigits(influencePath.length)} سند در زنجیره تاثیرگذاری` : "سندی ثبت نشده است"}</strong>
+                  <small>{directInfluenceCount ? `${toFaDigits(directInfluenceCount)} رابطه مستقیم و ${toFaDigits(influencePath.length - directInfluenceCount)} رابطه ادامه زنجیره` : "نبود رابطه ثبت‌شده به معنی تایید اعتبار جاری مصوبه نیست"}</small>
+                </div>
+                <div>
+                  <span>ساختار متن</span>
+                  <strong>{resolution.contentAvailable ? `${toFaDigits(resolution.readingMeta.wordCount)} واژه در ${toFaDigits(resolution.readingMeta.attachmentSectionCount)} پیوست` : "پیوست متنی در منبع موجود نیست"}</strong>
+                  <small>{`${toFaDigits(resolution.readingMeta.tableCount)} جدول و ${toFaDigits(resolution.readingMeta.imageCount)} تصویر`}</small>
+                </div>
+                <div>
+                  <span>وضعیت تنقیح</span>
+                  <strong>{influencePath.length ? "متن تنقیح‌شده تاییدشده موجود نیست" : "نیاز به تنقیح از داده منبع احراز نشد"}</strong>
+                  <small>{influencePath.length ? "متن پایه و زنجیره اسناد تاثیرگذار جداگانه ارائه شده‌اند" : "برای استناد حقوقی، بررسی منابع دیگر همچنان لازم است"}</small>
+                </div>
+              </div>
+
+              {influencePath.length ? (
+                <div className="resolution-reading-path">
+                  <div>
+                    <h3>مسیر مطالعه برای بررسی آخرین وضعیت</h3>
+                    <p>این مسیر از برچسب «اسناد تاثیرگذار» سامانه CRA ساخته شده است. ترتیب زیر جای متن تنقیح‌شده یا احراز اعتبار حقوقی را نمی‌گیرد.</p>
+                  </div>
+                  <ol>
+                    <li className="current"><span>متن پایه</span><strong>{toFaDigits(resolution.title)}</strong><small>{resolution.approvalDate ? toFaDate(resolution.approvalDate) : "تاریخ ثبت نشده"}</small></li>
+                    {influencePath.map((item) => {
+                      const local = craResolutionByGuid.get(item.target.targetGuid);
+                      return (
+                        <li key={item.target.targetGuid}>
+                          <span>{item.direct ? "سند تاثیرگذار مستقیم" : `ادامه زنجیره در سطح ${toFaDigits(item.depth)}`}</span>
+                          <strong><ResolutionTargetLink target={item.target} /></strong>
+                          <small>{local?.approvalDate ? toFaDate(local.approvalDate) : "جزئیات در منبع رسمی"}</small>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
+              ) : null}
+            </section>
+          </details>
+        </div>
 
         <article className="resolution-document" id="official-text">
           <div className="resolution-document-heading">
@@ -193,8 +207,10 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
           <a href={resolution.sourceUrl} target="_blank" rel="noreferrer">مشاهده صفحه رسمی ←</a>
           {resolution.attachments.length ? (
             <div className="resolution-source-files">
-              {resolution.attachments.map((attachment) => (
-                <a href={attachment.url} target="_blank" rel="noreferrer" key={attachment.url}>{attachment.format} · {toFaDigits(attachment.name)}</a>
+              {resolution.attachments.map((attachment, index) => (
+                <a href={attachment.url} target="_blank" rel="noreferrer" key={attachment.url}>
+                  دریافت پیوست {toFaDigits(index + 1)} · {attachment.format.toLowerCase() === "pdf" ? "فایل PDF" : "فایل Word"}
+                </a>
               ))}
             </div>
           ) : null}
