@@ -160,5 +160,5 @@ export const decisionRouteByMention: Record<string, string> = Object.fromEntries
 
 export function decisionDescription(record: DecisionRecord) {
   const first = record.stages[0].meta;
-  return `${record.title}، ${first["مرجع"]}، ${first["نوع تصمیم"]} و ارتباط آن با شبکه حقوق رقابت و تنظیم‌گری`;
+  return `${record.title}، ${first["مرجع"]}، ${first["نوع تصمیم"]} و ارتباطات حقوقی آن در حقوق رقابت و تنظیم‌گری`;
 }

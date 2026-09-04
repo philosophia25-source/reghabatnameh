@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import {
   article45Chapeau,
   article45CommentaryParts,
@@ -133,7 +134,24 @@ function Decisions() {
 }
 
 export function Article45({ active, commentaryPart }: { active: Tab; commentaryPart?: string }) {
+  const currentPart = commentaryPart ? article45CommentaryParts.find((part) => part.slug === commentaryPart) : undefined;
+  const currentRoute = currentPart
+    ? `/laws/general-policies-44/article-45/commentary/${currentPart.slug}`
+    : active === "commentary"
+      ? "/laws/general-policies-44/article-45/commentary"
+      : active === "decisions"
+        ? "/laws/general-policies-44/article-45/decisions"
+        : "/laws/general-policies-44/article-45";
+  const currentLabel = currentPart
+    ? (currentPart.slug === "chapeau" ? currentPart.title : `شرح ${currentPart.shortLabel} ماده ۴۵`)
+    : active === "commentary" ? "شرح ماده ۴۵" : active === "decisions" ? "آرای ماده ۴۵" : "ماده ۴۵";
   return <>
+    <BreadcrumbJsonLd items={[
+      { name: "خانه", href: "/" },
+      { name: "قوانین و شرح", href: "/laws" },
+      { name: "قانون اجرای سیاست‌های کلی اصل ۴۴", href: "/laws/general-policies-44" },
+      { name: currentLabel, href: currentRoute },
+    ]} />
     <section className="legal-hero">
       <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span><b>ماده ۴۵</b></div>
       <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>

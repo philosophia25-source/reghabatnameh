@@ -5,7 +5,7 @@ import { article45CommentaryParts } from "@/lib/knowledge/article45";
 import { decisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
 import { toFaDate, toFaDigits } from "@/app/text";
 import { EditorialMeta } from "@/components/editorial-meta";
-import { AUTHOR, CONTENT_UPDATED_FA, SITE_NAME, SITE_URL } from "@/lib/site";
+import { AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function commentaryFile(slug: string) {
   return slug === "chapeau" ? "commentary45.md" : `commentary45-${slug}.md`;
@@ -112,7 +112,7 @@ export function Article45Commentary({ slug }: { slug: string }) {
       <PartsNav current={slug} />
       <article className="commentary-body">
         <div className="commentary-title-row"><p className="commentary-kicker">شرح نادر جعفری</p><h2>{displayTitle}</h2><p>{part.title}، {part.description}</p></div>
-        <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/general-policies-44/article-45/commentary/${slug}`} />
+        <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، ${SITE_URL}/laws/general-policies-44/article-45/commentary/${slug}`} />
         {references.length ? <details className="commentary-decision-count"><summary><span>آرا و پرونده‌های مورد بررسی در این شرح</span><strong>{toFaDigits(references.length)} پرونده</strong><small>مشاهده فهرست و دسترسی به پرونده‌ها</small></summary><div className="commentary-decision-list">{references.map((reference) => <Link href={reference.href} key={reference.href}><small>{reference.detail}</small><strong>{reference.title}</strong><span>مشاهده پرونده ←</span></Link>)}</div></details> : null}
         {tocSections.length ? <details className="commentary-on-page"><summary>فهرست مطالب این شرح</summary><ol>{tocSections.map((section, tocIndex) => {
           const heading = clean(section.split("\n")[0]);

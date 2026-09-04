@@ -8,7 +8,7 @@ import { AUTHOR, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "رقابت‌نامه | نادر جعفری", template: "%s | رقابت‌نامه" },
-  description: "یادداشت‌ها، آرا و تحلیل‌های نادر جعفری درباره حقوق رقابت و تنظیم‌گری ایران",
+  description: SITE_DESCRIPTION,
   openGraph: {
     siteName: SITE_NAME,
     locale: "fa_IR",

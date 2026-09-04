@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function TopicsPage() {
   return (
     <section className="shell listing-page knowledge-index-page">
-      <p className="kicker">شبکه موضوعی</p><h1>موضوعات حقوقی</h1>
+      <p className="kicker">موضوعات مرتبط</p><h1>موضوعات حقوقی</h1>
       <p className="lead">هر موضوع، مواد قانونی و اسناد منتخب مربوط را بدون وابستگی به یک قانون یا نهاد خاص کنار هم قرار می‌دهد.</p>
       <div className="knowledge-card-grid knowledge-card-grid-three">
         {publishedTopics.map((topic) => (

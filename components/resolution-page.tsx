@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { toFaDate, toFaDigits } from "@/app/text";
 import { JsonLd } from "@/components/json-ld";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import { ResolutionActions } from "@/components/resolution-actions";
 import {
   craInfluencePathFor,
@@ -88,6 +89,13 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   return (
     <>
       <JsonLd data={jsonLd} />
+      <BreadcrumbJsonLd items={[
+        { name: "خانه", href: "/" },
+        { name: "مصوبات تنظیم‌گران", href: "/resolutions" },
+        { name: "سازمان تنظیم مقررات", href: CRA_ORGANIZATION_ROUTE },
+        { name: resolution.category, href: categoryHref },
+        { name: toFaDigits(number), href: resolution.route },
+      ]} />
       <section className="decision-hero resolution-hero">
         <div className="breadcrumbs">
           <Link href="/">خانه</Link><span>←</span>
@@ -195,7 +203,7 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
         {hasRelations ? (
           <section className="resolution-relations" id="document-relations" aria-labelledby="resolution-relations-title">
             <div className="knowledge-connections-heading">
-              <p className="eyebrow">شبکه مصوبات</p>
+              <p className="eyebrow">ارتباطات مصوبات</p>
               <h2 id="resolution-relations-title">روابط و ارجاعات قابل ردیابی</h2>
               <p>روابط رسمی از برچسب‌های CRA گرفته شده‌اند. ارجاعات متنی فقط وجود اشاره صریح به شماره مصوبه و جلسه را نشان می‌دهند و نوع اثر حقوقی را تعیین نمی‌کنند.</p>
             </div>

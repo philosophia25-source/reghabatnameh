@@ -1,4 +1,4 @@
-import { AUTHOR, CONTENT_UPDATED_FA, CONTENT_UPDATED_ISO } from "@/lib/site";
+import { AUTHOR } from "@/lib/site";
 
 export function EditorialMeta({ citation }: { citation: string }) {
   return (
@@ -6,7 +6,6 @@ export function EditorialMeta({ citation }: { citation: string }) {
       <div className="editorial-facts">
         <span>نویسنده <b>{AUTHOR.name}</b></span>
         <span>وضعیت <b>منتشرشده</b></span>
-        <span>آخرین به‌روزرسانی <time dateTime={CONTENT_UPDATED_ISO}>{CONTENT_UPDATED_FA}</time></span>
       </div>
       <details>
         <summary>شیوه پیشنهادی استناد</summary>

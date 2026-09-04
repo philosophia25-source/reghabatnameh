@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function SearchPage() {
   return (
     <section className="shell listing-page search-page">
-      <p className="kicker">جست‌وجوی شبکه</p>
+      <p className="kicker">جست‌وجو در همه منابع</p>
       <h1>جست‌وجو در رقابت‌نامه</h1>
       <p className="lead">قوانین، شرح‌ها، متن آرای منتخب، مصوبات تنظیم‌گری، نهادها، موضوعات و بازارها در یک جست‌وجوی واحد قابل دسترسی‌اند.</p>
       <SiteSearch />

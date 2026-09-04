@@ -9,8 +9,9 @@ import {
 import { article44DecisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
 import { toFaDate, toFaDigits } from "@/app/text";
 import { EditorialMeta } from "@/components/editorial-meta";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import { JsonLd } from "@/components/json-ld";
-import { AUTHOR, CONTENT_UPDATED_FA, CONTENT_UPDATED_ISO, SITE_NAME, SITE_URL } from "@/lib/site";
+import { AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function commentaryFile(slug: string) {
   return slug === "chapeau" ? "commentary44.md" : `commentary44-${slug}.md`;
@@ -181,7 +182,7 @@ function CommentaryBody({ slug }: { slug: string }) {
         <h2>{displayTitle}</h2>
         <p>{part.title}، {part.description}</p>
       </div>
-      <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}/laws/general-policies-44/article-44/commentary/${slug}`} />
+      <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، ${SITE_URL}/laws/general-policies-44/article-44/commentary/${slug}`} />
       {decisionReferences.length ? <details className="commentary-decision-count">
         <summary>
           <span>آرا و پرونده‌های مورد بررسی در این شرح</span>
@@ -349,6 +350,14 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
   const commentaryTitle = currentPart
     ? (currentPart.slug === "chapeau" ? currentPart.title : `شرح ${currentPart.shortLabel} ماده ۴۴`)
     : undefined;
+  const currentRoute = currentPart
+    ? `/laws/general-policies-44/article-44/commentary/${currentPart.slug}`
+    : active === "commentary"
+      ? "/laws/general-policies-44/article-44/commentary"
+      : active === "decisions"
+        ? "/laws/general-policies-44/article-44/decisions"
+        : "/laws/general-policies-44/article-44";
+  const currentLabel = commentaryTitle ?? (active === "commentary" ? "شرح ماده ۴۴" : active === "decisions" ? "آرای ماده ۴۴" : "ماده ۴۴");
   return (
     <>
       {currentPart && commentaryTitle ? <JsonLd data={{
@@ -357,12 +366,17 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
         headline: commentaryTitle,
         description: currentPart.description,
         inLanguage: "fa-IR",
-        dateModified: CONTENT_UPDATED_ISO,
         mainEntityOfPage: `${SITE_URL}/laws/general-policies-44/article-44/commentary/${currentPart.slug}`,
         author: { "@id": `${SITE_URL}/about#person` },
         publisher: { "@type": "Person", name: AUTHOR.name },
         isPartOf: { "@type": "CreativeWork", name: "شرح ماده ۴۴ قانون اجرای سیاست‌های کلی اصل چهل‌وچهار", url: `${SITE_URL}/laws/general-policies-44/article-44` },
       }} /> : null}
+      <BreadcrumbJsonLd items={[
+        { name: "خانه", href: "/" },
+        { name: "قوانین و شرح", href: "/laws" },
+        { name: "قانون اجرای سیاست‌های کلی اصل ۴۴", href: "/laws/general-policies-44" },
+        { name: currentLabel, href: currentRoute },
+      ]} />
       <section className="legal-hero">
         <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span><b>ماده ۴۴</b></div>
         <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>

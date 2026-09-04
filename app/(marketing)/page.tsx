@@ -3,14 +3,16 @@ import Link from "next/link";
 import heroImage from "../../public/hero-tehran.jpg";
 import { decisionIndexRecords } from "@/app/decision-data";
 import { toFaDigits } from "@/app/text";
+import { craResolutions } from "@/lib/cra/data";
 import { commentaryParts } from "@/lib/knowledge/article44";
-import { documentsForCase, publishedCases } from "@/lib/knowledge/queries";
+import { documentsForCase, publishedCases, publishedInstitutions } from "@/lib/knowledge/queries";
+import { SITE_DESCRIPTION } from "@/lib/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     title: "رقابت‌نامه | نادر جعفری",
-    description: "حقوق رقابت و تنظیم‌گری در بازارهای ایران",
+    description: SITE_DESCRIPTION,
     url: "/",
     siteName: "رقابت‌نامه",
     locale: "fa_IR",
@@ -20,18 +22,19 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "رقابت‌نامه | نادر جعفری",
-    description: "حقوق رقابت و تنظیم‌گری در بازارهای ایران",
+    description: SITE_DESCRIPTION,
     images: ["/og.jpg"],
   },
 };
 
 const Arrow = () => <span aria-hidden="true">←</span>;
 
+const publishedCommentaryCount = commentaryParts.filter((part) => part.available).length;
 const quickAccess = [
-  { label: "قوانین و شرح", detail: "مجموعه‌های قانونی", href: "/laws" },
-  { label: "آرای منتخب", detail: "پرونده‌های قاعده‌ساز", href: "/decisions" },
-  { label: "نهادها", detail: "مراجع و اسناد", href: "/institutions" },
-  { label: "مصوبات تنظیم‌گری", detail: "آرشیو کمیسیون", href: "/resolutions" },
+  { label: "شرح ماده ۴۴", detail: `${toFaDigits(publishedCommentaryCount)} بخش شرح منتشرشده`, href: "/laws/general-policies-44/article-44" },
+  { label: "آرای منتخب", detail: `${toFaDigits(decisionIndexRecords.length)} رأی و پرونده گزینشی`, href: "/decisions" },
+  { label: "نهادها", detail: `${toFaDigits(publishedInstitutions.length)} نهاد دارای سند`, href: "/institutions" },
+  { label: "مصوبات تنظیم‌گری", detail: `${toFaDigits(craResolutions.length)} مصوبه در آرشیو جامع کمیسیون`, href: "/resolutions/cra" },
 ];
 
 const articleTones = ["arch-one", "arch-two", "arch-three"];
@@ -43,7 +46,7 @@ const articles = ["clause-3", "clause-4", "clause-5"].flatMap((slug, index) => {
     title: part.title,
     summary: part.description,
     type: "شرح ماده",
-    status: "منتشر شده",
+    context: "ماده ۴۴",
     href: `/laws/general-policies-44/article-44/commentary/${part.slug}`,
   }] : [];
 });
@@ -83,11 +86,17 @@ export default function HomePage() {
         <div className="hero-backdrop" aria-hidden="true" style={{ backgroundImage: `url(${heroImage.src})` }} />
         <div className="hero-shade" />
         <div className="hero-content">
-          <p className="hero-kicker">پایگاه تحلیلی حقوق رقابت و تنظیم‌گری</p>
+          <p className="hero-kicker">پایگاه یکپارچه حقوق رقابت و تنظیم‌گری ایران</p>
           <h1>رقابت‌نامه</h1>
-          <h2>حقوق رقابت و تنظیم‌گری در بازارهای ایران</h2>
-          <p>تحلیل قوانین، رویه‌ها و سیاست‌های مرتبط با رقابت، تمرکزهای اقتصادی و تنظیم‌گری در بخش‌های مختلف اقتصاد ایران</p>
-          <Link href="/about">درباره رقابت‌نامه <Arrow /></Link>
+          <h2>قانون، رأی، مصوبه و تحلیل مرتبط را یکجا پیدا کنید</h2>
+          <p>متون رسمی قابل جست‌وجو، آرای منتخب، شرح مواد قانونی و ارتباط هر سند با موضوعات، بازارها و نهادهای مرتبط</p>
+          <form className="hero-search" action="/search" method="get" role="search">
+            <label htmlFor="home-search">جست‌وجو در همه منابع</label>
+            <div>
+              <input id="home-search" name="q" type="search" placeholder="موضوع، شماره رأی، مصوبه یا ماده قانونی" />
+              <button type="submit">جست‌وجو</button>
+            </div>
+          </form>
         </div>
         <nav className="hero-access" aria-label="دسترسی سریع به محتوای حقوقی">
           {quickAccess.map((item) => (
@@ -103,7 +112,7 @@ export default function HomePage() {
 
       <section className="insights shell" id="analysis">
         <div className="latest">
-          <div className="section-title section-title-with-link"><span>تازه‌های شبکه</span><i /><Link href="/search">جست‌وجو در همه محتوا <Arrow /></Link></div>
+          <div className="section-title section-title-with-link"><span>شرح‌های منتخب</span><i /><Link href="/search">جست‌وجو در همه منابع <Arrow /></Link></div>
           <div className="article-grid">
             {articles.map((article) => (
               <Link className="article-card" href={article.href} key={article.title}>
@@ -111,7 +120,7 @@ export default function HomePage() {
                 <div className="article-copy">
                   <h3>{article.title}</h3>
                   <p>{article.summary}</p>
-                  <div className="article-meta"><span>{article.type}</span><span>{article.status}</span></div>
+                  <div className="article-meta"><span>{article.type}</span><span>{article.context}</span></div>
                 </div>
               </Link>
             ))}
@@ -121,7 +130,7 @@ export default function HomePage() {
 
       <section className="decision-section shell" id="decisions">
         <div className="decision-heading">
-          <p>پرونده‌خوانی</p><h2>آرای شورای رقابت، با زمینه و تحلیل</h2>
+          <p>پرونده‌خوانی‌های منتخب</p><h2>آرای شورای رقابت، با زمینه و تحلیل</h2>
           <span>متن رأی به‌تنهایی کافی نیست. هر پرونده با کلیدواژه‌ها، سابقه و یادداشت تحلیلی خوانده می‌شود.</span>
         </div>
         <div className="decision-list">

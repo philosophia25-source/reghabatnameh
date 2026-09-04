@@ -7,7 +7,6 @@ import {
   type DecisionRouteParams,
 } from "@/app/decision-data";
 import { DecisionPage } from "@/components/decision-page";
-import { CONTENT_UPDATED_ISO } from "@/lib/site";
 
 export function generateStaticParams() {
   return decisionStaticParams;
@@ -31,7 +30,6 @@ export async function generateMetadata({ params }: { params: Promise<DecisionRou
       siteName: "رقابت‌نامه",
       locale: "fa_IR",
       type: "article",
-      modifiedTime: CONTENT_UPDATED_ISO,
       images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${decision.title} | رقابت‌نامه` }],
     },
     twitter: { card: "summary_large_image", title: `${decision.title} | رقابت‌نامه`, description: decisionDescription(decision), images: ["/og.jpg"] },

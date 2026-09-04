@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { toFaDigits } from "@/app/text";
 import { DecisionCollection } from "@/components/decision-collection";
 import { ResolutionCollection } from "@/components/resolution-collection";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import {
   documentsForInstitution,
   domainById,
@@ -47,6 +48,11 @@ export default async function InstitutionPage({ params }: { params: Promise<{ sl
     : "/resolutions";
   return (
     <>
+      <BreadcrumbJsonLd items={[
+        { name: "خانه", href: "/" },
+        { name: "نهادها", href: "/institutions" },
+        { name: institution.name, href: institution.route },
+      ]} />
       <section className="decision-hero knowledge-hero">
         <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/institutions">نهادها</Link><span>←</span><b>{domain?.name}</b></div>
         <p className="eyebrow">نهاد</p>

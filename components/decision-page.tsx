@@ -8,8 +8,9 @@ import {
   topicsForDocument,
 } from "@/lib/knowledge/queries";
 import { EditorialMeta } from "@/components/editorial-meta";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import { JsonLd } from "@/components/json-ld";
-import { AUTHOR, CONTENT_UPDATED_FA, CONTENT_UPDATED_ISO, SITE_NAME, SITE_URL } from "@/lib/site";
+import { AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function Stage({ record, index, total }: { record: ParsedDecision; index: number; total: number }) {
   const { meta, body } = record;
@@ -44,7 +45,7 @@ function KnowledgeConnections({ decision }: { decision: DecisionRecord }) {
   return (
     <section className="knowledge-connections" aria-labelledby="connections-title">
       <div className="knowledge-connections-heading">
-        <p className="eyebrow">شبکه حقوقی</p>
+        <p className="eyebrow">ارتباطات حقوقی</p>
         <h2 id="connections-title">ارتباطات این پرونده</h2>
       </div>
       <div className="connection-groups">
@@ -61,14 +62,13 @@ export function DecisionPage({ slug }: { slug: string }) {
   const decision = decisionRecords[slug];
   const first = decision.stages[0];
   const decisionNumber = toFaDigits(decision.stages.map((stage) => stage.meta["شماره جلسه/رأی"]).filter(Boolean).join(" و "));
-  const citation = `${AUTHOR.name}، «${decision.title}»، پرونده‌خوانی رأی ${decisionNumber}، ${SITE_NAME}، آخرین به‌روزرسانی ${CONTENT_UPDATED_FA}، ${SITE_URL}${decision.route}`;
+  const citation = `${AUTHOR.name}، «${decision.title}»، پرونده‌خوانی رأی ${decisionNumber}، ${SITE_NAME}، ${SITE_URL}${decision.route}`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: decision.title,
     description: decision.relation,
     inLanguage: "fa-IR",
-    dateModified: CONTENT_UPDATED_ISO,
     mainEntityOfPage: `${SITE_URL}${decision.route}`,
     author: { "@id": `${SITE_URL}/about#person` },
     publisher: { "@type": "Person", name: AUTHOR.name },
@@ -78,6 +78,11 @@ export function DecisionPage({ slug }: { slug: string }) {
   return (
     <>
       <JsonLd data={jsonLd} />
+      <BreadcrumbJsonLd items={[
+        { name: "خانه", href: "/" },
+        { name: "آرای منتخب", href: "/decisions" },
+        { name: decision.title, href: decision.route },
+      ]} />
       <section className="decision-hero">
         <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/decisions">آرای منتخب</Link><span>←</span><b>پرونده</b></div>
         <p className="eyebrow">پرونده‌خوانی حقوق رقابت</p>

@@ -34,7 +34,7 @@ export const institutionalDomains: InstitutionalDomain[] = [
   {
     id: "communications-regulation",
     name: "تنظیم‌گری ارتباطات",
-    description: "مصوبات کمیسیون تنظیم مقررات ارتباطات و شبکه روابط ثبت‌شده میان آنها در سامانه اسناد سازمان تنظیم مقررات",
+    description: "مصوبات کمیسیون تنظیم مقررات ارتباطات و روابط ثبت‌شده میان آنها در سامانه اسناد سازمان تنظیم مقررات",
     memberIds: ["communications-regulatory-authority", "communications-regulatory-commission"],
     status: "published",
   },
@@ -191,7 +191,7 @@ function decision(input: DecisionInput): KnowledgeDocument {
     topicIds: includeInArticle44 ? topicIds(parts, input.additionalTopics) : (input.additionalTopics ?? []),
     marketIds: input.markets,
     documentLinks: input.documentLinks ?? [],
-    relation: input.relation ?? "متن کامل تصمیم، مشخصات پرونده و جایگاه آن در شبکه حقوق رقابت",
+    relation: input.relation ?? "متن کامل تصمیم، مشخصات پرونده و ارتباطات آن در حقوق رقابت",
     curated: true,
     updatedAt: CONTENT_UPDATED_ISO,
     status: "published",
