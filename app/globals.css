@@ -647,9 +647,10 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-source-text h2 { margin:2.1em 0 .8em; padding-bottom:.45em; font-size:1.65rem; border-bottom:1px solid rgba(22,36,44,.2); }
 .cra-source-text h3 { margin:1.8em 0 .65em; font-size:1.25rem; }
 .cra-source-text h4,.cra-source-text h5 { margin:1.5em 0 .55em; font-size:1.0625rem; }
-.cra-source-text table { width:100%; margin:28px 0; display:block; overflow-x:auto; border-collapse:collapse; direction:rtl; }
-.cra-source-text thead,.cra-source-text tbody { width:100%; }
-.cra-source-text th,.cra-source-text td { min-width:120px; padding:12px 13px; vertical-align:top; color:#202a30; border:1px solid rgba(24,37,44,.24); font-size:var(--font-ui); line-height:1.9; text-align:right; }
+.cra-table-scroll { width:100%; margin:28px 0; overflow-x:auto; overscroll-behavior-inline:contain; }
+.cra-source-text .cra-table-scroll table { width:max-content; min-width:100%; margin:0; display:table; border-collapse:collapse; direction:rtl; }
+.cra-source-text thead,.cra-source-text tbody { width:auto; }
+.cra-source-text th,.cra-source-text td { min-width:150px; padding:12px 13px; vertical-align:top; color:#202a30; border:1px solid rgba(24,37,44,.24); font-size:var(--font-ui); line-height:1.9; text-align:right; }
 .cra-source-text th { background:#ded7c9; font-weight:650; }
 .cra-source-text td p,.cra-source-text th p { margin:0; font-size:inherit; line-height:inherit; text-align:inherit; }
 .cra-source-text img { max-width:100%; height:auto!important; margin:20px auto; display:block; }
@@ -658,6 +659,10 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-ocr-text math[display="inline"] { direction:ltr; font-size:1em; unicode-bidi:isolate; }
 .cra-ocr-text mtext { direction:rtl; unicode-bidi:isolate; }
 .cra-consolidated-text { background:#f7f2e7; }
+.cra-pdf-notes { margin-top:42px; border-block:1px solid rgba(24,37,44,.18); }
+.cra-pdf-notes summary { padding:16px 0; color:#705328; cursor:pointer; font-size:var(--font-small); font-weight:650; }
+.cra-pdf-notes>div { padding:0 0 18px; }
+.cra-pdf-notes p { margin:.5em 0!important; color:#4a555b!important; font-size:var(--font-small)!important; line-height:1.9!important; text-align:right!important; }
 .cra-editorial-note { margin:20px 0 30px!important; padding:16px 18px; color:#453a29!important; background:#e9dfc9; border-right:4px solid #9a7538; text-align:right!important; }
 .cra-source-text a { color:#705328; border-bottom:1px solid rgba(112,83,40,.35); }
 .cra-source-text .footnotes { margin-top:2em; padding:18px 20px; color:#263137; background:#e8e3d9; border:1px solid rgba(24,37,44,.18); }
