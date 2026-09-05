@@ -449,6 +449,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("docx", type=Path, help="Owner-reviewed OCR DOCX")
     parser.add_argument("repository", type=Path, help="Reghabatnameh repository root")
+    parser.add_argument("--reviewed-text", action="store_true", help="Rebuild the reviewed 336-1 transcript, retaining official revisions")
     args = parser.parse_args()
 
     docx = args.docx.resolve()
@@ -457,6 +458,32 @@ def main() -> None:
     index_path = repository / "content" / "cra" / "index.json"
     records = json.loads(index_path.read_text(encoding="utf-8"))
     records_by_route = {record["route"]: record for record in records}
+
+    if args.reviewed_text:
+        from cra_reviewed_336 import GUID, ROUTE, render
+        record = records_by_route[ROUTE]
+        source = docx.read_text(encoding="utf-8")
+        if '<' in source or '>' in source:
+            raise ValueError('The reviewed transcript must be plain text')
+        base_html = (repository / 'content' / record['contentFile']).read_text(encoding='utf-8')
+        override = render(source, base_html)
+        manifest_path = output_dir / 'manifest.json'
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        (output_dir / f'{GUID}.html').write_text(override, encoding='utf-8')
+        manifest['items'][GUID] = {
+            'route': ROUTE,
+            'contentFile': f'cra/ocr-overrides/{GUID}.html',
+            'readingMeta': reading_meta(override),
+            # Formatting is not a license to change the relationship graph.
+            'textReferences': record['textReferences'],
+            'hasEditorialConsolidation': False,
+            'source': str(docx.relative_to(repository)),
+            'sourceSha256': hashlib.sha256(docx.read_bytes()).hexdigest(),
+            'reconstruction': 'official-annotated-pdf',
+        }
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        print('Rebuilt 336-1 with 19 articles, official revision markup and a 15-row annex; other overrides preserved.')
+        return
 
     with tempfile.TemporaryDirectory(prefix="cra-ocr-") as temp_name:
         pandoc_html = Path(temp_name) / "ocr.html"
@@ -489,7 +516,10 @@ def main() -> None:
         matches.sort(key=lambda item: int(item.get("version") or "0"), reverse=True)
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    manifest_items: dict[str, dict] = {}
+    # Re-importing a legacy batch must not discard newer per-document reviews.
+    manifest_path = output_dir / 'manifest.json'
+    previous_manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {}
+    manifest_items: dict[str, dict] = dict(previous_manifest.get('items', {}))
     for route in sorted(EXPECTED_ROUTES):
         record = records_by_route.get(route)
         if not record:

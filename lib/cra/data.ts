@@ -15,6 +15,7 @@ import type { KnowledgeDocument } from "@/lib/knowledge/types";
 import { CONTENT_UPDATED_ISO } from "@/lib/site";
 import { craCategories } from "@/lib/cra/categories";
 import { toFaDate, toFaDigits } from "@/app/text";
+import { formatCraReadingHtml } from "./presentation";
 
 const craWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])[ \t]*[\u00AD\u200E\u200F\u2060][ \t]*([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 const craEmptyTableNumber = /<td([^>]*)>\s*<ol\b([^>]*)\bstart=(["'])(\d+)\3([^>]*)>\s*<li(?:\s[^>]*)?>\s*(?:<\/li>)?\s*<\/ol>\s*<\/td>/gi;
@@ -42,6 +43,13 @@ function normalizeCraWordArtifacts(text: string) {
     .replace(/اعالم/g, "اعلام")
     .replace(/کالن/g, "کلان")
     .replace(/بالمانع/g, "بلامانع")
+    .replace(/باال/g, "بالا")
+    .replace(/اصطالحات/g, "اصطلاحات")
+    .replace(/اطالع/g, "اطلاع")
+    .replace(/انحالل/g, "انحلال")
+    .replace(/اسالمی/g, "اسلامی")
+    .replace(/تسهیالت/g, "تسهیلات")
+    .replace(/دالیل/g, "دلایل")
     .replace(/الزم/g, "لازم");
 }
 
@@ -514,19 +522,11 @@ function cleanCraConsolidatedPdfSections(html: string) {
       return paragraph;
     });
 
-    const withReadableBoundaries = withoutPageFurniture
-      .split(/(<[^>]+>)/g)
-      .map((part) => {
-        if (part.startsWith("<")) return part;
-        return part
-          .replace(/([۰-۹])(?=[\u0600-\u06FF])/g, "$1 ")
-          .replace(/([\u0600-\u06FF])(?=[۰-۹])/g, "$1 ");
-      })
-      .join("");
-
-    if (!notes.length) return withReadableBoundaries;
+    // Persian digits also belong to U+0600–U+06FF. Treating that entire
+    // range as letters split ۳۳۶ and every date into individual digits.
+    if (!notes.length) return withoutPageFurniture;
     const noteDrawer = `<details class="cra-pdf-notes"><summary>پانوشت‌های نسخه تنقیحی</summary><div>${notes.join("")}</div></details>`;
-    return withReadableBoundaries.replace(/<\/section>$/i, `${noteDrawer}</section>`);
+    return withoutPageFurniture.replace(/<\/section>$/i, `${noteDrawer}</section>`);
   });
 }
 
@@ -539,18 +539,6 @@ function markFullyLatinCraBlocks(html: string) {
     if (!/[A-Za-z]/.test(plainText) || /[\u0600-\u06FF]/.test(plainText)) return block;
     return `<${tag}${attributes} dir="ltr">${content}</${tag}>`;
   });
-}
-
-function isolateInlineLatinCraText(html: string) {
-  return html
-    .split(/(<[^>]+>)/g)
-    .map((part) => {
-      if (part.startsWith("<") || !/[A-Za-z]/.test(part) || /[\u0600-\u06FF]/.test(part)) return part;
-      const match = part.match(/^(\s*)([\s\S]*?)(\s*)$/);
-      if (!match?.[2]) return part;
-      return `${match[1]}<bdi dir="ltr">${match[2]}</bdi>${match[3]}`;
-    })
-    .join("");
 }
 
 function wrapCraTables(html: string) {
@@ -606,7 +594,7 @@ function localizeCraDocumentText(html: string, guid: string) {
     },
   );
 
-  return wrapCraTables(isolateInlineLatinCraText(markFullyLatinCraBlocks(withCleanSourceLabels)));
+  return wrapCraTables(formatCraReadingHtml(markFullyLatinCraBlocks(withCleanSourceLabels)));
 }
 
 export function readCraResolutionHtml(resolution: CraResolution) {

@@ -279,6 +279,27 @@
         }
       ],
       "hasEditorialConsolidation": false
+    },
+    "46e982ec-2034-ed11-969e-0050569b0899": {
+      "route": "/resolutions/cra/1401/336-1",
+      "contentFile": "cra/ocr-overrides/46e982ec-2034-ed11-969e-0050569b0899.html",
+      "readingMeta": {
+        "wordCount": 12682,
+        "tableCount": 3,
+        "imageCount": 0,
+        "attachmentSectionCount": 5
+      },
+      "textReferences": [
+        {
+          "targetGuid": "e1dc7d42-e7ce-ec11-9698-0050569b0899",
+          "title": "اصول حاکم بر حمایت از توسعه شبکه دسترسی مبتنی بر فیبر نوری",
+          "evidence": "مصوبه شماره 3 جلسه شماره 329"
+        }
+      ],
+      "hasEditorialConsolidation": false,
+      "source": "content/cra/reviewed-sources/336-1.txt",
+      "sourceSha256": "aea7d20a43ed399bb9ab34bfe517eaeb559ec02220a7513aa3844502fa59b482",
+      "reconstruction": "official-annotated-pdf"
     }
   },
   "supplementalSources": [

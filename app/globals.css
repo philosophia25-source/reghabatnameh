@@ -638,7 +638,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-source-label span { color:#39444a; overflow-wrap:anywhere; }
 .cra-consolidated-label { padding:13px 15px; color:#5e4723; background:#e4d7bd; border-right:4px solid #9a7538; }
 .cra-consolidated-label strong { color:#5d4218; }
-.cra-source-text p,.cra-source-text li { color:#263137; font-size:var(--font-body); line-height:2.15; text-align:justify; }
+.cra-source-text p,.cra-source-text li { color:#263137; font-size:var(--font-body); line-height:2.05; text-align:right; }
 .cra-source-text p { margin:0 0 1.15em; }
 .cra-source-text ol { direction:rtl; list-style-type:persian; }
 .cra-source-text li::marker { direction:rtl; unicode-bidi:isolate; }
@@ -648,7 +648,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-source-text h3 { margin:1.8em 0 .65em; font-size:1.25rem; }
 .cra-source-text h4,.cra-source-text h5 { margin:1.5em 0 .55em; font-size:1.0625rem; }
 .cra-table-scroll { width:100%; margin:28px 0; overflow-x:auto; overscroll-behavior-inline:contain; }
-.cra-source-text .cra-table-scroll table { width:max-content; min-width:100%; margin:0; display:table; border-collapse:collapse; direction:rtl; }
+.cra-source-text .cra-table-scroll table { width:100%; min-width:640px; margin:0; display:table; border-collapse:collapse; direction:rtl; }
 .cra-source-text thead,.cra-source-text tbody { width:auto; }
 .cra-source-text th,.cra-source-text td { min-width:150px; padding:12px 13px; vertical-align:top; color:#202a30; border:1px solid rgba(24,37,44,.24); font-size:var(--font-ui); line-height:1.9; text-align:right; }
 .cra-source-text th { background:#ded7c9; font-weight:650; }
@@ -659,6 +659,18 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-ocr-text math[display="inline"] { direction:ltr; font-size:1em; unicode-bidi:isolate; }
 .cra-ocr-text mtext { direction:rtl; unicode-bidi:isolate; }
 .cra-consolidated-text { background:#f7f2e7; }
+.cra-source-text bdi { unicode-bidi:isolate; }
+.cra-clause-number { display:inline-block; margin-inline-end:.5em; color:#16242c; font-weight:650; white-space:nowrap; }
+.cra-reviewed-text .cra-proviso { margin-inline-start:1.2em; padding-inline-start:.9em; border-inline-start:2px solid #b6a98e; }
+.cra-reviewed-text .cra-revision-key { margin-bottom:1.8em; color:#5c5548; font-size:var(--font-small); }
+.cra-reviewed-text del { text-decoration:line-through; text-decoration-thickness:1px; color:#5b5551; }
+.cra-reviewed-text ins { text-decoration:underline; text-underline-offset:.2em; text-decoration-thickness:1px; color:#204d69; }
+.cra-reviewed-text .cra-note-ref { margin-inline:3px; font-size:.7em; vertical-align:super; line-height:0; }
+.cra-reviewed-text [id],.cra-source-text .footnotes [id] { scroll-margin-top:6rem; }
+.cra-reviewed-annex caption { padding-bottom:1em; font-weight:650; text-align:right; }
+.cra-source-text .cra-reviewed-annex th:first-child,.cra-source-text .cra-reviewed-annex td:first-child { width:4rem; min-width:3rem; text-align:center; }
+.cra-source-text .cra-reviewed-annex td:nth-child(2) { width:23%; }
+.cra-source-text .cra-reviewed-annex td:last-child { width:70%; }
 .cra-pdf-notes { margin-top:42px; border-block:1px solid rgba(24,37,44,.18); }
 .cra-pdf-notes summary { padding:16px 0; color:#705328; cursor:pointer; font-size:var(--font-small); font-weight:650; }
 .cra-pdf-notes>div { padding:0 0 18px; }
