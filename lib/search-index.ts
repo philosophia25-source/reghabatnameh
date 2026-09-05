@@ -3,12 +3,14 @@ import { join } from "node:path";
 import { decisionRecords } from "@/app/decision-data";
 import { craResolutions, readCraResolutionHtml } from "@/lib/cra/data";
 import { compactSearchText, normalizeSearchText } from "@/lib/search-normalize";
+import { readArticleHtml } from "@/lib/articles";
 import {
   documentsForCase,
   institutionsForDocument,
   marketsForDocument,
   provisionById,
   publishedCommentaries,
+  publishedArticles,
   publishedCases,
   publishedDocuments,
   publishedInstitutions,
@@ -195,6 +197,7 @@ export function buildSearchIndex(): SearchEntry[] {
   }));
 
   const entries = [
+    ...publishedArticles.map(article => ({ id: article.id, title: article.title, category: "مقاله پژوهشی", href: article.route, summary: article.abstract.slice(0,190), searchText: cleanHtml(`${article.title} ${article.authors.map(x=>x.name).join(" ")} ${article.abstract} ${readArticleHtml(article)}`) })),
     ...commentaryEntries,
     ...decisionEntries,
     ...resolutionEntries,

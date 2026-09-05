@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import {
   publishedDocuments,
+  publishedArticles,
   publishedCases,
   publishedInstitutions,
   publishedLegalSources,
@@ -27,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/laws/general-policies-44/article-45/commentary",
     "/laws/general-policies-44/article-45/decisions",
     "/decisions",
+    "/articles",
     "/resolutions",
     CRA_ORGANIZATION_ROUTE,
     CRA_ALL_RESOLUTIONS_ROUTE,
@@ -39,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const contentRoutes = [
+    ...publishedArticles.map((item) => item.route),
     ...publishedLegalSources.map((item) => item.route),
     ...publishedProvisions.map((item) => item.route),
     ...publishedDocuments.map((item) => item.route),

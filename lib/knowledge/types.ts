@@ -141,6 +141,11 @@ export type KnowledgeArticle = {
   title: string;
   route: string;
   contentFile: string;
+  abstract: string;
+  authors: { name: string; affiliation: string; corresponding?: boolean }[];
+  publication: { journal: string; year: string; volume: string; issue: string; serial: string; pages: string; season: string; doi: string; received: string; accepted: string };
+  keywords: string[];
+  pdfFile: string;
   institutionIds: string[];
   provisionIds: string[];
   documentIds: string[];

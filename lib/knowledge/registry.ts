@@ -22,6 +22,7 @@ import type {
 import { validateKnowledgeRegistry } from "./validate";
 import { CONTENT_UPDATED_ISO } from "@/lib/site";
 import { craKnowledgeDocuments } from "@/lib/cra/data";
+import telecomAbstract from "@/content/articles/telecom-abstract.json";
 
 export const institutionalDomains: InstitutionalDomain[] = [
   {
@@ -242,7 +243,29 @@ export const cases: KnowledgeCase[] = [
   },
 ];
 
-export const articles: KnowledgeArticle[] = [];
+export const articles: KnowledgeArticle[] = [{
+  id: "article:competition-council-and-telecom-regulator",
+  slug: "competition-council-and-telecom-regulator",
+  title: "موازنه صلاحیت شورای رقابت و نهاد تنظیم‌گر بخشی در صنعت مخابرات (مطالعه تطبیقی نظام‌های حقوقی ایالات متحده امریکا و ایران)",
+  route: "/articles/competition-council-and-telecom-regulator",
+  contentFile: "articles/competition-council-and-telecom-regulator.html",
+  abstract: telecomAbstract,
+  authors: [
+    { name: "مرتضی شهبازی‌نیا", affiliation: "دانشیار دانشکده حقوق دانشگاه تربیت مدرس، تهران، ایران", corresponding: true },
+    { name: "نادر جعفری", affiliation: "دانشجوی دکترا دانشکده حقوق دانشگاه تربیت مدرس، تهران، ایران" },
+    { name: "ولی رستمی", affiliation: "استاد گروه حقوق عمومی دانشکده حقوق و علوم سیاسی دانشگاه تهران، تهران، ایران" },
+    { name: "بیژن عباسی‌ارند", affiliation: "استادیار دانشکده برق و کامپیوتر دانشگاه تربیت مدرس، تهران، ایران" },
+  ],
+  publication: { journal: "دانش حقوق عمومی", year: "۱۴۰۳", volume: "۱۳", issue: "۳", serial: "۴۵", pages: "۱۸۹ تا ۲۱۲", season: "پاییز", doi: "10.22034/qjplk.2024.1969.1770", received: "۱۴۰۲/۱۱/۲۱", accepted: "۱۴۰۳/۰۶/۱۷" },
+  keywords: ["تعارض صلاحیت", "تنظیم‌گر بخشی", "شورای رقابت", "مخابرات"],
+  pdfFile: "/articles/competition-council-and-telecom-regulator.pdf",
+  institutionIds: ["competition-council", "communications-regulatory-commission"],
+  provisionIds: [],
+  // Resolve explicit citations by full route. Session 466 already in the
+  // decision archive concerns LIMS and must not be linked merely by number.
+  documentIds: craKnowledgeDocuments.filter(d => ["/resolutions/cra/1395/252-3", "/resolutions/cra/1401/338-1"].includes(d.route)).map(d => d.id),
+  topicIds: ["market-access"], marketIds: ["communications"], status: "published",
+}];
 
 validateKnowledgeRegistry({
   institutionalDomains,

@@ -14,6 +14,10 @@ import {
 export const publishedDocuments = documents.filter((item) => item.status === "published");
 export const publishedCases = cases.filter((item) => item.status === "published");
 export const publishedArticles = articles.filter((item) => item.status === "published");
+export function articlesForInstitution(id: string) { return publishedArticles.filter(a => a.institutionIds.includes(id)); }
+export function articlesForTopic(id: string) { return publishedArticles.filter(a => a.topicIds.includes(id)); }
+export function articlesForMarket(id: string) { return publishedArticles.filter(a => a.marketIds.includes(id)); }
+export function articlesForDocument(id: string) { return publishedArticles.filter(a => a.documentIds.includes(id)); }
 export const publishedLegalSources = legalSources.filter((item) => item.status === "published");
 export const publishedProvisions = provisions.filter((item) => item.status === "published");
 export const publishedCommentaries = commentaries.filter((item) => item.status === "published");

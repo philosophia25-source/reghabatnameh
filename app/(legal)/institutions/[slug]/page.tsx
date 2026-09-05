@@ -5,6 +5,7 @@ import { toFaDigits } from "@/app/text";
 import { DecisionCollection } from "@/components/decision-collection";
 import { ResolutionCollection } from "@/components/resolution-collection";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
+import { RelatedJournalArticles } from "@/components/related-journal-articles";
 import {
   documentsForInstitution,
   domainById,
@@ -81,6 +82,7 @@ export default async function InstitutionPage({ params }: { params: Promise<{ sl
           </>
         ) : null}
       </section>
+      <RelatedJournalArticles kind="institution" id={institution.id} />
     </>
   );
 }

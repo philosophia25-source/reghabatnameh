@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RelatedJournalArticles } from "@/components/related-journal-articles";
 import { toFaDate, toFaDigits } from "@/app/text";
 import { JsonLd } from "@/components/json-ld";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
@@ -233,6 +234,7 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
         </section>
 
         <details className="resolution-citation"><summary>شیوه استناد به این صفحه</summary><p>{toFaDigits(citation)}</p></details>
+        <RelatedJournalArticles kind="document" id={resolution.id} />
       </section>
     </>
   );
