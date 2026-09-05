@@ -11,7 +11,7 @@ export function SiteFooter() {
         <p>پایگاه یکپارچه حقوق رقابت و تنظیم‌گری ایران</p>
       </div>
       <div className="footer-author">
-        <strong>مدیریت علمی و گردآوری، نادر جعفری</strong>
+        <strong>مدیریت علمی و گردآوری: نادر جعفری</strong>
         <span>وکیل پایه یک دادگستری و پژوهشگر حقوق رقابت و تنظیم‌گری</span>
       </div>
       <nav className="footer-contact" aria-label="پیوندهای تکمیلی و راه‌های ارتباط">

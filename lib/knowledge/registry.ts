@@ -70,7 +70,7 @@ export const institutions: Institution[] = [
     shortName: "سازمان تنظیم مقررات",
     kind: "sector-regulator",
     domainId: "communications-regulation",
-    description: "نهاد اجرایی تنظیم‌گری بخش ارتباطات و رادیویی",
+    description: "نهاد اجرایی تنظیم‌گری بخش ارتباطات رادیویی",
     route: "/institutions/communications-regulatory-authority",
     status: "draft",
   },

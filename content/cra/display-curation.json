@@ -1,0 +1,134 @@
+{
+  "redundantTextSections": {
+    "e9439fb6-a985-eb11-9690-0050569b0899": [
+      "مصوبه شماره 311 کمیسیون- نسخه ابلاغ (2).pdf"
+    ],
+    "ffeabe98-3778-e811-9671-0050569b0899": [
+      "مصوبه جلسه شماره 267 کمیسیون.pdf"
+    ],
+    "7b9ad78f-2f9c-e711-80c6-0050568735c7": [
+      "مصوبه شماره 2 جلسه شماره 262 کمیسیون.pdf"
+    ],
+    "7a789af9-d20b-e711-80d5-005056875dcc": [
+      "۵.pdf"
+    ],
+    "2b7ac3e8-cf0b-e711-80d5-005056875dcc": [
+      "۲.pdf"
+    ],
+    "aaf1461a-1361-e611-80c9-005056874efe": [
+      "مصوبه شماره 1 جلسه شماره 238 کمیسیون.pdf"
+    ],
+    "5196e386-d1ee-f011-b97b-0050569c58ac": [
+      "364-8--هیئت وزیران.pdf"
+    ],
+    "8498ec5d-45d8-e911-967d-0050569b0899": [
+      "تصویب نامه هیئت وزیران- مصوبه شماره 4 جلسه شماره 292 کمیسیون.pdf"
+    ],
+    "d1cb8c7e-103d-ef11-b96c-0050569c58ac": [
+      "18239.pdf",
+      "تصویب_نامه هیئت وزیران2.pdf"
+    ]
+  },
+  "htmlReplacements": {
+    "8c7c91c4-89f9-ef11-b972-0050569c58ac": [
+      {
+        "from": "<strong>)<span dir=\"rtl\">همراه با اصلاحات مصوبه شماره 2 جلسه شماره 360 کمیسیون)</span></strong>",
+        "to": "<strong><span dir=\"rtl\">(همراه با اصلاحات مصوبه شماره 2 جلسه شماره 360 کمیسیون)</span></strong>"
+      }
+    ],
+    "3587e554-91bd-e911-967d-0050569b0899": [
+      {
+        "from": "شبکه ارتباطات ثابت ((</span>FCP<span dir=\"rtl\">،",
+        "to": "شبکه ارتباطات ثابت (</span>FCP<span dir=\"rtl\">)،"
+      }
+    ],
+    "f307acf7-bfef-e811-9677-0050569b0899": [
+      {
+        "from": "بین­الملل )فرم شماره دو</span></strong><span dir=\"rtl\">(</span>",
+        "to": "بین­الملل (فرم شماره دو)</span></strong>"
+      },
+      {
+        "from": "دارندگان پروانه) فرم شماره سه)",
+        "to": "دارندگان پروانه (فرم شماره سه)"
+      },
+      {
+        "from": "<p><strong>۴<span dir=\"rtl\">_ شاخص­های مرتبط با بخش دسترسی نسل دوم (</span>2G<span dir=\"rtl\">) شبکه تلفن همراه (</span></strong><span dir=\"rtl\"></span><img src=\"/cra-media/f307acf7-bfef-e811-9677-0050569b0899/1-6.png\" style=\"width:0.40625in;height:0.23958in\" loading=\"lazy\"><span dir=\"rtl\"><strong>)</strong> (فرم شماره</span> ۴<span dir=\"rtl\">)</span></p>",
+        "to": "<p><strong>۴<span dir=\"rtl\">_ شاخص­های مرتبط با بخش دسترسی نسل دوم (</span>2G<span dir=\"rtl\">) شبکه تلفن همراه (</span>BSS<span dir=\"rtl\">) (فرم شماره</span> ۴<span dir=\"rtl\">)</span></strong></p>"
+      },
+      {
+        "from": "(ساعت پیک یک ساعته (",
+        "to": "(ساعت پیک یک ساعته)"
+      }
+    ],
+    "b3e7fb40-3af7-e611-80d4-005056875dcc": [
+      {
+        "from": "فناوری بی سیم ثابت</span>FWA)",
+        "to": "فناوری بی سیم ثابت</span> (FWA)"
+      },
+      {
+        "from": "<span dir=\"rtl\">) ویا ایجاد و بهره برداری",
+        "to": "<span dir=\"rtl\"> و یا ایجاد و بهره برداری"
+      }
+    ],
+    "cacbb54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "WiFi <span dir=\"rtl\">خانواده</span> 802.11x<span dir=\"rtl\">) برای",
+        "to": "WiFi <span dir=\"rtl\">(خانواده</span> 802.11x<span dir=\"rtl\">) برای"
+      }
+    ],
+    "79cbb54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "<strong>IETF</strong> <span dir=\"rtl\">(</span>(Internet Engineering Task Force<span dir=\"rtl\">:",
+        "to": "<strong>IETF</strong> <span dir=\"rtl\">(</span>Internet Engineering Task Force<span dir=\"rtl\">):"
+      }
+    ],
+    "45cbb54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "<p><strong><span dir=\"rtl\">(ساعت پیک یک ساعته/</span> <span dir=\"rtl\">بدترین حالت</span>(</strong></p>",
+        "to": "<p><strong><span dir=\"rtl\">(ساعت پیک یک ساعته / بدترین حالت)</span></strong></p>"
+      }
+    ],
+    "31cbb54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "<p><span dir=\"rtl\">)</span>VSAT: Very Small Aperture Terminal)</p>",
+        "to": "<p>(VSAT: Very Small Aperture Terminal)</p>"
+      }
+    ],
+    "2fcbb54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "سامانه خودکار (</span>(Autonomous System <span dir=\"rtl\">می‌باشد",
+        "to": "سامانه خودکار (</span>Autonomous System<span dir=\"rtl\">) می‌باشد"
+      }
+    ],
+    "00cbb54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "فناوري اطلاعات(</span> (IT<span dir=\"rtl\">.</span>",
+        "to": "فناوري اطلاعات (</span>IT<span dir=\"rtl\">).</span>"
+      }
+    ],
+    "f4cab54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "تجهيزات مشتري ( </strong></span> <strong>(Customer Premises Equipment <span dir=\"rtl\">:</span></strong>",
+        "to": "تجهيزات مشتري (</strong></span><strong>Customer Premises Equipment<span dir=\"rtl\">):</span></strong>"
+      }
+    ],
+    "f0cab54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "خطوط کابلي(</span>PAP<span dir=\"rtl\">) )موظف",
+        "to": "خطوط کابلي (</span>PAP<span dir=\"rtl\">) موظف"
+      }
+    ],
+    "d9cab54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "بصورت اختصاصي</span>dedicated) <span dir=\"rtl\">) واگذار",
+        "to": "بصورت اختصاصي</span> (dedicated) <span dir=\"rtl\">واگذار"
+      }
+    ],
+    "c7cab54b-f687-e511-973c-68b599781b58": [
+      {
+        "from": "بين الملل</span> VOIP ) <span dir=\"rtl\">) سازمان",
+        "to": "بين الملل</span> (VOIP) <span dir=\"rtl\">سازمان"
+      }
+    ]
+  }
+}

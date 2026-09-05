@@ -19,7 +19,7 @@ export default function ResolutionsPage() {
         <Link className="knowledge-card resolution-regulator-card" href={CRA_ORGANIZATION_ROUTE}>
           <small>تنظیم‌گر بخشی</small>
           <h2>سازمان تنظیم مقررات و ارتباطات رادیویی</h2>
-          <p>مصوبات کمیسیون تنظیم مقررات ارتباطات در {toFaDigits(craCategories.length)} دسته منبع، همراه با متن قابل جست‌وجو و روابط میان اسناد</p>
+          <p>مصوبات کمیسیون تنظیم مقررات ارتباطات در {toFaDigits(craCategories.length)} دستهٔ ثبت‌شده در منبع رسمی، همراه با متن قابل جست‌وجو و روابط میان اسناد</p>
           <b>ورود به آرشیو سازمان ←</b>
         </Link>
       </div>

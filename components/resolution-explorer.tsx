@@ -112,7 +112,7 @@ export function ResolutionExplorer({
           </select>
         </label>
         <label>
-          <span>وضعیت مراجعه</span>
+          <span>ویژگی سند</span>
           <select value={readingStatus} onChange={(event) => { setReadingStatus(event.target.value); setVisible(40); }}>
             <option value="">همه وضعیت‌ها</option>
             <option value="consolidated">دارای پیوست تنقیحی</option>
@@ -147,7 +147,7 @@ export function ResolutionExplorer({
                     {resolution.supplementalReferenceCount ? <i>ارجاع متنی</i> : null}
                   </div>
                   <h2>{toFaDigits(resolution.title)}</h2>
-                  <p>{toFaDigits(resolution.code)} · {resolution.approvalDate ? toFaDate(resolution.approvalDate) : "تاریخ ثبت نشده"}{resolution.version !== "1" ? ` · نسخه ${toFaDigits(resolution.version)}` : ""}</p>
+                  <p>{toFaDigits(resolution.code)} · {resolution.approvalDate ? toFaDate(resolution.approvalDate) : "بدون تاریخ"}{resolution.version !== "1" ? ` · نسخه ${toFaDigits(resolution.version)}` : ""}</p>
                 </div>
                 <b aria-hidden="true">←</b>
               </Link>

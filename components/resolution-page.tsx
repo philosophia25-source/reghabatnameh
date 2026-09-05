@@ -28,8 +28,8 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const relationLabels = {
   related: "اسناد مرتبط در سامانه رسمی",
-  affects: "اسناد تاثیرپذیر در سامانه رسمی",
-  influencedBy: "اسناد تاثیرگذار در سامانه رسمی",
+  affects: "اسناد تأثیرپذیر در سامانه رسمی",
+  influencedBy: "اسناد تأثیرگذار در سامانه رسمی",
   versions: "نسخه‌های ثبت‌شده در سامانه رسمی",
 };
 
@@ -51,7 +51,7 @@ function TextReferenceLinks({ targets }: { targets: CraTextReferenceTarget[] }) 
       {targets.map((target) => (
         <li key={target.targetGuid}>
           <ResolutionTargetLink target={target} />
-          <small>عبارت شناسایی‌شده در متن&nbsp; {toFaDigits(target.evidence)}</small>
+          <small>عبارت شناسایی‌شده در متن: {toFaDigits(target.evidence)}</small>
         </li>
       ))}
     </ul>
@@ -131,13 +131,13 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
           <details className="resolution-disclosure">
             <summary>
               <span>مشخصات مصوبه</span>
-              <small>جلسه {toFaDigits(resolution.sessionNumber)} · {resolution.resolutionNumber ? `مصوبه ${toFaDigits(resolution.resolutionNumber)}` : "شماره مصوبه ثبت نشده"} · {resolution.approvalDate ? toFaDate(resolution.approvalDate) : "تاریخ ثبت نشده"}</small>
+              <small>جلسه {toFaDigits(resolution.sessionNumber)} · {resolution.resolutionNumber ? `مصوبه ${toFaDigits(resolution.resolutionNumber)}` : "بدون شماره مصوبه"} · {resolution.approvalDate ? toFaDate(resolution.approvalDate) : "بدون تاریخ"}</small>
             </summary>
             <div className="resolution-disclosure-body">
               <div className="resolution-facts">
                 <div><small>شماره جلسه</small><strong>{toFaDigits(resolution.sessionNumber)}</strong></div>
-                <div><small>شماره مصوبه</small><strong>{resolution.resolutionNumber ? toFaDigits(resolution.resolutionNumber) : "ثبت نشده"}</strong></div>
-                <div><small>تاریخ تصویب</small><strong>{resolution.approvalDate ? toFaDate(resolution.approvalDate) : "ثبت نشده"}</strong></div>
+                <div><small>شماره مصوبه</small><strong>{resolution.resolutionNumber ? toFaDigits(resolution.resolutionNumber) : "بدون شماره مصوبه"}</strong></div>
+                <div><small>تاریخ تصویب</small><strong>{resolution.approvalDate ? toFaDate(resolution.approvalDate) : "بدون تاریخ"}</strong></div>
                 <div><small>نسخه</small><strong>{toFaDigits(resolution.version)}</strong></div>
                 <div><small>حوزه سند</small><strong>{resolution.category}</strong></div>
                 <div><small>کد رسمی</small><strong>{toFaDigits(resolution.code)}</strong></div>

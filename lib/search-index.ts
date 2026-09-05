@@ -136,7 +136,7 @@ export function buildSearchIndex(): SearchEntry[] {
       title: resolution.title,
       category: "مصوبه تنظیم‌گری",
       href: resolution.route,
-      summary: `${number}، ${resolution.approvalDate || "تاریخ ثبت نشده"}، ${resolution.category}`,
+      summary: `${number}، ${resolution.approvalDate || "بدون تاریخ"}، ${resolution.category}`,
       searchText: cleanMarkdown([
         resolution.title,
         resolution.code,

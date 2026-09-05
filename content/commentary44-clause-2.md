@@ -58,4 +58,4 @@
 ---
 
 [\[1\]](#_ftnref1) در پرونده BIDS، دیوان دادگستری اتحادیه اروپا نیز محدودیت تولید را صرفاً به کاهش بالفعل مقدار تولید محدود نکرد و سازوکاری را که آزادی شرکت‌ها برای افزایش تولید را محدود می‌کرد، مشمول ممنوعیت دانست. موضوعی که در حقوق ایران نیز قابل اجرا به نظر می‌رسد. نک.
- CJEU, Competition Authority v Beef Industry Development Society Ltd (BIDS), Case C-209/07, Judgment of 20 November 2008.
+CJEU, Competition Authority v Beef Industry Development Society Ltd (BIDS), Case C-209/07, Judgment of 20 November 2008.

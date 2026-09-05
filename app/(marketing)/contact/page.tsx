@@ -28,7 +28,7 @@ export default function ContactPage() {
       <div className="contact-grid">
         <section className="contact-card">
           <small>نشانی دفتر</small>
-          <address>تهران، سرو، بزرگراه آیت الله هاشمی رفسنجانی، بلوار فرحزادی، ۱۰ متری تقاطع بوستان چهارم، پلاک ۵۱، واحد ۲</address>
+          <address>تهران، سرو، بزرگراه آیت‌الله هاشمی رفسنجانی، بلوار فرحزادی، ۱۰ متری تقاطع بوستان چهارم، پلاک ۵۱، واحد ۲</address>
           <a className="map-link" href={officeMap} target="_blank" rel="noreferrer">مشاهده روی نقشه <span aria-hidden="true">←</span></a>
         </section>
 

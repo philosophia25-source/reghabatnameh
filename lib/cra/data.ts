@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import rawResolutions from "@/content/cra/index.json";
+import rawDisplayCuration from "@/content/cra/display-curation.json";
 import rawOcrOverrides from "@/content/cra/ocr-overrides/manifest.json";
 import rawRelationshipCuration from "@/content/cra/relationship-curation.json";
 import type {
@@ -21,6 +22,13 @@ const craInlineFormattedDayFirstDate = /(\d{1,2})\/(\d{1,2})\/<(em|strong|b|i|u)
 const craSourceLabel = /(<section class="cra-source-text" data-format="([^"]+)">)<div class="cra-source-label">متن پیوست <span>([^<]*)<\/span><\/div>/gi;
 const craMarkupNumberSeparator = /([۰-۹])((?:<[^>]+>)*)[,،]((?:<[^>]+>)*)(?=[۰-۹])/g;
 const craMarkupWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])((?:<[^>]+>)*)[\u00AD\u200E\u200F\u2060]((?:<[^>]+>)*)(?=[\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
+const craTextBlock = /<(p|h[2-5])([^>]*)>([\s\S]*?)<\/\1>/gi;
+const craSourceSection = /<section class="cra-source-text[^"]*"[^>]*>[\s\S]*?<\/section>/gi;
+const craSourceName = /<div class="cra-source-label">متن پیوست <span>([^<]*)<\/span><\/div>/i;
+const craArabicLetter = "[\\u0621-\\u063A\\u0641-\\u064A\\u066E-\\u06D3\\u06FA-\\u06FF]";
+const craInWordTatweel = new RegExp(`(${craArabicLetter})\\u0640+(?=${craArabicLetter})`, "g");
+const craArabicIndicDigits = "٠١٢٣٤٥٦٧٨٩";
+const craPersianDigits = "۰۱۲۳۴۵۶۷۸۹";
 
 function normalizeCraWordArtifacts(text: string) {
   return text
@@ -35,6 +43,7 @@ function normalizeCraRelationTarget(target: CraRelationTarget): CraRelationTarge
 const sourceCraResolutions = rawResolutions as CraResolution[];
 type CraRelationshipCuration = {
   aliases: Record<string, string>;
+  duplicateRecords: Record<string, string>;
   ignoredTargets: string[];
   consolidations: { baseGuid: string; amendmentGuid: string }[];
 };
@@ -43,7 +52,12 @@ const sourceCraRelationshipCuration = rawRelationshipCuration as CraRelationship
 const sourceCraResolutionByGuid = new Map(
   sourceCraResolutions.map((resolution) => [resolution.guid, resolution]),
 );
+const sourceCraDisplayCuration = rawDisplayCuration as {
+  redundantTextSections: Record<string, string[]>;
+  htmlReplacements: Record<string, { from: string; to: string }[]>;
+};
 const ignoredRelationTargetGuids = new Set(sourceCraRelationshipCuration.ignoredTargets);
+const duplicateRecordGuids = new Set(Object.keys(sourceCraRelationshipCuration.duplicateRecords));
 
 for (const ignoredGuid of ignoredRelationTargetGuids) {
   if (sourceCraResolutionByGuid.has(ignoredGuid)) {
@@ -60,11 +74,52 @@ for (const [aliasGuid, canonicalGuid] of Object.entries(sourceCraRelationshipCur
   }
 }
 
+for (const [duplicateGuid, canonicalGuid] of Object.entries(sourceCraRelationshipCuration.duplicateRecords)) {
+  const duplicate = sourceCraResolutionByGuid.get(duplicateGuid);
+  const canonical = sourceCraResolutionByGuid.get(canonicalGuid);
+  if (!duplicate || !canonical) {
+    throw new Error(`CRA duplicate record points to an unknown document: ${duplicateGuid} -> ${canonicalGuid}.`);
+  }
+  if (duplicateGuid === canonicalGuid || duplicate.contentAvailable || !canonical.contentAvailable) {
+    throw new Error(`CRA duplicate record is not a valid empty-to-complete redirect: ${duplicateGuid} -> ${canonicalGuid}.`);
+  }
+}
+
+for (const [guid, sourceNames] of Object.entries(sourceCraDisplayCuration.redundantTextSections)) {
+  const resolution = sourceCraResolutionByGuid.get(guid);
+  if (!resolution) throw new Error(`CRA display curation points to an unknown document: ${guid}.`);
+  const contentPath = join(process.cwd(), "content", resolution.contentFile);
+  const sourceHtml = readFileSync(contentPath, "utf8");
+  for (const sourceName of sourceNames) {
+    if (!sourceHtml.includes(`<span>${sourceName}</span>`)) {
+      throw new Error(`CRA redundant text section is missing from ${guid}: ${sourceName}.`);
+    }
+  }
+}
+
+for (const [guid, replacements] of Object.entries(sourceCraDisplayCuration.htmlReplacements)) {
+  const resolution = sourceCraResolutionByGuid.get(guid);
+  if (!resolution) throw new Error(`CRA display replacement points to an unknown document: ${guid}.`);
+  const contentPath = join(process.cwd(), "content", resolution.contentFile);
+  const sourceHtml = readFileSync(contentPath, "utf8");
+  for (const replacement of replacements) {
+    if (!replacement.from || replacement.from === replacement.to || !sourceHtml.includes(replacement.from)) {
+      throw new Error(`CRA display replacement is invalid or stale for ${guid}: ${replacement.from}.`);
+    }
+  }
+}
+
+function canonicalCraGuid(guid: string) {
+  return sourceCraRelationshipCuration.duplicateRecords[guid]
+    ?? sourceCraRelationshipCuration.aliases[guid]
+    ?? guid;
+}
+
 function curateRelationTargets(targets: CraRelationTarget[], sourceGuid: string) {
   const curated: CraRelationTarget[] = [];
   for (const target of targets) {
     if (ignoredRelationTargetGuids.has(target.targetGuid)) continue;
-    const targetGuid = sourceCraRelationshipCuration.aliases[target.targetGuid] ?? target.targetGuid;
+    const targetGuid = canonicalCraGuid(target.targetGuid);
     const local = sourceCraResolutionByGuid.get(targetGuid);
     if (!local || targetGuid === sourceGuid || curated.some((item) => item.targetGuid === targetGuid)) continue;
     curated.push(normalizeCraRelationTarget({
@@ -94,37 +149,53 @@ if (unknownOcrOverrideGuids.length) {
   throw new Error(`CRA OCR override points to unknown GUIDs: ${unknownOcrOverrideGuids.join(", ")}.`);
 }
 
-export const craResolutions: CraResolution[] = sourceCraResolutions.map((resolution) => {
-  const ocrOverride = sourceCraOcrOverrides[resolution.guid];
-  if (ocrOverride && ocrOverride.route !== resolution.route) {
-    throw new Error(`CRA OCR route mismatch for ${resolution.guid}.`);
-  }
-  const textReferences = ocrOverride?.textReferences ?? resolution.textReferences;
+export const craResolutionRouteParams = sourceCraResolutions.map((resolution) => ({
+  year: resolution.year,
+  slug: resolution.slug,
+}));
 
-  return {
-    ...resolution,
-    contentFile: ocrOverride?.contentFile ?? resolution.contentFile,
-    contentAvailable: ocrOverride ? true : resolution.contentAvailable,
-    readingMeta: ocrOverride?.readingMeta ?? resolution.readingMeta,
-    title: normalizeCraWordArtifacts(resolution.title),
-    keywords: resolution.keywords.map(normalizeCraWordArtifacts),
-    relations: {
-      related: curateRelationTargets(resolution.relations.related, resolution.guid),
-      affects: curateRelationTargets(resolution.relations.affects, resolution.guid),
-      influencedBy: curateRelationTargets(resolution.relations.influencedBy, resolution.guid),
-      versions: curateRelationTargets(resolution.relations.versions, resolution.guid),
-    },
-    textReferences: curateRelationTargets(textReferences, resolution.guid).map((target) => {
-      const source = textReferences.find((item) => (
-        (sourceCraRelationshipCuration.aliases[item.targetGuid] ?? item.targetGuid) === target.targetGuid
-      ));
-      return {
-        ...target,
-        evidence: normalizeCraWordArtifacts(source?.evidence ?? ""),
-      };
+const duplicateDestinationByPath = new Map(
+  sourceCraResolutions
+    .filter((resolution) => duplicateRecordGuids.has(resolution.guid))
+    .map((resolution) => {
+      const canonicalGuid = sourceCraRelationshipCuration.duplicateRecords[resolution.guid];
+      const canonical = sourceCraResolutionByGuid.get(canonicalGuid);
+      if (!canonical) throw new Error(`CRA duplicate destination is missing: ${canonicalGuid}.`);
+      return [`${resolution.year}/${resolution.slug}`, canonical.route];
     }),
-  };
-});
+);
+
+export const craResolutions: CraResolution[] = sourceCraResolutions
+  .filter((resolution) => !duplicateRecordGuids.has(resolution.guid))
+  .map((resolution) => {
+    const ocrOverride = sourceCraOcrOverrides[resolution.guid];
+    if (ocrOverride && ocrOverride.route !== resolution.route) {
+      throw new Error(`CRA OCR route mismatch for ${resolution.guid}.`);
+    }
+    const textReferences = ocrOverride?.textReferences ?? resolution.textReferences;
+
+    return {
+      ...resolution,
+      contentFile: ocrOverride?.contentFile ?? resolution.contentFile,
+      contentAvailable: ocrOverride ? true : resolution.contentAvailable,
+      readingMeta: ocrOverride?.readingMeta ?? resolution.readingMeta,
+      title: normalizeCraWordArtifacts(resolution.title),
+      keywords: resolution.keywords.map(normalizeCraWordArtifacts),
+      relations: {
+        related: curateRelationTargets(resolution.relations.related, resolution.guid),
+        affects: curateRelationTargets(resolution.relations.affects, resolution.guid),
+        influencedBy: curateRelationTargets(resolution.relations.influencedBy, resolution.guid),
+        versions: curateRelationTargets(resolution.relations.versions, resolution.guid),
+      },
+      textReferences: curateRelationTargets(textReferences, resolution.guid).map((target) => {
+        const source = textReferences.find((item) => canonicalCraGuid(item.targetGuid) === target.targetGuid);
+        return {
+          ...target,
+          evidence: normalizeCraWordArtifacts(source?.evidence ?? ""),
+        };
+      }),
+    };
+  });
 
 export function craOcrOverrideFor(resolution: CraResolution) {
   return sourceCraOcrOverrides[resolution.guid];
@@ -354,25 +425,97 @@ export function craResolutionForPath(params: { year: string; slug: string }) {
   return craResolutionByPath.get(`${params.year}/${params.slug}`);
 }
 
+export function craDuplicateResolutionDestinationForPath(params: { year: string; slug: string }) {
+  return duplicateDestinationByPath.get(`${params.year}/${params.slug}`);
+}
+
 function localizeCraTextNode(text: string) {
-  return normalizeCraWordArtifacts(toFaDate(text))
+  const normalizedCompatibilityText = /[\uFB50-\uFDFF\uFE70-\uFEFE]/.test(text)
+    ? text.normalize("NFKC")
+    : text;
+  return normalizeCraWordArtifacts(normalizedCompatibilityText)
+    .replace(/[\u200E\u200F\u202A-\u202E\u2060\u2066-\u2069]/g, "")
+    .replace(/[٠-٩]/g, (digit) => craPersianDigits[craArabicIndicDigits.indexOf(digit)])
+    .replace(/\u200C{2,}/g, "‌")
+    .replace(/\u200C(?=[.,،؛:!?؟])/g, "")
+    .replace(craInWordTatweel, "$1")
+    .replace(/\u200C(?=\s)/g, "")
+    .replace(/(?<=\s)\u200C/g, "")
     .replace(/([۰-۹])[,،](?=[۰-۹])/g, "$1٬");
 }
 
-function localizeCraDocumentText(html: string) {
-  let attachmentNumber = 0;
-  const withCleanSourceLabels = html.replace(
-    craSourceLabel,
-    (_match, sectionStart: string, format: string, sourceName: string) => {
-      attachmentNumber += 1;
-      const formatLabel = format.toLowerCase() === "pdf" ? "فایل PDF" : "فایل Word";
-      const consolidated = /تنقیح/.test(sourceName);
-      const label = consolidated ? "پیوست تنقیحی" : `پیوست ${toFaDigits(attachmentNumber)}`;
-      const className = consolidated ? "cra-source-label cra-consolidated-label" : "cra-source-label";
-      return `${sectionStart}<div class="${className}"><strong>${label}</strong><span>${formatLabel}</span></div>`;
-    },
+function normalizeCraDateText(text: string) {
+  return toFaDate(text)
+    .replace(/([۰-۹])[,،](?=[۰-۹])/g, "$1٬");
+}
+
+function craSectionComparisonText(section: string) {
+  return section
+    .replace(/<div class="cra-source-label[^"]*">[\s\S]*?<\/div>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;|&#160;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, "\"")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function deduplicateCraSourceSections(html: string) {
+  const seen = new Set<string>();
+  return html.replace(craSourceSection, (section) => {
+    const comparisonText = craSectionComparisonText(section);
+    if (!comparisonText) return section;
+    if (seen.has(comparisonText)) return "";
+    seen.add(comparisonText);
+    return section;
+  });
+}
+
+function removeCuratedRedundantCraSections(html: string, guid: string) {
+  const redundantSourceNames = new Set(sourceCraDisplayCuration.redundantTextSections[guid] ?? []);
+  if (!redundantSourceNames.size) return html;
+  return html.replace(craSourceSection, (section) => {
+    const sourceName = section.match(craSourceName)?.[1];
+    return sourceName && redundantSourceNames.has(sourceName) ? "" : section;
+  });
+}
+
+function applyCuratedCraHtmlReplacements(html: string, guid: string) {
+  return (sourceCraDisplayCuration.htmlReplacements[guid] ?? [])
+    .reduce((result, replacement) => result.replaceAll(replacement.from, replacement.to), html);
+}
+
+function markFullyLatinCraBlocks(html: string) {
+  return html.replace(craTextBlock, (block, tag: string, attributes: string, content: string) => {
+    if (/\bdir\s*=/i.test(attributes)) return block;
+    const plainText = content
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&(?:#(?:x[0-9a-f]+|\d+)|[a-z][a-z0-9]+);/gi, " ");
+    if (!/[A-Za-z]/.test(plainText) || /[\u0600-\u06FF]/.test(plainText)) return block;
+    return `<${tag}${attributes} dir="ltr">${content}</${tag}>`;
+  });
+}
+
+function isolateInlineLatinCraText(html: string) {
+  return html
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (part.startsWith("<") || !/[A-Za-z]/.test(part) || /[\u0600-\u06FF]/.test(part)) return part;
+      const match = part.match(/^(\s*)([\s\S]*?)(\s*)$/);
+      if (!match?.[2]) return part;
+      return `${match[1]}<bdi dir="ltr">${match[2]}</bdi>${match[3]}`;
+    })
+    .join("");
+}
+
+function localizeCraDocumentText(html: string, guid: string) {
+  const curatedHtml = applyCuratedCraHtmlReplacements(
+    removeCuratedRedundantCraSections(html, guid),
+    guid,
   );
-  const withPlainTableNumbers = withCleanSourceLabels.replace(
+  const withPlainTableNumbers = curatedHtml.replace(
     craEmptyTableNumber,
     (_match, cellAttributes: string, _beforeStart: string, _quote: string, start: string) => (
       `<td${cellAttributes}><span class="cra-row-number">${toFaDigits(start)}</span></td>`
@@ -389,19 +532,35 @@ function localizeCraDocumentText(html: string) {
       if (part.startsWith("<")) return part;
       return part
         .split(/(&#(?:[0-9]+|x[0-9a-f]+);)/gi)
-        .map((text) => text.startsWith("&#") ? text : localizeCraTextNode(text))
+        .map((text) => text.startsWith("&#") ? text : normalizeCraDateText(localizeCraTextNode(text)))
         .join("");
     })
     .join("");
 
-  return localized
+  const normalized = localized
     .replace(craMarkupNumberSeparator, "$1$2٬$3")
     .replace(craMarkupWordJoinArtifact, "$1$2‌$3");
+
+  let attachmentNumber = 0;
+  const withoutDuplicateSections = deduplicateCraSourceSections(normalized);
+  const withCleanSourceLabels = withoutDuplicateSections.replace(
+    craSourceLabel,
+    (_match, sectionStart: string, format: string, sourceName: string) => {
+      attachmentNumber += 1;
+      const formatLabel = format.toLowerCase() === "pdf" ? "فایل PDF" : "فایل Word";
+      const consolidated = /تنقیح/.test(sourceName);
+      const label = consolidated ? "پیوست تنقیحی" : `پیوست ${toFaDigits(attachmentNumber)}`;
+      const className = consolidated ? "cra-source-label cra-consolidated-label" : "cra-source-label";
+      return `${sectionStart}<div class="${className}"><strong>${label}</strong><span>${formatLabel}</span></div>`;
+    },
+  );
+
+  return isolateInlineLatinCraText(markFullyLatinCraBlocks(withCleanSourceLabels));
 }
 
 export function readCraResolutionHtml(resolution: CraResolution) {
   const html = readFileSync(join(process.cwd(), "content", resolution.contentFile), "utf8");
-  return localizeCraDocumentText(html);
+  return localizeCraDocumentText(html, resolution.guid);
 }
 
 export function craResolutionDescription(resolution: CraResolution) {
