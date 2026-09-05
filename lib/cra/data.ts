@@ -25,6 +25,8 @@ const craMarkupWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06
 const craTextBlock = /<(p|h[2-5])([^>]*)>([\s\S]*?)<\/\1>/gi;
 const craSourceSection = /<section class="cra-source-text[^"]*"[^>]*>[\s\S]*?<\/section>/gi;
 const craSourceName = /<div class="cra-source-label">متن پیوست <span>([^<]*)<\/span><\/div>/i;
+const craTable = /<table\b[^>]*>[\s\S]*?<\/table>/gi;
+const craParagraph = /<p>([\s\S]*?)<\/p>/gi;
 const craArabicLetter = "[\\u0621-\\u063A\\u0641-\\u064A\\u066E-\\u06D3\\u06FA-\\u06FF]";
 const craInWordTatweel = new RegExp(`(${craArabicLetter})\\u0640+(?=${craArabicLetter})`, "g");
 const craArabicIndicDigits = "٠١٢٣٤٥٦٧٨٩";
@@ -33,7 +35,14 @@ const craPersianDigits = "۰۱۲۳۴۵۶۷۸۹";
 function normalizeCraWordArtifacts(text: string) {
   return text
     .replace(craWordJoinArtifact, "$1‌$2")
-    .replace(/\u00AD/g, "‌");
+    .replace(/\u00AD/g, "‌")
+    .replace(/ابالغ/g, "ابلاغ")
+    .replace(/اطالعات/g, "اطلاعات")
+    .replace(/اصالح/g, "اصلاح")
+    .replace(/اعالم/g, "اعلام")
+    .replace(/کالن/g, "کلان")
+    .replace(/بالمانع/g, "بلامانع")
+    .replace(/الزم/g, "لازم");
 }
 
 function normalizeCraRelationTarget(target: CraRelationTarget): CraRelationTarget {
@@ -487,6 +496,40 @@ function applyCuratedCraHtmlReplacements(html: string, guid: string) {
     .reduce((result, replacement) => result.replaceAll(replacement.from, replacement.to), html);
 }
 
+function cleanCraConsolidatedPdfSections(html: string) {
+  return html.replace(craSourceSection, (section) => {
+    const sourceName = section.match(craSourceName)?.[1];
+    if (!sourceName || !/تنقیح/.test(sourceName)) return section;
+
+    const notes: string[] = [];
+    const withoutPageFurniture = section.replace(craParagraph, (paragraph) => {
+      const plainText = craSectionComparisonText(paragraph);
+      if (/مصوبه شماره[\s\S]*کمیسیون تنظیم مقررات ارتباطات صفحه\s*[۰-۹]+\s*از\s*[۰-۹]+/.test(plainText)) {
+        return "";
+      }
+      if (/^[۰-۹]{1,2}\s+[A-Za-z]/.test(plainText) && plainText.length < 600) {
+        notes.push(paragraph);
+        return "";
+      }
+      return paragraph;
+    });
+
+    const withReadableBoundaries = withoutPageFurniture
+      .split(/(<[^>]+>)/g)
+      .map((part) => {
+        if (part.startsWith("<")) return part;
+        return part
+          .replace(/([۰-۹])(?=[\u0600-\u06FF])/g, "$1 ")
+          .replace(/([\u0600-\u06FF])(?=[۰-۹])/g, "$1 ");
+      })
+      .join("");
+
+    if (!notes.length) return withReadableBoundaries;
+    const noteDrawer = `<details class="cra-pdf-notes"><summary>پانوشت‌های نسخه تنقیحی</summary><div>${notes.join("")}</div></details>`;
+    return withReadableBoundaries.replace(/<\/section>$/i, `${noteDrawer}</section>`);
+  });
+}
+
 function markFullyLatinCraBlocks(html: string) {
   return html.replace(craTextBlock, (block, tag: string, attributes: string, content: string) => {
     if (/\bdir\s*=/i.test(attributes)) return block;
@@ -508,6 +551,10 @@ function isolateInlineLatinCraText(html: string) {
       return `${match[1]}<bdi dir="ltr">${match[2]}</bdi>${match[3]}`;
     })
     .join("");
+}
+
+function wrapCraTables(html: string) {
+  return html.replace(craTable, (table) => `<div class="cra-table-scroll">${table}</div>`);
 }
 
 function localizeCraDocumentText(html: string, guid: string) {
@@ -543,7 +590,8 @@ function localizeCraDocumentText(html: string, guid: string) {
 
   let attachmentNumber = 0;
   const withoutDuplicateSections = deduplicateCraSourceSections(normalized);
-  const withCleanSourceLabels = withoutDuplicateSections.replace(
+  const withCleanConsolidatedPdf = cleanCraConsolidatedPdfSections(withoutDuplicateSections);
+  const withCleanSourceLabels = withCleanConsolidatedPdf.replace(
     craSourceLabel,
     (_match, sectionStart: string, format: string, sourceName: string) => {
       attachmentNumber += 1;
@@ -551,11 +599,14 @@ function localizeCraDocumentText(html: string, guid: string) {
       const consolidated = /تنقیح/.test(sourceName);
       const label = consolidated ? "پیوست تنقیحی" : `پیوست ${toFaDigits(attachmentNumber)}`;
       const className = consolidated ? "cra-source-label cra-consolidated-label" : "cra-source-label";
-      return `${sectionStart}<div class="${className}"><strong>${label}</strong><span>${formatLabel}</span></div>`;
+      const decoratedSectionStart = consolidated
+        ? sectionStart.replace('class="cra-source-text"', 'class="cra-source-text cra-consolidated-text"')
+        : sectionStart;
+      return `${decoratedSectionStart}<div class="${className}"><strong>${label}</strong><span>${formatLabel}</span></div>`;
     },
   );
 
-  return isolateInlineLatinCraText(markFullyLatinCraBlocks(withCleanSourceLabels));
+  return wrapCraTables(isolateInlineLatinCraText(markFullyLatinCraBlocks(withCleanSourceLabels)));
 }
 
 export function readCraResolutionHtml(resolution: CraResolution) {
