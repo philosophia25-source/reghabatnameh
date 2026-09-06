@@ -8,6 +8,8 @@ The telecom article is reproduced from the owner-supplied published PDF, retaine
 - Author order and historical affiliations follow the published source.
 - The first numbered discourse is «گفتار دوم» in the source itself.
 - The owner explicitly authorized correcting note numbering and placement. All 20 source notes are retained and numbered in reading order. Printed body references 13/14/16/17/19/20 now target source notes 14/13/15/16/18/19. The redundant law reference 15 is removed. Source note 17 is attached to the first court case, and source note 20 accompanies the Trinko citation. The PDF remains unchanged. Each web note has a matching body reference and backlink.
+- At the owner's request, author-year citations are omitted from the web reading text because mixed LTR runs disrupted Persian reading. Acronyms, explanatory parentheses, numbered notes, the complete bibliography and the original PDF remain available.
+- Persian presentation normalization, including replacing Arabic `ة` with `ه` and repairing extraction forms such as `مثالً` to `مثلاً`, belongs in the importer so regeneration cannot undo it.
 - Four Persian bibliography entries and specific broken English bibliography fragments were restored using the owner's supplied transcript. Substantive legal claims have not been rewritten.
 
 Regenerate the HTML and abstract with `python scripts/import-published-article.py <source-pdf-path>`. The script requires Poppler's `pdftotext`. Keep extraction fixes in the importer rather than editing generated HTML.

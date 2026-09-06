@@ -4,6 +4,7 @@ import rawResolutions from "@/content/cra/index.json";
 import rawDisplayCuration from "@/content/cra/display-curation.json";
 import rawOcrOverrides from "@/content/cra/ocr-overrides/manifest.json";
 import rawRelationshipCuration from "@/content/cra/relationship-curation.json";
+import rawTextNormalization from "@/content/cra/text-normalization.json";
 import type {
   CraReadingMeta,
   CraRelationTarget,
@@ -17,12 +18,12 @@ import { craCategories } from "@/lib/cra/categories";
 import { toFaDate, toFaDigits } from "@/app/text";
 import { formatCraReadingHtml } from "./presentation";
 
-const craWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])[ \t]*[\u00AD\u200E\u200F\u2060][ \t]*([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
+const craWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])[ \t]*[\u00AD\u200E\u200F\u2060]+[ \t]*([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 const craEmptyTableNumber = /<td([^>]*)>\s*<ol\b([^>]*)\bstart=(["'])(\d+)\3([^>]*)>\s*<li(?:\s[^>]*)?>\s*(?:<\/li>)?\s*<\/ol>\s*<\/td>/gi;
 const craInlineFormattedDayFirstDate = /(\d{1,2})\/(\d{1,2})\/<(em|strong|b|i|u)(?:\s[^>]*)?>(\d{4})<\/\3>/gi;
 const craSourceLabel = /(<section class="cra-source-text" data-format="([^"]+)">)<div class="cra-source-label">متن پیوست <span>([^<]*)<\/span><\/div>/gi;
 const craMarkupNumberSeparator = /([۰-۹])((?:<[^>]+>)*)[,،]((?:<[^>]+>)*)(?=[۰-۹])/g;
-const craMarkupWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])((?:<[^>]+>)*)[\u00AD\u200E\u200F\u2060]((?:<[^>]+>)*)(?=[\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
+const craMarkupWordJoinArtifact = /([\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])((?:<[^>]+>)*)[\u00AD\u200E\u200F\u2060]+((?:<[^>]+>)*)(?=[\u0621-\u063A\u0641-\u064A\u066E-\u06D3\u06FA-\u06FF])/g;
 const craTextBlock = /<(p|h[2-5])([^>]*)>([\s\S]*?)<\/\1>/gi;
 const craSourceSection = /<section class="cra-source-text[^"]*"[^>]*>[\s\S]*?<\/section>/gi;
 const craSourceName = /<div class="cra-source-label">متن پیوست <span>([^<]*)<\/span><\/div>/i;
@@ -32,25 +33,30 @@ const craArabicLetter = "[\\u0621-\\u063A\\u0641-\\u064A\\u066E-\\u06D3\\u06FA-\
 const craInWordTatweel = new RegExp(`(${craArabicLetter})\\u0640+(?=${craArabicLetter})`, "g");
 const craArabicIndicDigits = "٠١٢٣٤٥٦٧٨٩";
 const craPersianDigits = "۰۱۲۳۴۵۶۷۸۹";
+const craAuditedTextReplacements = Object.entries(
+  (rawTextNormalization as { replacements: Record<string, string> }).replacements,
+).sort(([left], [right]) => right.length - left.length);
+
+function applyAuditedCraTextReplacements(text: string) {
+  return craAuditedTextReplacements.reduce(
+    (result, [from, to]) => result.replaceAll(from, to),
+    text,
+  );
+}
 
 function normalizeCraWordArtifacts(text: string) {
-  return text
+  return applyAuditedCraTextReplacements(text.normalize("NFKC"))
     .replace(craWordJoinArtifact, "$1‌$2")
-    .replace(/\u00AD/g, "‌")
-    .replace(/ابالغ/g, "ابلاغ")
-    .replace(/اطالعات/g, "اطلاعات")
-    .replace(/اصالح/g, "اصلاح")
-    .replace(/اعالم/g, "اعلام")
-    .replace(/کالن/g, "کلان")
-    .replace(/بالمانع/g, "بلامانع")
-    .replace(/باال/g, "بالا")
-    .replace(/اصطالحات/g, "اصطلاحات")
-    .replace(/اطالع/g, "اطلاع")
-    .replace(/انحالل/g, "انحلال")
-    .replace(/اسالمی/g, "اسلامی")
-    .replace(/تسهیالت/g, "تسهیلات")
-    .replace(/دالیل/g, "دلایل")
-    .replace(/الزم/g, "لازم");
+    .replace(/[\u00AD¬]/g, "‌")
+    .replace(/ي/g, "ی")
+    .replace(/ك/g, "ک")
+    .replace(/ۀ/g, "هٔ")
+    .replace(/[ \t]+:/g, ":")
+    .replace(/[ \t]+،[ \t]*/g, "، ")
+    .replace(/(ماده|بند)[ \t]*-[ \t]*([۰-۹0-9]+)/g, "$1 $2-")
+    .replace(/تبصره[ \t]+:[ \t]*([۰-۹0-9]+)[ \t]*/g, "تبصره $1: ")
+    .replace(/\([ \t]*\)[ \t]*%([۰-۹0-9]+)/g, "($1%)")
+    .replace(/\([ \t]*\)[ \t]*([۰-۹0-9]+)/g, "($1)");
 }
 
 function normalizeCraRelationTarget(target: CraRelationTarget): CraRelationTarget {
@@ -71,6 +77,7 @@ const sourceCraResolutionByGuid = new Map(
 );
 const sourceCraDisplayCuration = rawDisplayCuration as {
   redundantTextSections: Record<string, string[]>;
+  unreadableTextSections: Record<string, string[]>;
   htmlReplacements: Record<string, { from: string; to: string }[]>;
 };
 const ignoredRelationTargetGuids = new Set(sourceCraRelationshipCuration.ignoredTargets);
@@ -102,7 +109,12 @@ for (const [duplicateGuid, canonicalGuid] of Object.entries(sourceCraRelationshi
   }
 }
 
-for (const [guid, sourceNames] of Object.entries(sourceCraDisplayCuration.redundantTextSections)) {
+const curatedTextSections = [
+  ...Object.entries(sourceCraDisplayCuration.redundantTextSections),
+  ...Object.entries(sourceCraDisplayCuration.unreadableTextSections),
+];
+
+for (const [guid, sourceNames] of curatedTextSections) {
   const resolution = sourceCraResolutionByGuid.get(guid);
   if (!resolution) throw new Error(`CRA display curation points to an unknown document: ${guid}.`);
   const contentPath = join(process.cwd(), "content", resolution.contentFile);
@@ -490,12 +502,15 @@ function deduplicateCraSourceSections(html: string) {
   });
 }
 
-function removeCuratedRedundantCraSections(html: string, guid: string) {
-  const redundantSourceNames = new Set(sourceCraDisplayCuration.redundantTextSections[guid] ?? []);
-  if (!redundantSourceNames.size) return html;
+function removeCuratedCraSections(html: string, guid: string) {
+  const hiddenSourceNames = new Set([
+    ...(sourceCraDisplayCuration.redundantTextSections[guid] ?? []),
+    ...(sourceCraDisplayCuration.unreadableTextSections[guid] ?? []),
+  ]);
+  if (!hiddenSourceNames.size) return html;
   return html.replace(craSourceSection, (section) => {
     const sourceName = section.match(craSourceName)?.[1];
-    return sourceName && redundantSourceNames.has(sourceName) ? "" : section;
+    return sourceName && hiddenSourceNames.has(sourceName) ? "" : section;
   });
 }
 
@@ -547,7 +562,7 @@ function wrapCraTables(html: string) {
 
 function localizeCraDocumentText(html: string, guid: string) {
   const curatedHtml = applyCuratedCraHtmlReplacements(
-    removeCuratedRedundantCraSections(html, guid),
+    removeCuratedCraSections(html, guid),
     guid,
   );
   const withPlainTableNumbers = curatedHtml.replace(
@@ -560,8 +575,12 @@ function localizeCraDocumentText(html: string, guid: string) {
     craInlineFormattedDayFirstDate,
     "$4/$2/$1",
   );
+  const withJoinedMarkupWords = withUnifiedDates.replace(
+    craMarkupWordJoinArtifact,
+    "$1$2‌$3",
+  );
 
-  const localized = withUnifiedDates
+  const localized = withJoinedMarkupWords
     .split(/(<[^>]+>)/g)
     .map((part) => {
       if (part.startsWith("<")) return part;
