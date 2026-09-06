@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Build durable CRA OCR overrides from an owner-reviewed DOCX.
+"""Build durable CRA OCR overrides from an owner-reviewed document.
 
 The generated files live beside, but never overwrite, importer-owned CRA HTML.
-Route markers in the DOCX identify the target resolution pages.
+Route markers in the source document identify the target resolution pages.
 """
 
 from __future__ import annotations
@@ -447,9 +447,14 @@ def build_override(route: str, base_html: str, nodes: list[etree._Element]) -> s
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("docx", type=Path, help="Owner-reviewed OCR DOCX")
+    parser.add_argument("docx", type=Path, help="Owner-reviewed OCR document supported by Pandoc")
     parser.add_argument("repository", type=Path, help="Reghabatnameh repository root")
     parser.add_argument("--reviewed-text", action="store_true", help="Rebuild the reviewed 336-1 transcript, retaining official revisions")
+    parser.add_argument(
+        "--single-full-ocr",
+        action="store_true",
+        help="Replace one route with one complete owner-reviewed transcript while preserving other overrides",
+    )
     args = parser.parse_args()
 
     docx = args.docx.resolve()
@@ -498,12 +503,6 @@ def main() -> None:
         ], check=True)
         segments = route_segments(pandoc_html.read_text(encoding="utf-8"))
 
-    found_routes = set(segments)
-    if found_routes != EXPECTED_ROUTES:
-        missing = sorted(EXPECTED_ROUTES - found_routes)
-        extra = sorted(found_routes - EXPECTED_ROUTES)
-        raise ValueError(f"OCR route mismatch. Missing: {missing}. Extra: {extra}.")
-
     records_by_pair: dict[tuple[str, str], list[dict]] = {}
     for record in records:
         pair = (
@@ -514,6 +513,55 @@ def main() -> None:
             records_by_pair.setdefault(pair, []).append(record)
     for matches in records_by_pair.values():
         matches.sort(key=lambda item: int(item.get("version") or "0"), reverse=True)
+
+    if args.single_full_ocr:
+        if len(segments) != 1:
+            raise ValueError(
+                "A single full OCR import must contain exactly one CRA route marker."
+            )
+        route, nodes = next(iter(segments.items()))
+        record = records_by_route.get(route)
+        if not record:
+            raise ValueError(f"Target route is missing from CRA index: {route}")
+
+        override = full_ocr_override(nodes)
+        if "<img" in override.lower():
+            raise ValueError(f"Image remained in OCR override: {route}")
+
+        manifest_path = output_dir / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        source_sha256 = hashlib.sha256(docx.read_bytes()).hexdigest()
+        try:
+            source_name = str(docx.relative_to(repository))
+        except ValueError:
+            source_name = docx.name
+
+        (output_dir / f'{record["guid"]}.html').write_text(
+            override,
+            encoding="utf-8",
+        )
+        manifest["items"][record["guid"]] = {
+            "route": route,
+            "contentFile": f'cra/ocr-overrides/{record["guid"]}.html',
+            "readingMeta": reading_meta(override),
+            "textReferences": text_references(override, record, records_by_pair),
+            "hasEditorialConsolidation": False,
+            "source": source_name,
+            "sourceSha256": source_sha256,
+            "reconstruction": "owner-reviewed-transcript",
+        }
+        manifest_path.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        print(f"Wrote a full owner-reviewed OCR override for {route}.")
+        return
+
+    found_routes = set(segments)
+    if found_routes != EXPECTED_ROUTES:
+        missing = sorted(EXPECTED_ROUTES - found_routes)
+        extra = sorted(found_routes - EXPECTED_ROUTES)
+        raise ValueError(f"OCR route mismatch. Missing: {missing}. Extra: {extra}.")
 
     output_dir.mkdir(parents=True, exist_ok=True)
     # Re-importing a legacy batch must not discard newer per-document reviews.

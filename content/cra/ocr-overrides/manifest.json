@@ -300,6 +300,21 @@
       "source": "content/cra/reviewed-sources/336-1.txt",
       "sourceSha256": "aea7d20a43ed399bb9ab34bfe517eaeb559ec02220a7513aa3844502fa59b482",
       "reconstruction": "official-annotated-pdf"
+    },
+    "97a1afc6-521a-ef11-b96c-0050569c58ac": {
+      "route": "/resolutions/cra/1403/354-4",
+      "contentFile": "cra/ocr-overrides/97a1afc6-521a-ef11-b96c-0050569c58ac.html",
+      "readingMeta": {
+        "wordCount": 569,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [],
+      "hasEditorialConsolidation": false,
+      "source": "content/cra/reviewed-sources/354-4.md",
+      "sourceSha256": "4ea91879f51a527545b9a6ec3069afd9138d7d3e81864aa3795ef8f06f25e2b0",
+      "reconstruction": "owner-reviewed-transcript"
     }
   },
   "supplementalSources": [
