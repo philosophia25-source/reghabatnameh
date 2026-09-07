@@ -43,6 +43,13 @@
     "962e384d-15ed-ea11-968a-0050569b0899",
     "a6698b0c-c266-e611-80c9-005056874efe"
   ],
+  "repeals": [
+    { "revokedGuid": "8d2c56a0-bd4e-ed11-969f-0050569b0899", "repealingGuid": "5eaf24c7-7413-f011-b973-0050569c58ac", "evidenceAttachment": "نسخ کامل مصوبه شماره 1 جلسه 339 با مصوبه شماره3 جلسه 361" },
+    { "revokedGuid": "d24a2ae8-d14e-ed11-969f-0050569b0899", "repealingGuid": "5eaf24c7-7413-f011-b973-0050569c58ac", "evidenceAttachment": "نسخ کامل مصوبه شماره 2 جلسه شماره 339 به موجب مصوبه شماره 3 جلسه شماره 361 کمیسیون" },
+    { "revokedGuid": "664d9c31-04f7-ed11-b967-0050569ca4ea", "repealingGuid": "5eaf24c7-7413-f011-b973-0050569c58ac", "evidenceAttachment": "نسخ کامل مصوبه شماره 2 جلسه شماره 344 به موجب مصوبه شماره 3 جلسه 361" },
+    { "revokedGuid": "97a1afc6-521a-ef11-b96c-0050569c58ac", "repealingGuid": "5eaf24c7-7413-f011-b973-0050569c58ac", "evidenceAttachment": "نسخ مصوبه شماره 4 جلسه شماره 354 به موجب مصوبه شماره 3 جلسه 361" },
+    { "revokedGuid": "e8e3539c-b720-ef11-b96c-0050569c58ac", "repealingGuid": "5eaf24c7-7413-f011-b973-0050569c58ac", "evidenceAttachment": "نسخ مصوبه شماره 5 جلسه شماره 354 به موجب مصوبه شماره 3 جلسه 361" }
+  ],
   "consolidations": [
     { "baseGuid": "54bc984c-2178-f011-b977-0050569c58ac", "amendmentGuid": "91084a2f-cb00-f111-b97b-0050569c58ac" },
     { "baseGuid": "bcbe99d9-e403-f011-b972-0050569c58ac", "amendmentGuid": "acdea54e-1e78-f011-b977-0050569c58ac" },

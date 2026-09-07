@@ -6,8 +6,10 @@ import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import { ResolutionActions } from "@/components/resolution-actions";
 import {
   craConsolidationFor,
+  craLegalStatusFor,
   craOcrOverrideFor,
   craOfficialRelationsFor,
+  craRepealedResolutionsFor,
   craResolutionByGuid,
   craSameSessionResolutionsFor,
   craSupplementalTextBacklinksFor,
@@ -66,6 +68,8 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   const ocrOverride = craOcrOverrideFor(resolution);
   const hasEditorialConsolidation = Boolean(ocrOverride?.hasEditorialConsolidation);
   const consolidation = craConsolidationFor(resolution);
+  const legalStatus = craLegalStatusFor(resolution);
+  const repealedResolutions = craRepealedResolutionsFor(resolution);
   const { relations, additions } = craOfficialRelationsFor(resolution);
   const relationGroups = Object.entries(relations)
     .filter(([, targets]) => targets.length) as [keyof typeof relationLabels, CraRelationTarget[]][];
@@ -75,7 +79,9 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   const sameSession = craSameSessionResolutionsFor(resolution);
   const sameSessionTargets = sameSession.map((item) => ({ targetGuid: item.guid, title: item.title }));
   const hasRelations = Boolean(
-    consolidation.hasConsolidatedAttachment
+    legalStatus
+    || repealedResolutions.length
+    || consolidation.hasConsolidatedAttachment
     || consolidation.amendments.length
     || consolidation.bases.length
     || relationGroups.length
@@ -84,6 +90,7 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
     || sameSession.length,
   );
   const relationSummary = [
+    repealedResolutions.length ? `${toFaDigits(repealedResolutions.length)} مصوبه نسخ‌شده` : "",
     consolidation.hasConsolidatedAttachment ? "دارای پیوست تنقیحی" : "",
     consolidation.amendments.length ? `${toFaDigits(consolidation.amendments.length)} اصلاح بعدی` : "",
     consolidation.bases.length ? `${toFaDigits(consolidation.bases.length)} مصوبه پایه` : "",
@@ -127,6 +134,22 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
 
       <section className="resolution-content">
         <ResolutionActions citation={toFaDigits(citation)} hasRelations={hasRelations} />
+
+        {legalStatus?.kind === "revoked" ? (
+          <aside className="resolution-legal-status" aria-label="وضعیت اعتبار مصوبه">
+            <div>
+              <span>وضعیت اعتبار</span>
+              <strong>این مصوبه نسخ شده است</strong>
+              <p>
+                این مصوبه به موجب مصوبه شماره {toFaDigits(legalStatus.repealingResolution.resolutionNumber)} جلسه شماره {toFaDigits(legalStatus.repealingResolution.sessionNumber)} کمیسیون تنظیم مقررات ارتباطات نسخ شده است.
+              </p>
+            </div>
+            <div className="resolution-legal-status-links">
+              <Link href={legalStatus.repealingResolution.route}>مشاهده مصوبه ناسخ ←</Link>
+              <a href={legalStatus.evidenceUrl} target="_blank" rel="noreferrer">مشاهده مستند رسمی نسخ ←</a>
+            </div>
+          </aside>
+        ) : null}
 
         <div className="resolution-disclosures">
           <details className="resolution-disclosure">
@@ -172,6 +195,12 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
                   {consolidation.bases.length ? (
                     <div><span>این مصوبه، اسناد زیر را اصلاح کرده است</span><div><RelationLinks targets={consolidation.bases} /></div></div>
                   ) : null}
+                </div>
+              ) : null}
+
+              {repealedResolutions.length ? (
+                <div className="resolution-relation-groups resolution-curated-relations">
+                  <div><span>این مصوبه، اسناد زیر را نسخ کرده است</span><div><RelationLinks targets={repealedResolutions} /></div></div>
                 </div>
               ) : null}
 

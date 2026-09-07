@@ -68,6 +68,7 @@ type CraRelationshipCuration = {
   aliases: Record<string, string>;
   duplicateRecords: Record<string, string>;
   ignoredTargets: string[];
+  repeals: { revokedGuid: string; repealingGuid: string; evidenceAttachment: string }[];
   consolidations: { baseGuid: string; amendmentGuid: string }[];
 };
 
@@ -251,6 +252,52 @@ export const craResolutionByGuid = new Map(
 export const craResolutionByRoute = new Map(
   craResolutions.map((resolution) => [resolution.route, resolution]),
 );
+
+export type CraLegalStatus = {
+  kind: "revoked";
+  repealingResolution: CraResolution;
+  evidenceAttachment: string;
+  evidenceUrl: string;
+};
+
+const craLegalStatusByGuid = new Map<string, CraLegalStatus>();
+const craRepealedResolutionsByRepealingGuid = new Map<string, CraRelationTarget[]>();
+
+for (const repeal of sourceCraRelationshipCuration.repeals) {
+  const revokedResolution = craResolutionByGuid.get(repeal.revokedGuid);
+  const repealingResolution = craResolutionByGuid.get(repeal.repealingGuid);
+  if (!revokedResolution || !repealingResolution) {
+    throw new Error(`CRA repeal points to an unknown document: ${repeal.revokedGuid} -> ${repeal.repealingGuid}.`);
+  }
+  const evidence = revokedResolution.attachments.find(
+    (attachment) => attachment.name === repeal.evidenceAttachment,
+  );
+  if (!evidence || !/نسخ/.test(evidence.name)) {
+    throw new Error(`CRA repeal has no explicit supporting attachment: ${repeal.revokedGuid}.`);
+  }
+  if (craLegalStatusByGuid.has(repeal.revokedGuid)) {
+    throw new Error(`CRA repeal is duplicated for document: ${repeal.revokedGuid}.`);
+  }
+  craLegalStatusByGuid.set(repeal.revokedGuid, {
+    kind: "revoked",
+    repealingResolution,
+    evidenceAttachment: normalizeCraWordArtifacts(evidence.name),
+    evidenceUrl: evidence.url,
+  });
+  const repealedResolutions = craRepealedResolutionsByRepealingGuid.get(repeal.repealingGuid) ?? [];
+  if (!repealedResolutions.some((target) => target.targetGuid === revokedResolution.guid)) {
+    repealedResolutions.push({ targetGuid: revokedResolution.guid, title: revokedResolution.title });
+  }
+  craRepealedResolutionsByRepealingGuid.set(repeal.repealingGuid, repealedResolutions);
+}
+
+export function craLegalStatusFor(resolution: CraResolution) {
+  return craLegalStatusByGuid.get(resolution.guid);
+}
+
+export function craRepealedResolutionsFor(resolution: CraResolution) {
+  return craRepealedResolutionsByRepealingGuid.get(resolution.guid) ?? [];
+}
 
 const consolidationAmendmentsByBase = new Map<string, CraRelationTarget[]>();
 const consolidationBasesByAmendment = new Map<string, CraRelationTarget[]>();
