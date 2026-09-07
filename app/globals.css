@@ -581,6 +581,11 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .resolution-legal-status p { margin:7px 0 0; color:#d9c5bf; font-size:var(--font-small); line-height:1.95; }
 .resolution-legal-status-links { display:flex; flex-direction:column; align-items:flex-start; gap:8px; }
 .resolution-legal-status-links a { color:#f0c2b6; border-bottom:1px solid rgba(240,194,182,.38); font-size:var(--font-caption); line-height:1.8; }
+.resolution-legal-status-partial { color:#f3ead8; background:#282116; border-color:rgba(201,164,104,.38); border-right-color:var(--gold); }
+.resolution-legal-status-partial span { color:#ccb88e; }
+.resolution-legal-status-partial strong { color:#fff5dc; }
+.resolution-legal-status-partial p { color:#ded1b7; }
+.resolution-legal-status-partial .resolution-legal-status-links a { color:var(--gold-light); border-bottom-color:rgba(201,164,104,.38); }
 .resolution-disclosure { background:#081722; border:1px solid rgba(255,255,255,.09); scroll-margin-top:76px; }
 .resolution-disclosure>summary { min-height:62px; padding:13px 18px; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px 22px; color:#dce4e7; cursor:pointer; list-style:none; }
 .resolution-disclosure>summary::-webkit-details-marker { display:none; }
@@ -707,6 +712,9 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .resolution-relation-groups>div>span { display:block; margin-bottom:12px; color:#92a4ad; font-size:var(--font-caption); }
 .resolution-relation-groups>div>div { display:flex; flex-wrap:wrap; gap:9px; }
 .resolution-relation-groups a { padding:9px 12px; color:var(--gold-light); background:rgba(201,164,104,.07); border:1px solid rgba(201,164,104,.24); font-size:var(--font-small); line-height:1.8; }
+.resolution-relation-groups .resolution-scoped-relations { display:grid; width:100%; }
+.resolution-scoped-relations>span { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.resolution-scoped-relations small { color:#aebbc1; font-size:var(--font-caption); }
 .resolution-relation-note { margin:25px 0 0; padding:13px 15px; color:#a8b7be; background:rgba(255,255,255,.025); border-right:2px solid rgba(201,164,104,.5); font-size:var(--font-caption); }
 .resolution-text-relations { margin-top:30px; padding-top:28px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; border-top:1px solid rgba(255,255,255,.09); }
 .resolution-text-relations h3 { margin:0 0 14px; color:#dce4e7; font-size:var(--font-ui); line-height:1.9; }

@@ -68,7 +68,18 @@ type CraRelationshipCuration = {
   aliases: Record<string, string>;
   duplicateRecords: Record<string, string>;
   ignoredTargets: string[];
-  repeals: { revokedGuid: string; repealingGuid: string; evidenceAttachment: string }[];
+  repeals: {
+    revokedGuid: string;
+    repealingGuid: string;
+    evidenceAttachment?: string;
+    evidenceText?: string;
+  }[];
+  partialRepeals: {
+    affectedGuid: string;
+    repealingGuid: string;
+    scope: string;
+    evidenceText: string;
+  }[];
   consolidations: { baseGuid: string; amendmentGuid: string }[];
 };
 
@@ -256,12 +267,24 @@ export const craResolutionByRoute = new Map(
 export type CraLegalStatus = {
   kind: "revoked";
   repealingResolution: CraResolution;
-  evidenceAttachment: string;
+  evidenceLabel: string;
   evidenceUrl: string;
 };
 
+export type CraPartialLegalStatus = {
+  kind: "partially-revoked";
+  repealingResolution: CraResolution;
+  scope: string;
+  evidenceText: string;
+  evidenceUrl: string;
+};
+
+export type CraScopedRelationTarget = CraRelationTarget & { scope: string };
+
 const craLegalStatusByGuid = new Map<string, CraLegalStatus>();
 const craRepealedResolutionsByRepealingGuid = new Map<string, CraRelationTarget[]>();
+const craPartialLegalStatusesByGuid = new Map<string, CraPartialLegalStatus[]>();
+const craPartiallyRepealedResolutionsByRepealingGuid = new Map<string, CraScopedRelationTarget[]>();
 
 for (const repeal of sourceCraRelationshipCuration.repeals) {
   const revokedResolution = craResolutionByGuid.get(repeal.revokedGuid);
@@ -269,11 +292,20 @@ for (const repeal of sourceCraRelationshipCuration.repeals) {
   if (!revokedResolution || !repealingResolution) {
     throw new Error(`CRA repeal points to an unknown document: ${repeal.revokedGuid} -> ${repeal.repealingGuid}.`);
   }
-  const evidence = revokedResolution.attachments.find(
-    (attachment) => attachment.name === repeal.evidenceAttachment,
-  );
-  if (!evidence || !/نسخ/.test(evidence.name)) {
+  const evidence = repeal.evidenceAttachment
+    ? revokedResolution.attachments.find((attachment) => attachment.name === repeal.evidenceAttachment)
+    : undefined;
+  if (repeal.evidenceAttachment && (!evidence || !/نسخ/.test(evidence.name))) {
     throw new Error(`CRA repeal has no explicit supporting attachment: ${repeal.revokedGuid}.`);
+  }
+  if (!evidence && (!repeal.evidenceText || !/(?:نسخ|کان.?لم.?یکن)/.test(repeal.evidenceText))) {
+    throw new Error(`CRA repeal has no explicit textual evidence: ${repeal.revokedGuid}.`);
+  }
+  if (!evidence) {
+    const sourceHtml = readFileSync(join(process.cwd(), "content", repealingResolution.contentFile), "utf8");
+    if (!/(?:نسخ|کان[\s‌-]*لم[\s‌-]*یکن)/.test(sourceHtml)) {
+      throw new Error(`CRA repeal evidence is absent from the repealing document: ${repeal.repealingGuid}.`);
+    }
   }
   if (craLegalStatusByGuid.has(repeal.revokedGuid)) {
     throw new Error(`CRA repeal is duplicated for document: ${repeal.revokedGuid}.`);
@@ -281,8 +313,8 @@ for (const repeal of sourceCraRelationshipCuration.repeals) {
   craLegalStatusByGuid.set(repeal.revokedGuid, {
     kind: "revoked",
     repealingResolution,
-    evidenceAttachment: normalizeCraWordArtifacts(evidence.name),
-    evidenceUrl: evidence.url,
+    evidenceLabel: normalizeCraWordArtifacts(evidence?.name ?? repeal.evidenceText ?? "مستند رسمی نسخ"),
+    evidenceUrl: evidence?.url ?? repealingResolution.sourceUrl,
   });
   const repealedResolutions = craRepealedResolutionsByRepealingGuid.get(repeal.repealingGuid) ?? [];
   if (!repealedResolutions.some((target) => target.targetGuid === revokedResolution.guid)) {
@@ -297,6 +329,49 @@ export function craLegalStatusFor(resolution: CraResolution) {
 
 export function craRepealedResolutionsFor(resolution: CraResolution) {
   return craRepealedResolutionsByRepealingGuid.get(resolution.guid) ?? [];
+}
+
+for (const repeal of sourceCraRelationshipCuration.partialRepeals) {
+  const affectedResolution = craResolutionByGuid.get(repeal.affectedGuid);
+  const repealingResolution = craResolutionByGuid.get(repeal.repealingGuid);
+  if (!affectedResolution || !repealingResolution) {
+    throw new Error(`CRA partial repeal points to an unknown document: ${repeal.affectedGuid} -> ${repeal.repealingGuid}.`);
+  }
+  if (!repeal.scope.trim() || !/(?:نسخ|کان.?لم.?یکن)/.test(repeal.evidenceText)) {
+    throw new Error(`CRA partial repeal has no explicit scope or evidence: ${repeal.affectedGuid}.`);
+  }
+  const sourceHtml = readFileSync(join(process.cwd(), "content", repealingResolution.contentFile), "utf8");
+  if (!/(?:نسخ|کان[\s‌-]*لم[\s‌-]*یکن)/.test(sourceHtml)) {
+    throw new Error(`CRA partial repeal evidence is absent from the repealing document: ${repeal.repealingGuid}.`);
+  }
+  const statuses = craPartialLegalStatusesByGuid.get(affectedResolution.guid) ?? [];
+  if (statuses.some((status) => status.repealingResolution.guid === repealingResolution.guid && status.scope === repeal.scope)) {
+    throw new Error(`CRA partial repeal is duplicated for document: ${repeal.affectedGuid}.`);
+  }
+  statuses.push({
+    kind: "partially-revoked",
+    repealingResolution,
+    scope: normalizeCraWordArtifacts(repeal.scope),
+    evidenceText: normalizeCraWordArtifacts(repeal.evidenceText),
+    evidenceUrl: repealingResolution.sourceUrl,
+  });
+  craPartialLegalStatusesByGuid.set(affectedResolution.guid, statuses);
+
+  const targets = craPartiallyRepealedResolutionsByRepealingGuid.get(repealingResolution.guid) ?? [];
+  targets.push({
+    targetGuid: affectedResolution.guid,
+    title: affectedResolution.title,
+    scope: normalizeCraWordArtifacts(repeal.scope),
+  });
+  craPartiallyRepealedResolutionsByRepealingGuid.set(repealingResolution.guid, targets);
+}
+
+export function craPartialLegalStatusesFor(resolution: CraResolution) {
+  return craPartialLegalStatusesByGuid.get(resolution.guid) ?? [];
+}
+
+export function craPartiallyRepealedResolutionsFor(resolution: CraResolution) {
+  return craPartiallyRepealedResolutionsByRepealingGuid.get(resolution.guid) ?? [];
 }
 
 const consolidationAmendmentsByBase = new Map<string, CraRelationTarget[]>();

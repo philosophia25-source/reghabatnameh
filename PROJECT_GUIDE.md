@@ -76,7 +76,7 @@ flowchart TD
 | `content/decisions` | متن و متادیتای خام آرای منتخب |
 | `content/cra/index.json` | دفتر ساختاریافته ۵۵۸ رکورد خام CRA و روابط منبع |
 | `content/cra/display-curation.json` | قواعد نمایشی برای حذف تکرار متن پیوست‌ها بدون حذف فایل رسمی |
-| `content/cra/relationship-curation.json` | لایه پایدار روابط تنقیحی، شناسه‌های تکراری و مقصدهای حذف‌شده از نمایش |
+| `content/cra/relationship-curation.json` | لایه پایدار روابط تنقیحی، نسخ کامل و جزئی، شناسه‌های تکراری و مقصدهای حذف‌شده از نمایش |
 | `content/cra/documents` | متن HTML استخراج‌شده از پیوست‌های Word و PDF |
 | `content/cra/ocr-overrides` | جایگزین‌های OCR بازبینی‌شده برای تصاویر متن‌دار، بدون تغییر فایل‌های واردکننده |
 | `lib/cra/data.ts` | دسترسی به رکوردها، مسیرها و متن مصوبات CRA |

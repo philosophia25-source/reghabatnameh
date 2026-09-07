@@ -9,6 +9,8 @@ import {
   craLegalStatusFor,
   craOcrOverrideFor,
   craOfficialRelationsFor,
+  craPartialLegalStatusesFor,
+  craPartiallyRepealedResolutionsFor,
   craRepealedResolutionsFor,
   craResolutionByGuid,
   craSameSessionResolutionsFor,
@@ -69,10 +71,24 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   const hasEditorialConsolidation = Boolean(ocrOverride?.hasEditorialConsolidation);
   const consolidation = craConsolidationFor(resolution);
   const legalStatus = craLegalStatusFor(resolution);
+  const partialLegalStatuses = craPartialLegalStatusesFor(resolution);
   const repealedResolutions = craRepealedResolutionsFor(resolution);
+  const partiallyRepealedResolutions = craPartiallyRepealedResolutionsFor(resolution);
   const { relations, additions } = craOfficialRelationsFor(resolution);
+  const curatedRelationTargets = new Set([
+    legalStatus?.repealingResolution.guid,
+    ...partialLegalStatuses.map((status) => status.repealingResolution.guid),
+    ...repealedResolutions.map((target) => target.targetGuid),
+    ...partiallyRepealedResolutions.map((target) => target.targetGuid),
+    ...consolidation.amendments.map((target) => target.targetGuid),
+    ...consolidation.bases.map((target) => target.targetGuid),
+  ].filter(Boolean));
   const relationGroups = Object.entries(relations)
-    .filter(([, targets]) => targets.length) as [keyof typeof relationLabels, CraRelationTarget[]][];
+    .map(([relation, targets]) => [
+      relation,
+      targets.filter((target) => !curatedRelationTargets.has(target.targetGuid)),
+    ] as [keyof typeof relationLabels, CraRelationTarget[]])
+    .filter(([, targets]) => targets.length);
   const reverseAdditionCount = Object.values(additions).reduce((count, targets) => count + targets.length, 0);
   const textReferences = craSupplementalTextReferencesFor(resolution);
   const textBacklinks = craSupplementalTextBacklinksFor(resolution);
@@ -80,7 +96,9 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   const sameSessionTargets = sameSession.map((item) => ({ targetGuid: item.guid, title: item.title }));
   const hasRelations = Boolean(
     legalStatus
+    || partialLegalStatuses.length
     || repealedResolutions.length
+    || partiallyRepealedResolutions.length
     || consolidation.hasConsolidatedAttachment
     || consolidation.amendments.length
     || consolidation.bases.length
@@ -91,6 +109,8 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   );
   const relationSummary = [
     repealedResolutions.length ? `${toFaDigits(repealedResolutions.length)} مصوبه نسخ‌شده` : "",
+    partiallyRepealedResolutions.length ? `${toFaDigits(partiallyRepealedResolutions.length)} مصوبه با نسخ جزئی` : "",
+    partialLegalStatuses.length ? "دارای نسخ جزئی" : "",
     consolidation.hasConsolidatedAttachment ? "دارای پیوست تنقیحی" : "",
     consolidation.amendments.length ? `${toFaDigits(consolidation.amendments.length)} اصلاح بعدی` : "",
     consolidation.bases.length ? `${toFaDigits(consolidation.bases.length)} مصوبه پایه` : "",
@@ -151,6 +171,27 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
           </aside>
         ) : null}
 
+        {partialLegalStatuses.length ? (
+          <aside className="resolution-legal-status resolution-legal-status-partial" aria-label="نسخ جزئی مصوبه">
+            <div>
+              <span>وضعیت اعتبار</span>
+              <strong>بخش‌هایی از این مصوبه نسخ شده است</strong>
+              {partialLegalStatuses.map((status) => (
+                <p key={`${status.repealingResolution.guid}-${status.scope}`}>
+                  {status.scope} به موجب مصوبه شماره {toFaDigits(status.repealingResolution.resolutionNumber)} جلسه شماره {toFaDigits(status.repealingResolution.sessionNumber)} نسخ شده است.
+                </p>
+              ))}
+            </div>
+            <div className="resolution-legal-status-links">
+              {partialLegalStatuses.map((status) => (
+                <Link href={status.repealingResolution.route} key={`${status.repealingResolution.guid}-${status.scope}`}>
+                  مصوبه ناسخ {toFaDigits(status.scope)} ←
+                </Link>
+              ))}
+            </div>
+          </aside>
+        ) : null}
+
         <div className="resolution-disclosures">
           <details className="resolution-disclosure">
             <summary>
@@ -204,9 +245,25 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
                 </div>
               ) : null}
 
+              {partiallyRepealedResolutions.length ? (
+                <div className="resolution-relation-groups resolution-curated-relations">
+                  <div>
+                    <span>این مصوبه، بخش‌های زیر از اسناد دیگر را نسخ کرده است</span>
+                    <div className="resolution-scoped-relations">
+                      {partiallyRepealedResolutions.map((target) => (
+                        <span key={`${target.targetGuid}-${target.scope}`}>
+                          <ResolutionTargetLink target={target} />
+                          <small>{toFaDigits(target.scope)}</small>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+
               {relationGroups.length ? (
                 <div className="resolution-official-relations">
-                  <p>روابط زیر عیناً از دسته‌بندی سامانه رسمی CRA گرفته شده‌اند و با روابط اصلاحی بالا یکی نیستند.</p>
+                  <p>روابط زیر عیناً از دسته‌بندی سامانه رسمی CRA گرفته شده‌اند و با روابط حقوقی صریح بالا یکی نیستند.</p>
                   <div className="resolution-relation-groups">
                     {relationGroups.map(([relation, targets]) => (
                       <div key={relation}><span>{relationLabels[relation]}</span><div><RelationLinks targets={targets} /></div></div>
