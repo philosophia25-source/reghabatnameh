@@ -10,8 +10,11 @@ export const metadata: Metadata = {
   title: { default: "رقابت‌نامه | نادر جعفری", template: "%s | رقابت‌نامه" },
   description: SITE_DESCRIPTION,
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    shortcut: "/icon.svg",
+    icon: [
+      { url: "/favicon.ico?v=2", type: "image/x-icon", sizes: "16x16 32x32 48x48" },
+      { url: "/brand-icon-v2.png", type: "image/png", sizes: "32x32" },
+    ],
+    shortcut: "/favicon.ico?v=2",
   },
   openGraph: {
     siteName: SITE_NAME,
