@@ -73,6 +73,7 @@ type CraRelationshipCuration = {
     repealingGuid: string;
     evidenceAttachment?: string;
     evidenceText?: string;
+    evidenceOnRevokedPage?: boolean;
   }[];
   partialRepeals: {
     affectedGuid: string;
@@ -301,7 +302,7 @@ for (const repeal of sourceCraRelationshipCuration.repeals) {
   if (!evidence && (!repeal.evidenceText || !/(?:نسخ|کان.?لم.?یکن)/.test(repeal.evidenceText))) {
     throw new Error(`CRA repeal has no explicit textual evidence: ${repeal.revokedGuid}.`);
   }
-  if (!evidence) {
+  if (!evidence && !repeal.evidenceOnRevokedPage) {
     const sourceHtml = readFileSync(join(process.cwd(), "content", repealingResolution.contentFile), "utf8");
     if (!/(?:نسخ|کان[\s‌-]*لم[\s‌-]*یکن)/.test(sourceHtml)) {
       throw new Error(`CRA repeal evidence is absent from the repealing document: ${repeal.repealingGuid}.`);
@@ -314,7 +315,7 @@ for (const repeal of sourceCraRelationshipCuration.repeals) {
     kind: "revoked",
     repealingResolution,
     evidenceLabel: normalizeCraWordArtifacts(evidence?.name ?? repeal.evidenceText ?? "مستند رسمی نسخ"),
-    evidenceUrl: evidence?.url ?? repealingResolution.sourceUrl,
+    evidenceUrl: evidence?.url ?? (repeal.evidenceOnRevokedPage ? revokedResolution.sourceUrl : repealingResolution.sourceUrl),
   });
   const repealedResolutions = craRepealedResolutionsByRepealingGuid.get(repeal.repealingGuid) ?? [];
   if (!repealedResolutions.some((target) => target.targetGuid === revokedResolution.guid)) {
