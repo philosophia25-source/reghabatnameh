@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "رقابت‌نامه | نادر جعفری", template: "%s | رقابت‌نامه" },
   description: SITE_DESCRIPTION,
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg",
+  },
   openGraph: {
     siteName: SITE_NAME,
     locale: "fa_IR",
