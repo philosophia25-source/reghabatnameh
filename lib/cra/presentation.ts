@@ -10,7 +10,7 @@ export function formatCraReadingHtml(html: string) {
   const stack: { tag: string; protected: boolean }[] = [];
   const voidTags = new Set(["br", "hr", "img", "input", "meta", "link", "wbr", "col", "source"]);
   const protectedTags = new Set(["bdi", "math", "svg", "script", "style", "code", "pre"]);
-  const runs = /\([A-Za-z][A-Za-z0-9 .,+/&;_–−-]*\)|(?<![۰-۹0-9])[۰-۹0-9]{4}\/[۰-۹0-9]{1,2}\/[۰-۹0-9]{1,2}(?![۰-۹0-9])|[A-Za-z][A-Za-z0-9]*(?:[ .+/_–−-]+[A-Za-z0-9]+)*/g;
+  const runs = /\([A-Za-z][A-Za-z0-9 .,+/&;_–−-]*\)|(?<![۰-۹0-9])[۰-۹0-9]{4}\/[۰-۹0-9]{1,2}\/[۰-۹0-9]{1,2}(?![۰-۹0-9])|(?<![۰-۹0-9])[۰-۹0-9]+(?:[\/\-–−][۰-۹0-9]+)+(?![۰-۹0-9])|[A-Za-z][A-Za-z0-9]*(?:[ .+/_–−-]+[A-Za-z0-9]+)*/g;
   return flattened.split(/(<[^>]+>)/g).map((part) => {
     if (part.startsWith("<")) {
       const closing = part.match(/^<\/([a-z][\w:-]*)/i);
