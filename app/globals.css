@@ -654,6 +654,12 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-source-text p { margin:0 0 1.15em; }
 .cra-source-text ol { direction:rtl; list-style-type:persian; }
 .cra-source-text li::marker { direction:rtl; unicode-bidi:isolate; }
+.cra-source-text .cra-2041-article-numbering>li::marker { content:counter(list-item,persian) "-  "; direction:ltr; }
+.cra-source-text .cra-2041-definition-numbering>li::marker { content:counter(list-item,persian) "-۱-  "; direction:ltr; }
+.cra-source-text .cra-2041-article-16-numbering { direction:rtl; }
+.cra-source-text .cra-2041-article-16-numbering>li { display:list-item; }
+.cra-source-text .cra-2041-article-16-numbering>li::marker { content:counter(list-item,persian) "-۱۶-  "; direction:ltr; }
+.cra-legal-number { display:inline-block; direction:ltr; unicode-bidi:isolate; color:#16242c; font-weight:650; white-space:nowrap; }
 .cra-row-number { display:block; direction:ltr; unicode-bidi:isolate; text-align:center; white-space:nowrap; font-variant-numeric:tabular-nums; }
 .cra-source-text h2,.cra-source-text h3,.cra-source-text h4,.cra-source-text h5 { color:#16242c; font-family:"Estedad Variable","Vazirmatn Variable",sans-serif; line-height:1.85; text-align:right; }
 .cra-source-text h2 { margin:2.1em 0 .8em; padding-bottom:.45em; font-size:1.65rem; border-bottom:1px solid rgba(22,36,44,.2); }

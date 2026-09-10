@@ -642,6 +642,47 @@ function applyCuratedCraHtmlReplacements(html: string, guid: string) {
     .reduce((result, replacement) => result.replaceAll(replacement.from, replacement.to), html);
 }
 
+/**
+ * The Word source for resolution 204-1 uses literal multi-level legal
+ * numbers. Its imported HTML mistakenly turned those labels into ordinary
+ * list markers and dropped one definition number altogether. Restore the
+ * labels only in the reading layer; the archived source remains untouched.
+ */
+function restoreCra2041Numbering(html: string, guid: string) {
+  if (guid !== "07ccb54b-f687-e511-973c-68b599781b58") return html;
+
+  let orderedListIndex = 0;
+  const withOrderedListProfiles = html.replace(/<ol\b([^>]*)>/gi, (opening, attributes: string) => {
+    const index = orderedListIndex++;
+    if ([0, 3, 4, 5, 6].includes(index)) {
+      return `<ol${attributes} class="cra-2041-article-numbering">`;
+    }
+    if (index === 1) {
+      return `<ol${attributes} class="cra-2041-definition-numbering">`;
+    }
+    if (index === 2) {
+      const correctedAttributes = /\bstart=/i.test(attributes)
+        ? attributes.replace(/\bstart=(["'])11\1/i, 'start="12"')
+        : `${attributes} start="12"`;
+      return `<ol${correctedAttributes} class="cra-2041-definition-numbering">`;
+    }
+    return opening;
+  });
+
+  const withMissingDefinitionNumber = withOrderedListProfiles.replace(
+    /(<p>\s*<span dir="rtl">)(<strong>پاسخگویی از راه دور:<\/strong>)/i,
+    '$1<span class="cra-legal-number">11-1-</span> $2',
+  );
+
+  return withMissingDefinitionNumber.replace(
+    /<ul>(?=\s*<li>\s*<p>\s*<span dir="rtl">هنگاميكه شخصيت حقوقي)/i,
+    '<ol class="cra-2041-article-16-numbering">',
+  ).replace(
+    /<\/ul>(?=\s*<p>\s*<span dir="rtl">17- امنيت ملی)/i,
+    '</ol>',
+  );
+}
+
 function cleanCraConsolidatedPdfSections(html: string) {
   return html.replace(craSourceSection, (section) => {
     const sourceName = section.match(craSourceName)?.[1];
@@ -685,7 +726,7 @@ function wrapCraTables(html: string) {
 
 function localizeCraDocumentText(html: string, guid: string) {
   const curatedHtml = applyCuratedCraHtmlReplacements(
-    removeCuratedCraSections(html, guid),
+    restoreCra2041Numbering(removeCuratedCraSections(html, guid), guid),
     guid,
   );
   const withPlainTableNumbers = curatedHtml.replace(
