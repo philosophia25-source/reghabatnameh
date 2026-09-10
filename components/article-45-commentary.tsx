@@ -5,6 +5,7 @@ import { article45CommentaryParts } from "@/lib/knowledge/article45";
 import { decisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
 import { toFaDate, toFaDigits } from "@/app/text";
 import { EditorialMeta } from "@/components/editorial-meta";
+import { ScrollablePartsNav } from "@/components/scrollable-parts-nav";
 import { AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function commentaryFile(slug: string) {
@@ -62,7 +63,7 @@ function linkedText(text: string) {
 }
 
 function PartsNav({ current }: { current: string }) {
-  return <aside className="parts-nav">
+  return <ScrollablePartsNav>
     <p>اجزای ماده ۴۵</p>
     <ol>
       {article45CommentaryParts.map((part, index) => <li className={current === part.slug ? "active" : ""} aria-current={current === part.slug ? "page" : undefined} key={part.slug}>
@@ -73,7 +74,7 @@ function PartsNav({ current }: { current: string }) {
         </span>}
       </li>)}
     </ol>
-  </aside>;
+  </ScrollablePartsNav>;
 }
 
 function decisionReferences(commentary: string) {
