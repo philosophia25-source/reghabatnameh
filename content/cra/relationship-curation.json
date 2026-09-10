@@ -44,6 +44,10 @@
     "a6698b0c-c266-e611-80c9-005056874efe"
   ],
   "repeals": [
+    { "revokedGuid": "45cbb54b-f687-e511-973c-68b599781b58", "repealingGuid": "f307acf7-bfef-e811-9677-0050569b0899", "evidenceText": "این مصوبه به موجب مصوبه شماره ۱ جلسه شماره ۲۸۳ کمیسیون نسخ شده است", "evidenceOnRevokedPage": true },
+    { "revokedGuid": "70cbb54b-f687-e511-973c-68b599781b58", "repealingGuid": "b2c6eaf5-2919-e811-966b-005056872bc9", "evidenceText": "این مصوبه به موجب مصوبه شماره ۳ جلسه شماره ۲۷۰ کمیسیون نسخ شده است", "evidenceOnRevokedPage": true },
+    { "revokedGuid": "811f60d0-2f9c-e711-80c6-0050568735c7", "repealingGuid": "2dc45d3d-40d0-e811-9677-0050569b0899", "evidenceText": "این مصوبه به موجب مصوبه شماره ۱ جلسه شماره ۲۷۹ کمیسیون نسخ شده است", "evidenceOnRevokedPage": true },
+    { "revokedGuid": "89cbb54b-f687-e511-973c-68b599781b58", "repealingGuid": "3efc4ea4-5433-e911-9678-0050569b0899", "evidenceText": "این مصوبه به موجب مصوبه شماره ۱ جلسه شماره ۲۸۵ کمیسیون تنظیم مقررات ارتباطات نسخ شده است", "evidenceOnRevokedPage": true },
     { "revokedGuid": "8d2c56a0-bd4e-ed11-969f-0050569b0899", "repealingGuid": "5eaf24c7-7413-f011-b973-0050569c58ac", "evidenceAttachment": "نسخ کامل مصوبه شماره 1 جلسه 339 با مصوبه شماره3 جلسه 361" },
     { "revokedGuid": "d24a2ae8-d14e-ed11-969f-0050569b0899", "repealingGuid": "5eaf24c7-7413-f011-b973-0050569c58ac", "evidenceAttachment": "نسخ کامل مصوبه شماره 2 جلسه شماره 339 به موجب مصوبه شماره 3 جلسه شماره 361 کمیسیون" },
     { "revokedGuid": "664d9c31-04f7-ed11-b967-0050569ca4ea", "repealingGuid": "5eaf24c7-7413-f011-b973-0050569c58ac", "evidenceAttachment": "نسخ کامل مصوبه شماره 2 جلسه شماره 344 به موجب مصوبه شماره 3 جلسه 361" },
