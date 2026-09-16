@@ -13,13 +13,13 @@ export default function LawsPage() {
     <section className="shell listing-page laws-index-page">
       <p className="kicker">پایگاه قوانین</p>
       <h1>قوانین و مقررات</h1>
-      <p className="lead">هر قانون به‌عنوان یک مجموعه مستقل منتشر می‌شود و مواد منتخب، شرح‌ها و اسناد مرتبط را یکجا در دسترس قرار می‌دهد.</p>
+      <p className="lead">متن کامل قوانین در کنار راهنمای موضوعی، شرح مواد و اسناد مرتبط در دسترس قرار می‌گیرد.</p>
       <div className="law-index-grid">
         <Link className="law-index-card" href="/laws/general-policies-44">
           <small>قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</small>
           <span>ق</span>
           <h2>قانون اجرای سیاست‌های کلی اصل ۴۴</h2>
-          <p>مواد منتخب مرتبط با رقابت، شرح ماده‌به‌ماده و آرای دارای ارزش تحلیلی</p>
+          <p>متن کامل و جاری قانون، راهنمای مواد مرتبط با رقابت، شرح‌های تحلیلی و آرای منتخب</p>
           <b>ورود به مجموعه قانون ←</b>
         </Link>
         <Link className="law-index-card principles-index-card" href={COMPETITION_PRINCIPLES_ROUTE}>

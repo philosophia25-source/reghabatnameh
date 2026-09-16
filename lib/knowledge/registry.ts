@@ -22,6 +22,7 @@ import type {
 import { validateKnowledgeRegistry } from "./validate";
 import { CONTENT_UPDATED_ISO } from "@/lib/site";
 import { craKnowledgeDocuments } from "@/lib/cra/data";
+import { generalPolicies44ArticleProvisions } from "@/lib/laws/general-policies-44";
 import telecomAbstract from "@/content/articles/telecom-abstract.json";
 
 export const institutionalDomains: InstitutionalDomain[] = [
@@ -100,7 +101,11 @@ export const legalSources: LegalSource[] = [
   },
 ];
 
-export const provisions = [...article44Provisions, ...article45Provisions];
+export const provisions = [
+  ...generalPolicies44ArticleProvisions,
+  ...article44Provisions,
+  ...article45Provisions,
+];
 export const commentaries = [...article44Commentaries, ...article45Commentaries];
 
 export const topics: Topic[] = [

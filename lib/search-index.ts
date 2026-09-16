@@ -4,6 +4,7 @@ import { decisionRecords } from "@/app/decision-data";
 import { craResolutions, readCraResolutionHtml } from "@/lib/cra/data";
 import { compactSearchText, normalizeSearchText } from "@/lib/search-normalize";
 import { readArticleHtml } from "@/lib/articles";
+import { lawArticleForProvision } from "@/lib/laws/general-policies-44";
 import {
   COMPETITION_PRINCIPLES_DESCRIPTION,
   COMPETITION_PRINCIPLES_ROUTE,
@@ -83,20 +84,26 @@ export function buildSearchIndex(): SearchEntry[] {
     title: source.title,
     category: "قانون و مقرره",
     href: source.route,
-    summary: `متن و شرح مواد منتخب ${source.shortTitle}`,
+    summary: `متن کامل، راهنمای موضوعی و شرح مواد ${source.shortTitle}`,
     searchText: `${source.title} ${source.shortTitle}`,
   }));
 
   const provisionEntries = publishedProvisions
     .filter((provision) => !commentaryRoutes.has(provision.route))
-    .map((provision) => ({
-      id: `provision:${provision.id}`,
-      title: `${provision.label}، ${provision.title}`,
-      category: "ماده قانونی",
-      href: provision.route,
-      summary: provision.description,
-      searchText: `${provision.label} ${provision.title} ${provision.description}`,
-    }));
+    .map((provision) => {
+      const lawArticle = lawArticleForProvision(provision.id);
+      const officialText = lawArticle?.blocks.map((block) => block.text).join(" ") ?? "";
+      return {
+        id: `provision:${provision.id}`,
+        title: lawArticle
+          ? `${provision.label} قانون اجرای سیاست‌های کلی اصل ۴۴`
+          : `${provision.label}، ${provision.title}`,
+        category: "ماده قانونی",
+        href: provision.route,
+        summary: provision.description,
+        searchText: `${provision.label} ${provision.title} ${provision.description} ${officialText}`,
+      };
+    });
 
   const commentaryEntries = publishedCommentaries.map((commentary) => {
     const provision = provisionById(commentary.provisionId);
