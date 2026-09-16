@@ -154,7 +154,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .decision-grid { margin-top:56px; display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
 .decision-card { min-height:210px; padding:30px; background:var(--panel); border:1px solid var(--line); }
 .decision-card h2 { margin:13px 0; font-size:25px; }.decision-card p { color:#aab1b5; font-size:var(--font-ui); line-height:2; }
-.law-index-grid { max-width:760px; margin-top:55px; }
+.law-index-grid { max-width:1120px; margin-top:55px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
 .law-index-card { min-height:300px; padding:36px 38px; position:relative; display:flex; flex-direction:column; overflow:hidden; background:linear-gradient(145deg,#102635,#0a1b28); border:1px solid rgba(201,164,104,.34); transition:transform .2s,border-color .2s; }
 .law-index-card:hover { transform:translateY(-3px); border-color:rgba(221,191,134,.62); }
 .law-index-card>small { max-width:540px; color:var(--gold); font-size:var(--font-caption); line-height:1.9; }
@@ -162,6 +162,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .law-index-card h2 { margin:30px 0 12px; position:relative; font-size:36px; }
 .law-index-card p { max-width:590px; margin:0; position:relative; color:#aab9c0; font-size:var(--font-ui); line-height:2; }
 .law-index-card b { margin-top:auto; padding-top:28px; position:relative; color:var(--gold-light); font-size:var(--font-caption); font-weight:400; }
+.principles-index-card>span { font-size:125px; }
 .text-link { margin-top:38px; display:inline-block; padding-bottom:5px; color:var(--gold-light); border-bottom:1px solid var(--gold); font-size:var(--font-small); }
 .prose-page { max-width:950px; }
 .prose-page h2 { margin-top:55px; font-size:28px; }.prose-page p:not(.kicker) { color:#c7ccce; font-size:var(--font-body); line-height:2.05; }
@@ -499,6 +500,8 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .knowledge-card p { margin:0; color:#a6b4bb; font-size:var(--font-ui); line-height:2; }
 .knowledge-card b { margin-top:auto; padding-top:24px; color:var(--gold-light); font-size:var(--font-small); font-weight:400; }
 .law-knowledge-card { max-width:760px; min-height:285px; }
+.principles-knowledge-card { min-height:215px; grid-column:1/-1; }
+.principles-knowledge-card p { max-width:850px; }
 .knowledge-hero>p:not(.eyebrow) { max-width:860px; }
 .knowledge-detail { padding-block:72px 110px; }
 .knowledge-summary-grid { margin-bottom:68px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
@@ -555,6 +558,16 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .resolution-more:hover,.resolution-more:focus-visible { background:#0e2332; border-color:rgba(201,164,104,.55); }
 .resolution-list-compact { margin-top:10px; }
 .collection-all-link { width:max-content; margin-top:28px; padding-bottom:6px; display:block; color:var(--gold-light); border-bottom:1px solid rgba(201,164,104,.5); font-size:var(--font-small); }
+
+/* اصول عمومی تفسیر و اجرای حقوق رقابت */
+.principles-hero>p:not(.eyebrow) { max-width:930px; }
+.principles-layout { grid-template-columns:285px minmax(0,780px); }
+.principles-body section { scroll-margin-top:42px; }
+.principles-body section:first-of-type { padding-top:5px; }
+.principles-body .commentary-kicker { margin-bottom:8px; text-align:right; }
+.principles-body h2 { margin-top:0; }
+.principles-nav .parts-nav-link { min-height:76px; }
+.principles-nav .parts-nav-link strong { line-height:1.75; }
 
 .resolution-hero { padding-block:36px 42px; }
 .resolution-hero .breadcrumbs { margin-bottom:22px; }
@@ -766,6 +779,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
   .legal-header .main-nav a { padding:14px 0 12px; }
   .legal-header .main-nav a.active::after { bottom:5px; }
   .knowledge-index-page { padding-top:62px; }
+  .law-index-grid { grid-template-columns:1fr; }
   .knowledge-card-grid,.knowledge-card-grid-three,.knowledge-summary-grid,.connection-groups { grid-template-columns:1fr; }
   .knowledge-card { min-height:215px; padding:25px 23px; }
   .knowledge-detail { padding-block:46px 76px; }
@@ -808,6 +822,13 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
   .cra-source-text { padding:27px 20px; }.cra-source-text p,.cra-source-text li { font-size:1rem; line-height:2.05; text-align:right; }.cra-source-text h2 { font-size:1.35rem; }.cra-ocr-text math[display="block"] { padding:14px 10px; font-size:.9rem; }
   .resolution-source-box { grid-template-columns:1fr; }.resolution-source-box>a { width:max-content; }.resolution-source-files { grid-column:auto; }
   .resolution-relations { padding:25px 20px; }
+}
+
+@media (max-width:640px) {
+  .principles-nav { overflow:hidden; }
+  .principles-nav ol { display:flex; overflow-x:auto; scroll-snap-type:x proximity; scrollbar-width:thin; }
+  .principles-nav li { flex:0 0 min(82vw,300px); scroll-snap-align:start; border-left:1px solid rgba(255,255,255,.055)!important; border-bottom:0; }
+  .principles-nav .parts-nav-link { height:100%; min-height:88px; }
 }
 
 @media print {

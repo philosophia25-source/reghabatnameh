@@ -16,6 +16,7 @@ import {
   craCategoryRoute,
 } from "@/lib/cra/categories";
 import { SITE_URL } from "@/lib/site";
+import { COMPETITION_PRINCIPLES_ROUTE } from "@/lib/competition-principles";
 
 export const dynamic = "force-static";
 
@@ -23,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const fixedRoutes = [
     "",
     "/laws",
+    COMPETITION_PRINCIPLES_ROUTE,
     "/laws/general-policies-44/article-44/commentary",
     "/laws/general-policies-44/article-44/decisions",
     "/laws/general-policies-44/article-45/commentary",

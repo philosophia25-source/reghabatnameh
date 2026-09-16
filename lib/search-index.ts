@@ -5,6 +5,12 @@ import { craResolutions, readCraResolutionHtml } from "@/lib/cra/data";
 import { compactSearchText, normalizeSearchText } from "@/lib/search-normalize";
 import { readArticleHtml } from "@/lib/articles";
 import {
+  COMPETITION_PRINCIPLES_DESCRIPTION,
+  COMPETITION_PRINCIPLES_ROUTE,
+  COMPETITION_PRINCIPLES_TITLE,
+  readCompetitionPrinciples,
+} from "@/lib/competition-principles";
+import {
   documentsForCase,
   institutionsForDocument,
   marketsForDocument,
@@ -61,6 +67,16 @@ function cleanHtml(value: string) {
 
 export function buildSearchIndex(): SearchEntry[] {
   const commentaryRoutes = new Set(publishedCommentaries.map((item) => item.route));
+  const principleSections = readCompetitionPrinciples();
+
+  const principleEntries = [{
+    id: "principles:competition-law",
+    title: COMPETITION_PRINCIPLES_TITLE,
+    category: "اصول عمومی حقوق رقابت",
+    href: COMPETITION_PRINCIPLES_ROUTE,
+    summary: COMPETITION_PRINCIPLES_DESCRIPTION,
+    searchText: principleSections.flatMap((section) => [section.title, ...section.paragraphs]).join(" "),
+  }];
 
   const legalSourceEntries = publishedLegalSources.map((source) => ({
     id: `law:${source.id}`,
@@ -197,6 +213,7 @@ export function buildSearchIndex(): SearchEntry[] {
   }));
 
   const entries = [
+    ...principleEntries,
     ...publishedArticles.map(article => ({ id: article.id, title: article.title, category: "مقاله پژوهشی", href: article.route, summary: article.abstract.slice(0,190), searchText: cleanHtml(`${article.title} ${article.authors.map(x=>x.name).join(" ")} ${article.abstract} ${readArticleHtml(article)}`) })),
     ...commentaryEntries,
     ...decisionEntries,

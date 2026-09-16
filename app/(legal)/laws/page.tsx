@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { COMPETITION_PRINCIPLES_ROUTE } from "@/lib/competition-principles";
 
 export const metadata: Metadata = {
   title: "قوانین و مقررات",
@@ -20,6 +21,13 @@ export default function LawsPage() {
           <h2>قانون اجرای سیاست‌های کلی اصل ۴۴</h2>
           <p>مواد منتخب مرتبط با رقابت، شرح ماده‌به‌ماده و آرای دارای ارزش تحلیلی</p>
           <b>ورود به مجموعه قانون ←</b>
+        </Link>
+        <Link className="law-index-card principles-index-card" href={COMPETITION_PRINCIPLES_ROUTE}>
+          <small>مبانی مشترک شرح و تحلیل مقررات رقابت</small>
+          <span>۸</span>
+          <h2>اصول عمومی تفسیر و اجرای حقوق رقابت</h2>
+          <p>هشت اصل راهنما برای تفسیر مقررات، احراز مسئولیت و انتخاب مداخله متناسب</p>
+          <b>مطالعه اصول عمومی ←</b>
         </Link>
       </div>
     </section>
