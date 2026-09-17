@@ -117,7 +117,7 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
     sameSession.length ? `${toFaDigits(sameSession.length)} مصوبه دیگر در همین جلسه` : "",
   ].filter(Boolean).join(" · ") || "روابط رسمی، ارجاعات متنی و مصوبات همین جلسه";
   const number = resolution.resolutionNumber ? `مصوبه شماره ${resolution.resolutionNumber}` : "مصوبه";
-  const citation = `${number} جلسه شماره ${resolution.sessionNumber} کمیسیون تنظیم مقررات ارتباطات، مصوب ${resolution.approvalDate}، ${SITE_NAME}، ${SITE_URL}${resolution.route}`;
+  const citation = `${toFaDigits(number)} جلسه شماره ${toFaDigits(resolution.sessionNumber)} کمیسیون تنظیم مقررات ارتباطات، مصوب ${toFaDigits(resolution.approvalDate)}، ${SITE_NAME}، ${SITE_URL}${resolution.route}`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Legislation",
@@ -153,7 +153,7 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
       </section>
 
       <section className="resolution-content">
-        <ResolutionActions citation={toFaDigits(citation)} hasRelations={hasRelations} />
+        <ResolutionActions citation={citation} hasRelations={hasRelations} />
 
         {legalStatus?.kind === "revoked" ? (
           <aside className="resolution-legal-status" aria-label="وضعیت اعتبار مصوبه">
@@ -319,7 +319,7 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
           ) : null}
         </section>
 
-        <details className="resolution-citation"><summary>شیوه استناد به این صفحه</summary><p>{toFaDigits(citation)}</p></details>
+        <details className="resolution-citation"><summary>شیوه استناد به این صفحه</summary><p>{citation}</p></details>
         <RelatedJournalArticles kind="document" id={resolution.id} />
       </section>
     </>
