@@ -2,16 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { toFaDigits } from "@/app/text";
+import { normalizeSearchText } from "@/lib/search-normalize";
 
-function normalize(value: string) {
-  return value
-    .toLocaleLowerCase("fa")
-    .replace(/[يى]/g, "ی")
-    .replace(/ك/g, "ک")
-    .replace(/[أإٱ]/g, "ا")
-    .replace(/\u200c/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+function normalizeLawSearchText(value: string) {
+  return normalizeSearchText(value).replace(/[أإٱ]/g, "ا");
 }
 
 export function LawSearch({ total }: { total: number }) {
@@ -19,11 +13,11 @@ export function LawSearch({ total }: { total: number }) {
   const [matches, setMatches] = useState(total);
 
   useEffect(() => {
-    const needle = normalize(query);
+    const needle = normalizeLawSearchText(query);
     const articles = Array.from(document.querySelectorAll<HTMLElement>("[data-law-article]"));
     let visible = 0;
     articles.forEach((article) => {
-      const matchesQuery = !needle || normalize(article.textContent ?? "").includes(needle);
+      const matchesQuery = !needle || normalizeLawSearchText(article.textContent ?? "").includes(needle);
       article.classList.toggle("law-search-hidden", !matchesQuery);
       if (matchesQuery) visible += 1;
     });
