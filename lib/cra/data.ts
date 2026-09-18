@@ -29,6 +29,8 @@ const craSourceSection = /<section class="cra-source-text[^"]*"[^>]*>[\s\S]*?<\/
 const craSourceName = /<div class="cra-source-label">متن پیوست <span>([^<]*)<\/span><\/div>/i;
 const craTable = /<table\b[^>]*>[\s\S]*?<\/table>/gi;
 const craParagraph = /<p>([\s\S]*?)<\/p>/gi;
+const craBlockquote = /<blockquote\b[^>]*>([\s\S]*?)<\/blockquote>/gi;
+const craBlockElement = /<(p|li)\b[^>]*>([\s\S]*?)<\/\1>/gi;
 const craArabicLetter = "[\\u0621-\\u063A\\u0641-\\u064A\\u066E-\\u06D3\\u06FA-\\u06FF]";
 const craInWordTatweel = new RegExp(`(${craArabicLetter})\\u0640+(?=${craArabicLetter})`, "g");
 const craArabicIndicDigits = "٠١٢٣٤٥٦٧٨٩";
@@ -89,6 +91,7 @@ const sourceCraResolutionByGuid = new Map(
   sourceCraResolutions.map((resolution) => [resolution.guid, resolution]),
 );
 const sourceCraDisplayCuration = rawDisplayCuration as {
+  flattenedBlockquotePrefixes: Record<string, string[]>;
   redundantTextSections: Record<string, string[]>;
   unreadableTextSections: Record<string, string[]>;
   htmlReplacements: Record<string, { from: string; to: string }[]>;
@@ -147,6 +150,50 @@ for (const [guid, replacements] of Object.entries(sourceCraDisplayCuration.htmlR
   for (const replacement of replacements) {
     if (!replacement.from || replacement.from === replacement.to || !sourceHtml.includes(replacement.from)) {
       throw new Error(`CRA display replacement is invalid or stale for ${guid}: ${replacement.from}.`);
+    }
+  }
+}
+
+function toLatinCraDigits(text: string) {
+  return text.replace(/[۰-۹٠-٩]/g, (digit) => {
+    const persianIndex = craPersianDigits.indexOf(digit);
+    return String(persianIndex >= 0 ? persianIndex : craArabicIndicDigits.indexOf(digit));
+  });
+}
+
+function craLegalNumberPrefix(html: string) {
+  const text = toLatinCraDigits(html.replace(/<[^>]+>/g, " ").replace(/&nbsp;|&#160;/gi, " "))
+    .replace(/\s+/g, " ")
+    .trim();
+  const match = text.match(/^([0-9]+(?:\s*[-–—]\s*[0-9]+)+)(?=\s|[-–—.:])/);
+  return match ? match[1].split(/\s*[-–—]\s*/).slice(0, -1).join("-") : null;
+}
+
+function blockquoteLegalPrefixes(html: string) {
+  const prefixes = new Set<string>();
+  html.replace(craBlockElement, (_block, _tag: string, content: string) => {
+    const prefix = craLegalNumberPrefix(content);
+    if (prefix) prefixes.add(prefix);
+    return _block;
+  });
+  return prefixes;
+}
+
+for (const [guid, prefixes] of Object.entries(sourceCraDisplayCuration.flattenedBlockquotePrefixes)) {
+  const resolution = sourceCraResolutionByGuid.get(guid);
+  if (!resolution) throw new Error(`CRA blockquote curation points to an unknown document: ${guid}.`);
+  if (!prefixes.length || new Set(prefixes).size !== prefixes.length) {
+    throw new Error(`CRA blockquote curation has empty or duplicate prefixes: ${guid}.`);
+  }
+  const sourceHtml = readFileSync(join(process.cwd(), "content", resolution.contentFile), "utf8");
+  const availablePrefixes = new Set<string>();
+  sourceHtml.replace(craBlockquote, (_blockquote, content: string) => {
+    for (const prefix of blockquoteLegalPrefixes(content)) availablePrefixes.add(prefix);
+    return _blockquote;
+  });
+  for (const prefix of prefixes) {
+    if (!availablePrefixes.has(prefix)) {
+      throw new Error(`CRA blockquote curation is stale for ${guid}: ${prefix}.`);
     }
   }
 }
@@ -642,6 +689,15 @@ function applyCuratedCraHtmlReplacements(html: string, guid: string) {
     .reduce((result, replacement) => result.replaceAll(replacement.from, replacement.to), html);
 }
 
+function flattenCuratedCraBlockquotes(html: string, guid: string) {
+  const targetPrefixes = new Set(sourceCraDisplayCuration.flattenedBlockquotePrefixes[guid] ?? []);
+  if (!targetPrefixes.size) return html;
+  return html.replace(craBlockquote, (blockquote, content: string) => {
+    const prefixes = blockquoteLegalPrefixes(content);
+    return [...prefixes].some((prefix) => targetPrefixes.has(prefix)) ? content : blockquote;
+  });
+}
+
 /**
  * The Word source for resolution 204-1 uses literal multi-level legal
  * numbers. Its imported HTML mistakenly turned those labels into ordinary
@@ -725,10 +781,10 @@ function wrapCraTables(html: string) {
 }
 
 function localizeCraDocumentText(html: string, guid: string) {
-  const curatedHtml = applyCuratedCraHtmlReplacements(
+  const curatedHtml = flattenCuratedCraBlockquotes(applyCuratedCraHtmlReplacements(
     restoreCra2041Numbering(removeCuratedCraSections(html, guid), guid),
     guid,
-  );
+  ), guid);
   const withPlainTableNumbers = curatedHtml.replace(
     craEmptyTableNumber,
     (_match, cellAttributes: string, _beforeStart: string, _quote: string, start: string) => (
