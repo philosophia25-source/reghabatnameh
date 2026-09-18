@@ -723,6 +723,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-source-label span { color:#39444a; overflow-wrap:anywhere; }
 .cra-consolidated-label { padding:13px 15px; color:#5e4723; background:#e4d7bd; border-right:4px solid #9a7538; }
 .cra-consolidated-label strong { color:#5d4218; }
+.cra-source-text blockquote { margin:0; }
 .cra-source-text p,.cra-source-text li { color:#263137; font-size:var(--font-body); line-height:2.05; text-align:right; }
 .cra-source-text p { margin:0 0 1.15em; }
 .cra-source-text ol { direction:rtl; list-style-type:persian; }
