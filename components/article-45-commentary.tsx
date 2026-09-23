@@ -77,6 +77,23 @@ function PartsNav({ current }: { current: string }) {
   </ScrollablePartsNav>;
 }
 
+function CommentarySectionNav({ sections }: { sections: string[] }) {
+  const tocSections = sections.slice(1, 11);
+  if (!tocSections.length) return null;
+
+  return <nav className="commentary-section-nav" aria-label="فهرست داخلی این شرح">
+    <p>در این شرح</p>
+    <ol>
+      <li><a href="#commentary-start">آغاز شرح</a></li>
+      {tocSections.map((section, tocIndex) => {
+        const heading = clean(section.split("\n")[0]);
+        const id = `section-${heading.match(/^\d+/)?.[0] ?? tocIndex + 1}`;
+        return <li key={id}><a href={`#${id}`}>{plainHeading(withoutBookNumber(heading))}</a></li>;
+      })}
+    </ol>
+  </nav>;
+}
+
 function decisionReferences(commentary: string) {
   const references: { href: string; title: string; detail: string; position: number }[] = [];
   const recordByRoute = new Map(decisionIndexRecords.map((decision) => [decision.href, decision]));
@@ -109,10 +126,8 @@ export function Article45Commentary({ slug }: { slug: string }) {
   const next = article45CommentaryParts.slice(index + 1).find((item) => item.available);
 
   return <>
-    <div className="commentary-layout part-layout">
-      <PartsNav current={slug} />
+    <div className="commentary-layout part-layout commentary-detail-layout">
       <article className="commentary-body">
-        <div className="commentary-title-row"><p className="commentary-kicker">شرح نادر جعفری</p><h2>{displayTitle}</h2><p>{part.title}، {part.description}</p></div>
         <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، ${SITE_URL}/laws/general-policies-44/article-45/commentary/${slug}`} />
         {references.length ? <details className="commentary-decision-count"><summary><span>آرا و پرونده‌های مورد بررسی در این شرح</span><strong>{toFaDigits(references.length)} پرونده</strong><small>مشاهده فهرست و دسترسی به پرونده‌ها</small></summary><div className="commentary-decision-list">{references.map((reference) => <Link href={reference.href} key={reference.href}><small>{reference.detail}</small><strong>{reference.title}</strong><span>مشاهده پرونده ←</span></Link>)}</div></details> : null}
         {tocSections.length ? <details className="commentary-on-page"><summary>فهرست مطالب این شرح</summary><ol>{tocSections.map((section, tocIndex) => {
@@ -131,6 +146,10 @@ export function Article45Commentary({ slug }: { slug: string }) {
         })}
         {footnotes.length ? <section className="footnotes" aria-labelledby="footnotes-title"><div className="footnotes-heading"><span>ارجاعات</span><h2 id="footnotes-title">یادداشت‌ها و منابع</h2></div><ol>{footnotes.map((footnote) => <li id={`footnote-${footnote.number}`} key={footnote.number}><span className="footnote-number">{toFaDigits(footnote.number)}</span><p>{linkedText(footnote.text)}</p><a className="footnote-back" href={`#footnote-ref-${footnote.number}`} aria-label={`بازگشت از زیرنویس ${toFaDigits(footnote.number)} به متن`}>بازگشت ↑</a></li>)}</ol></section> : null}
       </article>
+      <div className="commentary-sidebar">
+        <CommentarySectionNav sections={sections} />
+        <PartsNav current={slug} />
+      </div>
     </div>
     <nav className="part-pagination" aria-label="حرکت میان اجزای شرح">
       {previous ? <Link href={`/laws/general-policies-44/article-45/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}

@@ -295,6 +295,10 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .eyebrow { margin:0 0 14px; color:var(--gold); font-size:var(--font-caption); letter-spacing:.02em; }
 .legal-hero h1,.decision-hero h1 { margin:0; font-size:clamp(48px,7vw,92px); line-height:1.2; letter-spacing:-.055em; }
 .legal-hero>p:not(.eyebrow),.decision-hero>p:not(.eyebrow) { max-width:780px; margin:16px 0 0; color:#b7c1c6; font-size:1rem; line-height:2; }
+.commentary-part-hero { padding-block:40px 46px; }
+.commentary-part-hero .breadcrumbs { margin-bottom:26px; }
+.commentary-part-hero h1 { max-width:980px; font-size:clamp(36px,5vw,64px); line-height:1.35; }
+.commentary-part-hero .law-meta { margin-top:28px; }
 .law-meta { margin-top:48px; display:flex; flex-wrap:wrap; gap:20px 56px; color:#91a2ab; font-size:var(--font-caption); }
 .law-meta span { display:flex; gap:12px; }
 .law-meta b { color:#d5dde0; font-size:var(--font-caption); font-weight:500; }
@@ -398,6 +402,16 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .article-45-commentary-heading h3 { margin:0; }
 .part-grid-single { grid-template-columns:minmax(0,350px); }
 .part-layout { grid-template-columns:285px minmax(0,760px); }
+.commentary-detail-layout .commentary-body { grid-column:2; grid-row:1; }
+.commentary-sidebar { max-height:calc(100vh - 56px); max-height:calc(100dvh - 56px); position:sticky; top:28px; grid-column:1; grid-row:1; display:flex; flex-direction:column; gap:16px; overflow-y:auto; scrollbar-color:rgba(201,164,104,.45) transparent; scrollbar-width:thin; }
+.commentary-section-nav { flex:0 0 auto; background:#091a27; border:1px solid rgba(255,255,255,.08); }
+.commentary-section-nav>p { margin:0; padding:18px 20px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.08); font-size:var(--font-caption); }
+.commentary-section-nav ol { margin:0; padding:7px 20px 12px; list-style:none; }
+.commentary-section-nav li+li { border-top:1px solid rgba(255,255,255,.055); }
+.commentary-section-nav a { padding:9px 0; display:block; color:#a7b4bb; font-size:var(--font-caption); line-height:1.8; }
+.commentary-section-nav a:hover { color:#fff; }
+.commentary-sidebar .parts-nav { max-height:360px; position:static; top:auto; flex:0 0 auto; }
+.commentary-sidebar .parts-nav ol { max-height:300px; }
 .parts-nav { max-height:calc(100vh - 56px); max-height:calc(100dvh - 56px); position:sticky; top:28px; display:flex; flex-direction:column; background:#091a27; border:1px solid rgba(255,255,255,.08); }
 .parts-nav>p { margin:0; padding:20px 21px; flex:0 0 auto; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.08); font-size:var(--font-caption); }
 .parts-nav ol { min-height:0; margin:0; padding:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-color:rgba(201,164,104,.45) transparent; scrollbar-gutter:stable; scrollbar-width:thin; list-style:none; }
@@ -807,6 +821,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .resolution-citation p { padding:0 0 20px; color:#91a4ad; font-size:var(--font-small); line-height:2; }
 
 @media (min-width:901px) {
+  .commentary-detail-layout .commentary-on-page { display:none; }
   .resolutions-hub-page { padding-top:42px; }
   .resolutions-hub-page h1 { max-width:none; margin-bottom:12px; font-size:clamp(42px,4.1vw,58px); line-height:1.32; letter-spacing:-.045em; }
   .resolutions-hub-page>.kicker { margin-bottom:10px; }
@@ -863,6 +878,8 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 
 @media (max-width:900px) {
   .commentary-layout { grid-template-columns:1fr; gap:36px; }.commentary-toc { position:static; }.commentary-toc ol { columns:2; column-gap:30px; }
+  .commentary-detail-layout .commentary-body { grid-column:auto; grid-row:auto; }
+  .commentary-detail-layout .commentary-sidebar { display:none; }
   .law-text-card { grid-template-columns:1fr; }.law-number { font-size:75px; }.decision-facts { grid-template-columns:1fr 1fr; }
   .part-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.parts-nav { max-height:none; position:static; display:block; }.parts-nav ol { display:grid; grid-template-columns:repeat(2,1fr); overflow:visible; overscroll-behavior:auto; scrollbar-gutter:auto; }.parts-nav li:nth-child(odd) { border-left:1px solid rgba(255,255,255,.055); }
 }
@@ -871,6 +888,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
   .legal-header { height:120px; padding-inline:18px; }.legal-header .main-nav { gap:18px; }.legal-header .main-nav a { padding:14px 0 12px; }.legal-header .main-nav a.active::after { bottom:5px; }
   .legal-header .brand small { display:none; }.legal-header .brand strong { font-size:1.0625rem; }.legal-header .brand-seal { width:34px; height:34px; }
   .legal-hero { padding:42px 22px 52px; }.decision-hero { padding:30px 22px 36px; }.breadcrumbs { margin-bottom:32px; }.legal-hero h1 { font-size:56px; }.decision-hero h1 { font-size:30px; line-height:1.6; }.resolution-hero { padding:28px 22px 32px; }.resolution-hero .breadcrumbs { margin-bottom:20px; }.resolution-hero h1 { font-size:28px; }
+  .commentary-part-hero { padding:28px 22px 34px; }.commentary-part-hero .breadcrumbs { margin-bottom:22px; }.commentary-part-hero h1 { font-size:34px; line-height:1.55; }.commentary-part-hero .law-meta { margin-top:24px; }
   .law-meta { margin-top:34px; gap:15px 25px; }.legal-tabs { min-height:60px; padding-inline:18px; gap:10px; justify-content:space-between; }.legal-tabs a { min-width:auto; font-size:var(--font-caption); }
   .legal-content,.decision-content { width:calc(100% - 28px); padding-block:42px 70px; }.law-text-card { padding:27px 22px; gap:22px; }.law-lead { font-size:var(--font-body); }.law-text-card li { font-size:1rem; }
   .commentary-toc ol { columns:1; }.commentary-body h2 { font-size:25px; }.commentary-body p { font-size:var(--font-body); line-height:2.05; text-align:right; }.commentary-decision-list { grid-template-columns:1fr; }

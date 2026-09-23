@@ -59,6 +59,12 @@ function commentarySections(commentary: string) {
   return sections.filter(Boolean);
 }
 
+function loadCommentary(slug: string) {
+  const commentary = readFileSync(join(process.cwd(), "content", commentaryFile(slug)), "utf8");
+  const [main, footnoteText = ""] = commentary.split(/\n---\n/, 2);
+  return { main, footnoteText, sections: commentarySections(main) };
+}
+
 function linkedText(text: string) {
   const mentions = Object.keys(decisionRouteByMention).sort((a, b) => b.length - a.length);
   const normalized = clean(text).replace(/\[\\?\[(\d+)\\?\]\]\(#_ftn\d+\)/g, "[[FN:$1]]");
@@ -161,12 +167,29 @@ function PartsNav({ current }: { current?: string }) {
   );
 }
 
-function CommentaryBody({ slug }: { slug: string }) {
+function CommentarySectionNav({ sections }: { sections: string[] }) {
+  const tocSections = sections.slice(1, 11);
+  if (!tocSections.length) return null;
+
+  return (
+    <nav className="commentary-section-nav" aria-label="فهرست داخلی این شرح">
+      <p>در این شرح</p>
+      <ol>
+        <li><a href="#commentary-start">آغاز شرح</a></li>
+        {tocSections.map((section, tocIndex) => {
+          const heading = clean(section.split("\n")[0]);
+          const id = `section-${heading.match(/^\d+/)?.[0] ?? tocIndex + 1}`;
+          return <li key={id}><a href={`#${id}`}>{plainHeading(heading.replace(/^\d+\.\s*/, ""))}</a></li>;
+        })}
+      </ol>
+    </nav>
+  );
+}
+
+function CommentaryBody({ slug, document }: { slug: string; document: ReturnType<typeof loadCommentary> }) {
   const part = commentaryParts.find((item) => item.slug === slug);
   if (!part) return null;
-  const commentary = readFileSync(join(process.cwd(), "content", commentaryFile(slug)), "utf8");
-  const [commentaryMain, commentaryFootnotes = ""] = commentary.split(/\n---\n/, 2);
-  const sections = commentarySections(commentaryMain);
+  const { main: commentaryMain, footnoteText: commentaryFootnotes, sections } = document;
   const tocSections = sections.slice(1, 11);
   const footnotes = Array.from(commentaryFootnotes.matchAll(/\[\\?\[(\d+)\\?\]\]\(#_ftnref\d+\)\s*([\s\S]*?)(?=\n\n\[\\?\[\d+|$)/g)).map((match) => ({
     number: match[1],
@@ -177,11 +200,6 @@ function CommentaryBody({ slug }: { slug: string }) {
 
   return (
     <article className="commentary-body">
-      <div className="commentary-title-row">
-        <p className="commentary-kicker">شرح نادر جعفری</p>
-        <h2>{displayTitle}</h2>
-        <p>{part.title}، {part.description}</p>
-      </div>
       <EditorialMeta citation={`${AUTHOR.name}، «${displayTitle}»، ${SITE_NAME}، ${SITE_URL}/laws/general-policies-44/article-44/commentary/${slug}`} />
       {decisionReferences.length ? <details className="commentary-decision-count">
         <summary>
@@ -274,15 +292,19 @@ function CommentaryIndex() {
 function CommentaryPart({ slug }: { slug: string }) {
   const part = commentaryParts.find((item) => item.slug === slug);
   if (!part?.available) return null;
+  const document = loadCommentary(slug);
   const index = commentaryParts.findIndex((item) => item.slug === slug);
   const previous = commentaryParts.slice(0, index).reverse().find((item) => item.available);
   const next = commentaryParts.slice(index + 1).find((item) => item.available);
 
   return (
     <>
-      <div className="commentary-layout part-layout">
-        <PartsNav current={slug} />
-        <CommentaryBody slug={slug} />
+      <div className="commentary-layout part-layout commentary-detail-layout">
+        <CommentaryBody slug={slug} document={document} />
+        <div className="commentary-sidebar">
+          <CommentarySectionNav sections={document.sections} />
+          <PartsNav current={slug} />
+        </div>
       </div>
       <nav className="part-pagination" aria-label="حرکت میان اجزای شرح">
         {previous ? <Link href={`/laws/general-policies-44/article-44/commentary/${previous.slug}`}><small>بخش قبلی</small><strong>{previous.shortLabel}</strong></Link> : <span />}
@@ -358,6 +380,8 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
         ? "/laws/general-policies-44/article-44/decisions"
         : "/laws/general-policies-44/article-44";
   const currentLabel = commentaryTitle ?? (active === "commentary" ? "شرح ماده ۴۴" : active === "decisions" ? "آرای ماده ۴۴" : "ماده ۴۴");
+  const heroTitle = commentaryTitle ?? "ماده ۴۴";
+  const heroDescription = currentPart ? `${currentPart.title}، ${currentPart.description}` : "توافق‌ها و هماهنگی‌های اخلال‌گر در رقابت";
   return (
     <>
       {currentPart && commentaryTitle ? <JsonLd data={{
@@ -377,12 +401,16 @@ export function Article44({ active, commentaryPart }: { active: Tab; commentaryP
         { name: "قانون اجرای سیاست‌های کلی اصل ۴۴", href: "/laws/general-policies-44" },
         { name: currentLabel, href: currentRoute },
       ]} />
-      <section className="legal-hero">
-        <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span><b>ماده ۴۴</b></div>
-        <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>
-        <h1>ماده ۴۴</h1>
-        <p>توافق‌ها و هماهنگی‌های اخلال‌گر در رقابت</p>
-        <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>اجزای شرح <b>{toFaDigits(commentaryPartCount)} بخش</b></span></div>
+      <section className={`legal-hero${currentPart ? " commentary-part-hero" : ""}`}>
+        <div className="breadcrumbs">
+          <Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span>
+          {currentPart ? <><Link href="/laws/general-policies-44/article-44">ماده ۴۴</Link><span>←</span><b>{commentaryTitle}</b></> : <b>ماده ۴۴</b>}
+        </div>
+        <p className="eyebrow">{currentPart ? "محشّی قانون اجرای سیاست‌های کلی اصل چهل‌وچهار" : "قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی"}</p>
+        <h1>{heroTitle}</h1>
+        <p>{heroDescription}</p>
+        {currentPart ? <div className="law-meta"><span>نوع محتوا <b>شرح حقوقی</b></span><span>نویسنده <b>نادر جعفری</b></span><span>جایگاه در ماده <b>{currentPart.shortLabel}</b></span></div>
+          : <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>اجزای شرح <b>{toFaDigits(commentaryPartCount)} بخش</b></span></div>}
       </section>
 
       <nav className="legal-tabs" aria-label="بخش‌های ماده ۴۴">

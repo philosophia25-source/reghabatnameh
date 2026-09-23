@@ -135,6 +135,9 @@ function Decisions() {
 
 export function Article45({ active, commentaryPart }: { active: Tab; commentaryPart?: string }) {
   const currentPart = commentaryPart ? article45CommentaryParts.find((part) => part.slug === commentaryPart) : undefined;
+  const commentaryTitle = currentPart
+    ? (currentPart.slug === "chapeau" ? "شرح صدر ماده ۴۵" : `شرح ${currentPart.shortLabel} ماده ۴۵`)
+    : undefined;
   const currentRoute = currentPart
     ? `/laws/general-policies-44/article-45/commentary/${currentPart.slug}`
     : active === "commentary"
@@ -143,8 +146,10 @@ export function Article45({ active, commentaryPart }: { active: Tab; commentaryP
         ? "/laws/general-policies-44/article-45/decisions"
         : "/laws/general-policies-44/article-45";
   const currentLabel = currentPart
-    ? (currentPart.slug === "chapeau" ? currentPart.title : `شرح ${currentPart.shortLabel} ماده ۴۵`)
+    ? commentaryTitle!
     : active === "commentary" ? "شرح ماده ۴۵" : active === "decisions" ? "آرای ماده ۴۵" : "ماده ۴۵";
+  const heroTitle = commentaryTitle ?? "ماده ۴۵";
+  const heroDescription = currentPart ? `${currentPart.title}، ${currentPart.description}` : "اعمال یک‌جانبه اخلال‌گر در رقابت";
   return <>
     <BreadcrumbJsonLd items={[
       { name: "خانه", href: "/" },
@@ -152,12 +157,16 @@ export function Article45({ active, commentaryPart }: { active: Tab; commentaryP
       { name: "قانون اجرای سیاست‌های کلی اصل ۴۴", href: "/laws/general-policies-44" },
       { name: currentLabel, href: currentRoute },
     ]} />
-    <section className="legal-hero">
-      <div className="breadcrumbs"><Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span><b>ماده ۴۵</b></div>
-      <p className="eyebrow">قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی</p>
-      <h1>ماده ۴۵</h1>
-      <p>اعمال یک‌جانبه اخلال‌گر در رقابت</p>
-      <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>شرح منتشرشده <b>{toFaDigits(publishedCommentaryCount)} بخش</b></span></div>
+    <section className={`legal-hero${currentPart ? " commentary-part-hero" : ""}`}>
+      <div className="breadcrumbs">
+        <Link href="/">خانه</Link><span>←</span><Link href="/laws/general-policies-44">قانون اجرای سیاست‌های کلی اصل ۴۴</Link><span>←</span>
+        {currentPart ? <><Link href="/laws/general-policies-44/article-45">ماده ۴۵</Link><span>←</span><b>{commentaryTitle}</b></> : <b>ماده ۴۵</b>}
+      </div>
+      <p className="eyebrow">{currentPart ? "محشّی قانون اجرای سیاست‌های کلی اصل چهل‌وچهار" : "قانون اجرای سیاست‌های کلی اصل چهل‌وچهار قانون اساسی"}</p>
+      <h1>{heroTitle}</h1>
+      <p>{heroDescription}</p>
+      {currentPart ? <div className="law-meta"><span>نوع محتوا <b>شرح حقوقی</b></span><span>نویسنده <b>نادر جعفری</b></span><span>جایگاه در ماده <b>{currentPart.shortLabel}</b></span></div>
+        : <div className="law-meta"><span>نوع محتوا <b>قانون و شرح</b></span><span>نویسنده شرح <b>نادر جعفری</b></span><span>شرح منتشرشده <b>{toFaDigits(publishedCommentaryCount)} بخش</b></span></div>}
     </section>
     <nav className="legal-tabs" aria-label="بخش‌های ماده ۴۵">
       {tabs.map((tab) => <Link className={active === tab.key ? "active" : ""} aria-current={active === tab.key ? "page" : undefined} href={tab.href} key={tab.key}>{tab.label}{tab.count ? <small>{tab.count}</small> : null}</Link>)}
