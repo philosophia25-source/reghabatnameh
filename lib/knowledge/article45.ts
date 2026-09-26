@@ -178,6 +178,13 @@ function provisionId(slug: string) {
   return `${ARTICLE_45_ID}:${slug}`;
 }
 
+const publishedCommentarySlugs = new Set([
+  "clause-alef",
+  "clause-alef-1",
+  "clause-alef-2",
+  "clause-alef-3",
+]);
+
 export const article45CommentaryParts: Article45Part[] = [
   {
     slug: "chapeau",
@@ -193,7 +200,7 @@ export const article45CommentaryParts: Article45Part[] = [
       shortLabel: `بند ${section.letter}`,
       title: section.title,
       description: descriptions[section.slug],
-      available: false,
+      available: publishedCommentarySlugs.has(section.slug),
       provisionId: provisionId(section.slug),
     };
     const itemParts = (section.items ?? []).map<Article45Part>((item) => ({
@@ -201,7 +208,7 @@ export const article45CommentaryParts: Article45Part[] = [
       shortLabel: `جزء ${item.number} بند ${section.letter}`,
       title: descriptions[item.slug],
       description: item.text,
-      available: item.slug === "clause-alef-1",
+      available: publishedCommentarySlugs.has(item.slug),
       provisionId: provisionId(item.slug),
       parentSlug: section.slug,
     }));
