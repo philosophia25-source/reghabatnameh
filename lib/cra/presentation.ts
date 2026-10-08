@@ -1,3 +1,28 @@
+import { toFaDigits } from "@/app/text";
+import type { CraResolution } from "./types";
+
+export function craResolutionPageTitle(resolution: Pick<CraResolution, "title" | "resolutionNumber" | "sessionNumber">) {
+  const number = toFaDigits(resolution.resolutionNumber.trim());
+  const session = toFaDigits(resolution.sessionNumber.trim());
+  const identifier = [number ? `مصوبه شماره ${number}` : "مصوبه", session ? `جلسه ${session}` : ""]
+    .filter(Boolean).join(" ");
+  let subject = toFaDigits(resolution.title).trim();
+
+  // Only remove a leading reference to this resolution. References to other
+  // resolutions in amendment titles are part of the subject and must remain.
+  const fullReference = subject.match(/^مصوبه\s+شماره\s*\(?\s*([۰-۹]+)\s*\)?\s+جلسه\s+(?:شماره\s*)?\(?\s*([۰-۹]+)\s*\)?(?=\s|$)/);
+  const sessionOnlyReference = subject.match(/^مصوبه\s+شماره\s+جلسه\s+(?:شماره\s*)?([۰-۹]+)(?:\s+کمیسیون)?(?=\s|$)/);
+  const ownReference = fullReference?.[1] === number && fullReference?.[2] === session
+    ? fullReference
+    : sessionOnlyReference?.[1] === session ? sessionOnlyReference : null;
+  if (ownReference) {
+    subject = subject.slice(ownReference[0].length).trim()
+      .replace(/^(?:با\s*موضوع|در\s+خصوص|درباره|با\s*عنوان)\s+/u, "");
+  }
+
+  return subject ? `${identifier} | ${subject}` : identifier;
+}
+
 /** Display-only isolation. Never reverse clause numbers or rewrite legal text. */
 export function formatCraReadingHtml(html: string) {
   // These leaf spans add no information inside an already-RTL document, but

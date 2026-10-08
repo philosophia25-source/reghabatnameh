@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { decisionRecords } from "@/app/decision-data";
 import { craResolutions, readCraResolutionHtml } from "@/lib/cra/data";
+import { craResolutionPageTitle } from "@/lib/cra/presentation";
 import { compactSearchText, normalizeSearchText } from "@/lib/search-normalize";
 import { readArticleHtml } from "@/lib/articles";
 import { lawArticleForProvision } from "@/lib/laws/general-policies-44";
@@ -158,7 +159,7 @@ export function buildSearchIndex(): SearchEntry[] {
     ].join(" ");
     return {
       id: resolution.id,
-      title: resolution.title,
+      title: craResolutionPageTitle(resolution),
       category: "مصوبه تنظیم‌گری",
       href: resolution.route,
       summary: `${number}، ${resolution.approvalDate || "بدون تاریخ"}، ${resolution.category}`,

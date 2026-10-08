@@ -30,6 +30,7 @@ import type {
   CraTextReferenceTarget,
 } from "@/lib/cra/types";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { craResolutionPageTitle } from "@/lib/cra/presentation";
 
 const relationLabels = {
   related: "اسناد مرتبط در سامانه رسمی",
@@ -64,6 +65,7 @@ function TextReferenceLinks({ targets }: { targets: CraTextReferenceTarget[] }) 
 }
 
 export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
+  const pageTitle = craResolutionPageTitle(resolution);
   const category = craCategoryForName(resolution.category);
   const categoryHref = category ? craCategoryRoute(category) : CRA_ALL_RESOLUTIONS_ROUTE;
   const body = resolution.contentAvailable ? readCraResolutionHtml(resolution) : "";
@@ -121,7 +123,7 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Legislation",
-    name: resolution.title,
+    name: pageTitle,
     legislationIdentifier: resolution.code,
     inLanguage: "fa-IR",
     mainEntityOfPage: `${SITE_URL}${resolution.route}`,
@@ -148,7 +150,7 @@ export function ResolutionPage({ resolution }: { resolution: CraResolution }) {
           <b>{toFaDigits(number)}</b>
         </div>
         <p className="eyebrow">مصوبه کمیسیون تنظیم مقررات ارتباطات</p>
-        <h1>{toFaDigits(resolution.title)}</h1>
+        <h1>{pageTitle}</h1>
         <p>{toFaDigits(resolution.code)}</p>
       </section>
 

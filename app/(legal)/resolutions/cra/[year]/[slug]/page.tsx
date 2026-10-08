@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LegacyRedirect } from "@/components/legacy-redirect";
 import { ResolutionPage } from "@/components/resolution-page";
+import { craResolutionPageTitle } from "@/lib/cra/presentation";
 import {
   craDuplicateResolutionDestinationForPath,
   craResolutionDescription,
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const resolution = craResolutionForPath(resolved);
   if (!resolution) return {};
   return {
-    title: resolution.title,
+    title: craResolutionPageTitle(resolution),
     description: craResolutionDescription(resolution),
     alternates: { canonical: resolution.route },
   };
