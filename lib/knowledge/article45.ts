@@ -184,6 +184,7 @@ const publishedCommentarySlugs = new Set([
   "clause-alef-2",
   "clause-alef-3",
   "clause-be",
+  "clause-jim",
 ]);
 
 export const article45CommentaryParts: Article45Part[] = [
