@@ -5,6 +5,7 @@ import {
   institutionsForDocument,
   marketsForDocument,
   provisionsForDocument,
+  relatedDocumentsForDocument,
   topicsForDocument,
 } from "@/lib/knowledge/queries";
 import { EditorialMeta } from "@/components/editorial-meta";
@@ -60,6 +61,7 @@ function KnowledgeConnections({ decision }: { decision: DecisionRecord }) {
   const provisions = provisionsForDocument(decision.id);
   const topics = topicsForDocument(decision.id);
   const markets = marketsForDocument(decision.id);
+  const relatedDocuments = relatedDocumentsForDocument(decision.id);
   return (
     <section className="knowledge-connections" aria-labelledby="connections-title">
       <div className="knowledge-connections-heading">
@@ -67,6 +69,7 @@ function KnowledgeConnections({ decision }: { decision: DecisionRecord }) {
         <h2 id="connections-title">ارتباطات این پرونده</h2>
       </div>
       <div className="connection-groups">
+        {relatedDocuments.length ? <div><span>آرای مرتبط</span><div>{relatedDocuments.map(({ document, relation }) => <Link href={document.route} key={document.id}>{relation === "affirms" ? "تأیید رأی ـ " : relation === "reverses" ? "نقض رأی ـ " : relation === "appeals" ? "تجدیدنظر از ـ " : ""}{document.title}</Link>)}</div></div> : null}
         <div><span>نهاد صادرکننده</span><div>{institutions.map((institution) => <Link href={institution.route} key={institution.id}>{institution.shortName}</Link>)}</div></div>
         <div><span>مواد و اجزای مرتبط</span><div>{provisions.map(({ provision }) => provision.status === "published" ? <Link href={provision.route} key={provision.id}>{provision.label}</Link> : <span className="connection-pending" key={provision.id}>{provision.label}</span>)}</div></div>
         <div><span>موضوعات</span><div>{topics.map((topic) => <Link href={topic.route} key={topic.id}>{topic.title}</Link>)}</div></div>

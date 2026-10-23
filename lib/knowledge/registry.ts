@@ -168,6 +168,7 @@ type DecisionInput = {
   additionalTopics?: string[];
   relation?: string;
   article45Parts?: string[];
+  article45ReferenceParts?: string[];
   year: string;
   numberSlug?: string;
   legacyRoutes?: string[];
@@ -192,6 +193,10 @@ function decision(input: DecisionInput): KnowledgeDocument {
       ...(input.article45Parts ?? []).map((part) => ({
         provisionId: article45ProvisionIdBySlug[part],
         relation: "applies" as const,
+      })),
+      ...(input.article45ReferenceParts ?? []).map((part) => ({
+        provisionId: article45ProvisionIdBySlug[part],
+        relation: "commentary-reference" as const,
       })),
     ],
     topicIds: includeInArticle44 ? topicIds(parts, input.additionalTopics) : (input.additionalTopics ?? []),
@@ -226,12 +231,26 @@ export const documents: KnowledgeDocument[] = [
   decision({ slug: "429", year: "1399", title: "قدرت مسلط و قیمت‌گذاری تهاجمی در خرید توتون", files: ["429.txt"], parts: ["clause-1", "clause-2"], markets: ["agriculture-food"] }),
   decision({ slug: "421", year: "1399", title: "ظرفیت وکالت و دامنه ماده ۷", files: ["421.txt"], parts: ["clause-2", "clause-7"], markets: ["professional-services"] }),
   decision({ slug: "403", year: "1398", title: "قراردادهای جایگاه‌داری سوخت", files: ["403.txt"], includeInArticle44: false, article45Parts: ["clause-vav-2", "clause-ta-2"], markets: ["energy"], additionalTopics: ["third-party-dealing"], relation: "احراز تحمیل معامله با شخص ثالث و شرایط قراردادی غیرمنصفانه در قراردادهای جایگاه‌داری" }),
-  decision({ slug: "354", year: "1397", title: "تبعیض در مزایده تبلیغات شهری", files: ["354.txt"], parts: ["clause-3"], markets: ["public-local-markets"] }),
-  decision({ slug: "sugar-296", year: "1396", numberSlug: "296", title: "بازار شکر و مجوز واردات", files: ["sugar-296.txt"], parts: ["clause-6"], markets: ["agriculture-food"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:sugar-appeal", relation: "related" }], relation: "تصمیم بدوی درباره تبانی، تبعیض و تقسیم بازار در اعطای مجوز واردات شکر" }),
-  decision({ slug: "sugar-appeal", year: "1396", numberSlug: "29-96", title: "انحصار واردات شکر در تجدیدنظر", files: ["sugar-appeal.txt"], parts: ["clause-6"], issuerIds: ["competition-appeal-board"], markets: ["agriculture-food"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:sugar-296", relation: "appeals" }], relation: "نقض تصمیم ۲۹۶ شورا و الزام به رفع انحصار واردات شکر" }),
+  decision({ slug: "354", year: "1397", title: "تبعیض در مزایده تبلیغات شهری", files: ["354.txt"], parts: ["clause-3"], article45ReferenceParts: ["clause-jim"], markets: ["public-local-markets"] }),
+  decision({ slug: "sugar-296", year: "1396", numberSlug: "296", title: "بازار شکر و مجوز واردات", files: ["sugar-296.txt"], parts: ["clause-6"], article45ReferenceParts: ["clause-jim"], markets: ["agriculture-food"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:sugar-appeal", relation: "related" }], relation: "تصمیم بدوی درباره تبانی، تبعیض و تقسیم بازار در اعطای مجوز واردات شکر" }),
+  decision({ slug: "sugar-appeal", year: "1396", numberSlug: "29-96", title: "انحصار واردات شکر در تجدیدنظر", files: ["sugar-appeal.txt"], parts: ["clause-6"], article45ReferenceParts: ["clause-jim"], issuerIds: ["competition-appeal-board"], markets: ["agriculture-food"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:sugar-296", relation: "appeals" }], relation: "نقض تصمیم ۲۹۶ شورا و الزام به رفع انحصار واردات شکر" }),
   decision({ slug: "270", year: "1395", title: "پرونده جامع بازار فولاد", files: ["270.txt"], parts: ["clause-5"], markets: ["industry"] }),
   decision({ slug: "236", year: "1394", title: "پرونده ارزی ۶۵۰ میلیون یورویی", files: ["236.txt"], parts: ["clause-3", "clause-7"], markets: ["finance-insurance"] }),
   decision({ slug: "232", year: "1394", title: "تعیین قیمت صنفی لوح فشرده", files: ["232.txt"], parts: ["clause-2", "clause-6", "clause-7"], markets: ["industry"] }),
+  decision({ slug: "229", year: "1394", title: "تبعیض در واگذاری پژوهش‌های نفت", files: ["229.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["energy"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:appeal-9-95", relation: "related" }] }),
+  decision({ slug: "appeal-9-95", year: "1395", numberSlug: "9-95", title: "واگذاری پروژه‌های پژوهشی وزارت نفت در تجدیدنظر", files: ["appeal-9-95.txt"], includeInArticle44: false, issuerIds: ["competition-appeal-board"], article45ReferenceParts: ["clause-jim"], markets: ["energy"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:229", relation: "affirms" }] }),
+  decision({ slug: "265", year: "1395", title: "استنکاف و تبعیض در خدمات IN مخابرات", files: ["265.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["communications"], additionalTopics: ["discriminatory-conditions"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:appeal-17-96", relation: "related" }] }),
+  decision({ slug: "appeal-17-96", year: "1396", numberSlug: "17-96", title: "خدمات IN مخابرات در تجدیدنظر", files: ["appeal-17-96.txt"], includeInArticle44: false, issuerIds: ["competition-appeal-board"], article45ReferenceParts: ["clause-jim"], markets: ["communications"], additionalTopics: ["discriminatory-conditions"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:265", relation: "appeals" }] }),
+  decision({ slug: "817", year: "1404", title: "الزام فروشندگان پرریسک ترب به درگاه امن", files: ["817.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["digital-markets"], additionalTopics: ["discriminatory-conditions"], legacyRoutes: [] }),
+  decision({ slug: "311", year: "1396", title: "انحصار و تبعیض در وکیوم‌باتوم", files: ["311.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["energy"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:appeal-26-96", relation: "related" }] }),
+  decision({ slug: "appeal-26-96", year: "1396", numberSlug: "26-96", title: "تجدیدنظرخواهی نفت جی در پرونده وکیوم‌باتوم", files: ["appeal-26-96.txt"], includeInArticle44: false, issuerIds: ["competition-appeal-board"], article45ReferenceParts: ["clause-jim"], markets: ["energy"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:311", relation: "appeals" }] }),
+  decision({ slug: "369", year: "1397", title: "تبعیض در ظرفیت انتقال برق", files: ["369.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["energy"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [] }),
+  decision({ slug: "728", year: "1403", title: "بازار استایرن منومر و تبعیض در عرضه", files: ["728.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["energy"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:appeal-217-05", relation: "related" }] }),
+  decision({ slug: "appeal-217-05", year: "1405", numberSlug: "217-05", title: "قراردادهای خوراک استایرن منومر در تجدیدنظر", files: ["appeal-217-05.txt"], includeInArticle44: false, issuerIds: ["competition-appeal-board"], article45ReferenceParts: ["clause-jim"], markets: ["energy"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:728", relation: "reverses" }] }),
+  decision({ slug: "839", year: "1405", title: "تکمیل رأی قراردادهای تبلیغاتی صداوسیما", files: ["839.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["public-local-markets"], additionalTopics: ["discriminatory-conditions"], legacyRoutes: [] }),
+  decision({ slug: "715", year: "1403", title: "حذف آگهی در پلتفرم دیوار", files: ["715.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["digital-markets"], additionalTopics: ["discriminatory-conditions"], legacyRoutes: [] }),
+  decision({ slug: "328", year: "1396", title: "تبعیض و سقف مالکیت در آواپزشک", files: ["328.txt"], includeInArticle44: false, article45ReferenceParts: ["clause-jim"], markets: ["industry"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:appeal-34-97", relation: "related" }] }),
+  decision({ slug: "appeal-34-97", year: "1397", numberSlug: "34-97", title: "استثنای حوزه سلامت از شمول قانون در تجدیدنظر", files: ["appeal-34-97.txt"], includeInArticle44: false, issuerIds: ["competition-appeal-board"], article45ReferenceParts: ["clause-jim"], markets: ["industry"], additionalTopics: ["discriminatory-conditions", "market-access"], legacyRoutes: [], documentLinks: [{ targetDocumentId: "decision:328", relation: "reverses" }] }),
   ...craKnowledgeDocuments,
 ];
 

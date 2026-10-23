@@ -103,6 +103,14 @@ export function institutionsForDocument(documentId: string) {
   return document.issuerIds.map(institutionById).filter((item): item is NonNullable<typeof item> => Boolean(item));
 }
 
+export function relatedDocumentsForDocument(documentId: string) {
+  const document = publishedDocuments.find((item) => item.id === documentId);
+  if (!document) return [];
+  return document.documentLinks
+    .map((link) => ({ ...link, document: publishedDocuments.find((item) => item.id === link.targetDocumentId) }))
+    .filter((item): item is typeof item & { document: NonNullable<typeof item.document> } => Boolean(item.document));
+}
+
 export function provisionsForDocument(documentId: string) {
   const document = publishedDocuments.find((item) => item.id === documentId);
   if (!document) return [];
