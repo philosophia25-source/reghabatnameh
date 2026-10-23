@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { linkedText } from "@/components/legal-inline-text";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import { EditorialMeta } from "@/components/editorial-meta";
 import { JsonLd } from "@/components/json-ld";
@@ -54,7 +55,7 @@ export function CompetitionPrinciplesPage() {
               <section id={section.id} className={index === 0 ? "principles-introduction" : undefined} key={section.id}>
                 <p className="commentary-kicker">{index === 0 ? "مقدمه" : `اصل ${toFaDigits(index)}`}</p>
                 <h2>{section.title.replace(/^[۰-۹0-9]+\.\s*/, "")}</h2>
-                {section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph}</p>)}
+                {section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{linkedText(paragraph)}</p>)}
               </section>
             ))}
           </article>

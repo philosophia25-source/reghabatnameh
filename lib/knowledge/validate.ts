@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import type {
   CommentaryRecord,
   InstitutionalDomain,
@@ -32,6 +34,15 @@ function assertUnique(values: string[], label: string) {
 function assertReferences(values: string[], known: Set<string>, label: string) {
   const missing = values.filter((value) => !known.has(value));
   if (missing.length) throw new Error(`Unknown ${label}: ${Array.from(new Set(missing)).join(", ")}`);
+}
+
+export function validateCommentaryReferences(content: string, routes: Set<string>, source: string) {
+  if (/https?:\/\/(?:drive|docs)\.google\.com\//i.test(content)) {
+    throw new Error(`Public commentary must not reference Google Drive: ${source}`);
+  }
+  for (const match of content.matchAll(/\]\((\/decisions\/[^)\s]+)\)/g)) {
+    if (!routes.has(match[1])) throw new Error(`Unknown canonical decision reference in ${source}: ${match[1]}`);
+  }
 }
 
 export function validateKnowledgeRegistry(registry: Registry) {
@@ -100,4 +111,15 @@ export function validateKnowledgeRegistry(registry: Registry) {
     assertReferences(article.topicIds, topicIds, `topic for article ${article.id}`);
     assertReferences(article.marketIds, marketIds, `market for article ${article.id}`);
   });
+
+  const decisionRoutes = new Set(registry.documents
+    .filter((document) => document.documentType === "decision" && document.status === "published")
+    .map((document) => document.route));
+  const commentaryFiles = [
+    ...registry.commentaries.filter((commentary) => commentary.status === "published" && commentary.contentFile).map((commentary) => commentary.contentFile!),
+    "competition-law-principles.md",
+  ];
+  for (const file of commentaryFiles) {
+    validateCommentaryReferences(readFileSync(join(process.cwd(), "content", file), "utf8"), decisionRoutes, file);
+  }
 }
