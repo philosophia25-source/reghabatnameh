@@ -27,7 +27,6 @@ const REQUIRED_DECISION_META = [
   "نوع تصمیم",
   "قاعده/دلیل انتخاب",
   "نتیجه واقعی",
-  "نشانی رسمی",
 ] as const;
 
 function parseDecision(raw: string, sourceName: string): ParsedDecision {
@@ -40,6 +39,12 @@ function parseDecision(raw: string, sourceName: string): ParsedDecision {
   const missing = REQUIRED_DECISION_META.filter((key) => !meta[key]?.trim());
   if (missing.length) {
     throw new Error(`Missing required decision metadata in ${sourceName}: ${missing.join(", ")}`);
+  }
+  if (!meta["نشانی رسمی"] && !meta["منبع متن"]) {
+    throw new Error(`Missing decision source in ${sourceName}`);
+  }
+  if (meta["نشانی رسمی"] && !/^https?:\/\//.test(meta["نشانی رسمی"])) {
+    throw new Error(`Invalid official source URL in ${sourceName}`);
   }
   const body = bodyParts.join("\n").replace(/^\s*متن کامل موضوع\s*/m, "").trim();
   if (!body) throw new Error(`Decision body is empty in ${sourceName}`);

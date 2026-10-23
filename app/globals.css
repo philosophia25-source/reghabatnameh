@@ -493,6 +493,7 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .decision-fulltext-heading .eyebrow { margin-bottom:5px; }
 .decision-fulltext-heading h2 { margin:0; color:#edf1f2; font-size:clamp(23px,2.7vw,31px); }
 .decision-fulltext-heading .official-source { flex:0 0 auto; margin:0; }
+.decision-source-provenance { max-width:34ch; color:#92a4ad; font-size:var(--font-small); line-height:1.8; }
 .decision-fulltext-body { padding:20px 0 4px; }
 .decision-fulltext p { white-space:pre-line; color:#b6c1c7; font-size:1rem; line-height:2.05; }
 .official-source { width:max-content; margin-top:27px; padding-bottom:6px; display:block; color:var(--gold-light); border-bottom:1px solid rgba(201,164,104,.5); font-size:var(--font-small); }

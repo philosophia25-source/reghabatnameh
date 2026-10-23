@@ -16,6 +16,7 @@ import { AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 function Stage({ record, index, total }: { record: ParsedDecision; index: number; total: number }) {
   const { meta, body } = record;
   const fullTextTitleId = `decision-fulltext-${index}`;
+  const hasOfficialSource = Boolean(meta["نشانی رسمی"]);
   const hasResearchCaution = Boolean(meta["احتیاط پژوهشی"] && meta["احتیاط پژوهشی"] !== "—");
   return (
     <article className="decision-stage">
@@ -47,8 +48,8 @@ function Stage({ record, index, total }: { record: ParsedDecision; index: number
       </div>
       <section className="decision-fulltext" aria-labelledby={fullTextTitleId}>
         <div className="decision-fulltext-heading">
-          <div><p className="eyebrow">متن رسمی</p><h2 id={fullTextTitleId}>متن کامل رأی</h2></div>
-          {meta["نشانی رسمی"] ? <a className="official-source" href={meta["نشانی رسمی"]} target="_blank" rel="noreferrer">مشاهده منبع رسمی ←</a> : null}
+          <div><p className="eyebrow">{hasOfficialSource ? "متن رسمی" : "نسخه آرشیوی"}</p><h2 id={fullTextTitleId}>{hasOfficialSource ? "متن کامل رأی" : "متن موجود رأی"}</h2></div>
+          {hasOfficialSource ? <a className="official-source" href={meta["نشانی رسمی"]} target="_blank" rel="noreferrer">مشاهده منبع رسمی ←</a> : <span className="decision-source-provenance">{meta["منبع متن"]}</span>}
         </div>
         <div className="decision-fulltext-body">{body.split(/\n{2,}/).map((paragraph, pIndex) => <p key={pIndex}>{toFaDigits(paragraph)}</p>)}</div>
       </section>
