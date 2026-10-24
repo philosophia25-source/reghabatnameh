@@ -15,6 +15,7 @@ import { AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function Stage({ record, index, total }: { record: ParsedDecision; index: number; total: number }) {
   const { meta, body } = record;
+  const number = toFaDigits(meta["شماره جلسه/رأی"].replace(/^رأی\s*/, ""));
   const fullTextTitleId = `decision-fulltext-${index}`;
   const hasOfficialSource = Boolean(meta["نشانی رسمی"]);
   const hasResearchCaution = Boolean(meta["احتیاط پژوهشی"] && meta["احتیاط پژوهشی"] !== "—");
@@ -25,11 +26,11 @@ function Stage({ record, index, total }: { record: ParsedDecision; index: number
         <details className="decision-disclosure">
           <summary>
             <span>مشخصات رأی</span>
-            <small>{toFaDigits(meta["مرجع"])} · رأی {toFaDigits(meta["شماره جلسه/رأی"])} · {toFaDate(meta["تاریخ"])}</small>
+            <small>{toFaDigits(meta["مرجع"])} · رأی {number} · {toFaDate(meta["تاریخ"])}</small>
           </summary>
           <div className="decision-facts">
             <div><small>مرجع</small><strong>{toFaDigits(meta["مرجع"])}</strong></div>
-            <div><small>شماره رأی</small><strong>{toFaDigits(meta["شماره جلسه/رأی"])}</strong></div>
+            <div><small>شماره رأی</small><strong>{number}</strong></div>
             <div><small>تاریخ</small><strong>{toFaDate(meta["تاریخ"])}</strong></div>
             <div><small>نوع تصمیم</small><strong>{toFaDigits(meta["نوع تصمیم"])}</strong></div>
           </div>
@@ -72,9 +73,9 @@ function KnowledgeConnections({ decision }: { decision: DecisionRecord }) {
       <div className="connection-groups">
         {relatedDocuments.length ? <div><span>آرای مرتبط</span><div>{relatedDocuments.map(({ document, relation }) => <Link href={document.route} key={document.id}>{relation === "affirms" ? "تأیید رأی ـ " : relation === "reverses" ? "نقض رأی ـ " : relation === "appeals" ? "تجدیدنظر از ـ " : ""}{document.title}</Link>)}</div></div> : null}
         <div><span>نهاد صادرکننده</span><div>{institutions.map((institution) => <Link href={institution.route} key={institution.id}>{institution.shortName}</Link>)}</div></div>
-        <div><span>مواد و اجزای مرتبط</span><div>{provisions.map(({ provision }) => provision.status === "published" ? <Link href={provision.route} key={provision.id}>{provision.label}</Link> : <span className="connection-pending" key={provision.id}>{provision.label}</span>)}</div></div>
-        <div><span>موضوعات</span><div>{topics.map((topic) => <Link href={topic.route} key={topic.id}>{topic.title}</Link>)}</div></div>
-        <div><span>بازارها</span><div>{markets.map((market) => <Link href={market.route} key={market.id}>{market.title}</Link>)}</div></div>
+        {provisions.length ? <div><span>مواد و اجزای مرتبط</span><div>{provisions.map(({ provision }) => provision.status === "published" ? <Link href={provision.route} key={provision.id}>{provision.label}</Link> : <span className="connection-pending" key={provision.id}>{provision.label}</span>)}</div></div> : null}
+        {topics.length ? <div><span>موضوعات</span><div>{topics.map((topic) => <Link href={topic.route} key={topic.id}>{topic.title}</Link>)}</div></div> : null}
+        {markets.length ? <div><span>بازارها</span><div>{markets.map((market) => <Link href={market.route} key={market.id}>{market.title}</Link>)}</div></div> : null}
       </div>
     </section>
   );
@@ -83,7 +84,7 @@ function KnowledgeConnections({ decision }: { decision: DecisionRecord }) {
 export function DecisionPage({ slug }: { slug: string }) {
   const decision = decisionRecords[slug];
   const first = decision.stages[0];
-  const decisionNumber = toFaDigits(decision.stages.map((stage) => stage.meta["شماره جلسه/رأی"]).filter(Boolean).join(" و "));
+  const decisionNumber = toFaDigits(decision.stages.map((stage) => stage.meta["شماره جلسه/رأی"].replace(/^رأی\s*/, "")).filter(Boolean).join(" و "));
   const citation = `${AUTHOR.name}، «${decision.title}»، پرونده‌خوانی رأی ${decisionNumber}، ${SITE_NAME}، ${SITE_URL}${decision.route}`;
   const jsonLd = {
     "@context": "https://schema.org",
