@@ -228,6 +228,21 @@ export const article45CommentaryParts: Article45Part[] = [
   }),
 ];
 
+export function article45CommentaryHref(part: Article45Part): string | undefined {
+  const base = "/laws/general-policies-44/article-45/commentary";
+  if (part.available) return `${base}/${part.slug}`;
+  const bundledSections: Record<string, string> = {
+    "clause-dal-1": "section-2",
+    "clause-dal-2": "section-4",
+    "clause-dal-note": "section-5",
+  };
+  const section = bundledSections[part.slug];
+  if (section && publishedCommentarySlugs.has("clause-dal")) {
+    return `${base}/clause-dal#${section}`;
+  }
+  return undefined;
+}
+
 export const article45Provisions: Provision[] = [
   {
     id: ARTICLE_45_ID,

@@ -3,6 +3,7 @@ import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld";
 import {
   article45Chapeau,
   article45CommentaryParts,
+  article45CommentaryHref,
   article45Sections,
   type Article45Part,
 } from "@/lib/knowledge/article45";
@@ -25,9 +26,10 @@ function partBySlug(slug: string) {
 }
 
 function LawUnit({ part, children, className = "" }: { part: Article45Part; children: React.ReactNode; className?: string }) {
-  const classes = `law-unit ${className} ${part.available ? "" : "unavailable"}`.trim();
-  if (part.available) {
-    return <Link className={classes} href={`/laws/general-policies-44/article-45/commentary/${part.slug}`}>
+  const href = article45CommentaryHref(part);
+  const classes = `law-unit ${className} ${href ? "" : "unavailable"}`.trim();
+  if (href) {
+    return <Link className={classes} href={href}>
       <span>{children}</span>
       <small>مطالعه شرح {part.shortLabel} ←</small>
     </Link>;
@@ -77,15 +79,16 @@ function LawText() {
 }
 
 function PartCard({ part, index }: { part: Article45Part; index: number }) {
+  const href = article45CommentaryHref(part);
   const content = <>
     <span className="part-index">{toFaDigits(index + 1)}</span>
     <small>{part.shortLabel}</small>
     <h3>{part.title}</h3>
     <p>{part.description}</p>
-    <b>{part.available ? "مطالعه شرح ←" : "شرح هنوز منتشر نشده است"}</b>
+    <b>{href ? (part.available ? "مطالعه شرح ←" : "مطالعه در شرح بند د ←") : "شرح هنوز منتشر نشده است"}</b>
   </>;
-  return part.available
-    ? <Link className="part-card available" href={`/laws/general-policies-44/article-45/commentary/${part.slug}`}>{content}</Link>
+  return href
+    ? <Link className="part-card available" href={href}>{content}</Link>
     : <article className="part-card" aria-disabled="true">{content}</article>;
 }
 

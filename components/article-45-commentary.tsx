@@ -2,7 +2,7 @@ import Link from "next/link";
 import { linkedText } from "@/components/legal-inline-text";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { article45CommentaryParts } from "@/lib/knowledge/article45";
+import { article45CommentaryParts, article45CommentaryHref } from "@/lib/knowledge/article45";
 import { decisionIndexRecords, decisionRouteByMention } from "@/app/decision-data";
 import { toFaDate, toFaDigits } from "@/app/text";
 import { EditorialMeta } from "@/components/editorial-meta";
@@ -49,7 +49,7 @@ function PartsNav({ current }: { current: string }) {
     <p>اجزای ماده ۴۵</p>
     <ol>
       {article45CommentaryParts.map((part, index) => <li className={current === part.slug ? "active" : ""} aria-current={current === part.slug ? "page" : undefined} key={part.slug}>
-        {part.available ? <Link className="parts-nav-link" href={`/laws/general-policies-44/article-45/commentary/${part.slug}`}>
+        {article45CommentaryHref(part) ? <Link className="parts-nav-link" href={article45CommentaryHref(part)!}>
           <span>{toFaDigits(index + 1)}</span><div><small>{part.shortLabel}</small><strong>{part.title}</strong></div>
         </Link> : <span className="parts-nav-link unavailable" aria-disabled="true">
           <span>{toFaDigits(index + 1)}</span><div><small>{part.shortLabel}</small><strong>{part.title}</strong></div><i>به‌زودی</i>
