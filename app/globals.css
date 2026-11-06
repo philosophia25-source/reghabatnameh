@@ -629,6 +629,14 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .resolution-row>b { color:var(--gold); font-size:20px; font-weight:400; }
 .resolution-more { width:100%; min-height:54px; margin-top:22px; color:var(--gold-light); background:#0a1b28; border:1px solid rgba(201,164,104,.28); cursor:pointer; }
 .resolution-more:hover,.resolution-more:focus-visible { background:#0e2332; border-color:rgba(201,164,104,.55); }
+.resolution-year-index { margin:0 0 24px; border:1px solid rgba(201,164,104,.28); background:#0a1b28; }
+.resolution-year-index>summary { padding:16px 20px; color:var(--gold-light); cursor:pointer; font-size:var(--font-ui); }
+.resolution-year-index nav { padding:0 20px 20px; }
+.resolution-year-index section+section { margin-top:24px; }
+.resolution-year-index h2 { color:var(--gold-light); font-size:var(--font-ui); }
+.resolution-year-index ul { margin:12px 0 0; padding-inline-start:24px; }
+.resolution-year-index li { padding:6px 0; font-size:var(--font-small); line-height:1.9; overflow-wrap:anywhere; }
+.resolution-year-index a:hover { color:var(--gold-light); }
 .resolution-list-compact { margin-top:10px; }
 .collection-all-link { width:max-content; margin-top:28px; padding-bottom:6px; display:block; color:var(--gold-light); border-bottom:1px solid rgba(201,164,104,.5); font-size:var(--font-small); }
 

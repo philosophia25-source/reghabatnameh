@@ -5,6 +5,7 @@ import {
   craSupplementalTextReferencesFor,
 } from "@/lib/cra/data";
 import type { CraResolution } from "@/lib/cra/types";
+import { toFaDigits } from "@/app/text";
 
 export function ResolutionArchive({
   resolutions,
@@ -36,5 +37,29 @@ export function ResolutionArchive({
     };
   });
 
-  return <ResolutionExplorer items={items} showCategoryFilter={showCategoryFilter} />;
+  const years = Array.from(new Set(items.map((item) => item.year)))
+    .sort((a, b) => b.localeCompare(a, "fa"));
+
+  return (
+    <>
+      <details className="resolution-year-index">
+        <summary>فهرست کامل مصوبات بر اساس سال تصویب</summary>
+        <nav aria-label="فهرست کامل مصوبات بر اساس سال تصویب">
+          {years.map((year) => (
+            <section key={year}>
+              <h2>{year === "undated" ? "بدون تاریخ" : toFaDigits(year)}</h2>
+              <ul>
+                {items.filter((item) => item.year === year).map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href}>{toFaDigits(item.title)}</a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </nav>
+      </details>
+      <ResolutionExplorer items={items} showCategoryFilter={showCategoryFilter} />
+    </>
+  );
 }
