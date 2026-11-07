@@ -24,6 +24,7 @@ import { CONTENT_UPDATED_ISO } from "@/lib/site";
 import { craKnowledgeDocuments } from "@/lib/cra/data";
 import { generalPolicies44ArticleProvisions } from "@/lib/laws/general-policies-44";
 import telecomAbstract from "@/content/articles/telecom-abstract.json";
+import energyCompetitionAbstract from "@/content/articles/energy-competition-abstract.json";
 
 export const institutionalDomains: InstitutionalDomain[] = [
   {
@@ -330,6 +331,28 @@ export const articles: KnowledgeArticle[] = [{
   // decision archive concerns LIMS and must not be linked merely by number.
   documentIds: craKnowledgeDocuments.filter(d => ["/resolutions/cra/1395/252-3", "/resolutions/cra/1401/338-1"].includes(d.route)).map(d => d.id),
   topicIds: ["market-access"], marketIds: ["communications"], status: "published",
+}, {
+  id: "article:third-party-access-energy-competition",
+  slug: "third-party-access-energy-competition",
+  title: "بررسی نقش قوانین رقابت انرژی در اتحادیۀ اروپا با تأکید بر حق دسترسی ثالث؛ مطالعۀ تطبیقی با قوانین ملی ایران",
+  route: "/articles/third-party-access-energy-competition",
+  contentFile: "articles/third-party-access-energy-competition.html",
+  abstract: energyCompetitionAbstract,
+  authors: [
+    { name: "سارا محسنین", affiliation: "دانشجوی دکتری، دانشکدۀ حکمرانی، دانشگاه تهران، تهران، ایران" },
+    { name: "ریحانه لونی", affiliation: "استادیار، دانشکدۀ حکمرانی، دانشگاه تهران، تهران، ایران", corresponding: true },
+    { name: "بهاره حیدری", affiliation: "استادیار، دانشکدۀ حکمرانی، دانشگاه تهران، تهران، ایران" },
+  ],
+  publication: { journal: "مطالعات حقوق انرژی", year: "۱۴۰۳", volume: "۱۰", issue: "۱", pages: "۱۰۱ تا ۱۳۰", season: "بهار و تابستان", doi: "10.22059/JRELS.2025.386083.572", received: "۱۴۰۳/۰۲/۲۰", accepted: "۱۴۰۳/۰۵/۲۲" },
+  keywords: ["اصل همبستگی", "امنیت انرژی", "دسترسی شخص ثالث", "رقابت مؤثر", "قوانین رقابتی اتحادیۀ اروپا"],
+  pdfFile: "/articles/third-party-access-energy-competition.pdf",
+  republicationNote: "بازنشر با انتساب به نویسندگان و نشریه بر اساس مجوز CC BY اعلام‌شده در صفحۀ ۱۰۴ اصل مقاله. برای نمایش در وب، قالب متن، فاصله‌گذاری و جای پاورقی‌ها با PDF تطبیق داده شده است. فایل PDF همان نسخۀ ناشر است.",
+  institutionIds: ["competition-council"],
+  provisionIds: [],
+  documentIds: ["decision:369"],
+  topicIds: ["market-access"],
+  marketIds: ["energy"],
+  status: "published",
 }];
 
 validateKnowledgeRegistry({
