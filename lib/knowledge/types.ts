@@ -147,6 +147,7 @@ export type KnowledgeArticle = {
   keywords: string[];
   pdfFile: string;
   republicationNote?: string;
+  licenseUrl?: string;
   institutionIds: string[];
   provisionIds: string[];
   documentIds: string[];

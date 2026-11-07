@@ -40,7 +40,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         <p>وابستگی‌های دانشگاهی مطابق زمان انتشار مقاله درج شده‌اند.</p>
         <p>تاریخ دریافت <bdi dir="ltr">{p.received}</bdi> · تاریخ پذیرش <bdi dir="ltr">{p.accepted}</bdi>{p.serial && <> · شماره پیاپی {p.serial}</>}</p>
         <p>{citation}</p><a href={`https://doi.org/${p.doi}`}><bdi dir="ltr">{p.doi}</bdi></a>
-        <p>{a.republicationNote ?? "نسخه چاپی دارای نشان CC BY است. متن برای مطالعه در وب قالب‌بندی شده و با تأیید نویسنده، شماره‌گذاری و محل ارجاع پانوشت‌ها با محتوای آن‌ها هماهنگ شده است. فایل PDF همان نسخه چاپ‌شده است."}{a.republicationNote && <> <a href={`${a.pdfFile}#page=4`}>اعلام مجوز در PDF ناشر</a></>}</p>
+        <p>{a.republicationNote ?? "نسخه چاپی دارای نشان CC BY است. متن برای مطالعه در وب قالب‌بندی شده و با تأیید نویسنده، شماره‌گذاری و محل ارجاع پانوشت‌ها با محتوای آن‌ها هماهنگ شده است. فایل PDF همان نسخه چاپ‌شده است."}{a.licenseUrl ? <> <a rel="license" href={a.licenseUrl}>متن مجوز</a></> : a.republicationNote && <> <a href={`${a.pdfFile}#page=4`}>اعلام مجوز در PDF ناشر</a></>}</p>
       </details>
     </header>
     <div className="journal-layout">

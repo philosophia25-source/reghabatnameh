@@ -25,6 +25,7 @@ import { craKnowledgeDocuments } from "@/lib/cra/data";
 import { generalPolicies44ArticleProvisions } from "@/lib/laws/general-policies-44";
 import telecomAbstract from "@/content/articles/telecom-abstract.json";
 import energyCompetitionAbstract from "@/content/articles/energy-competition-abstract.json";
+import sharingEconomyAbstract from "@/content/articles/sharing-economy-abstract.json";
 
 export const institutionalDomains: InstitutionalDomain[] = [
   {
@@ -352,6 +353,29 @@ export const articles: KnowledgeArticle[] = [{
   documentIds: ["decision:369"],
   topicIds: ["market-access"],
   marketIds: ["energy"],
+  status: "published",
+}, {
+  id: "article:sharing-economy-contracts",
+  slug: "sharing-economy-contracts",
+  title: "واکاوی ابعاد حقوقی روابط قراردادی در اقتصاد مشارکتی",
+  route: "/articles/sharing-economy-contracts",
+  contentFile: "articles/sharing-economy-contracts.html",
+  abstract: sharingEconomyAbstract,
+  authors: [
+    { name: "احمد امجدی شایق", affiliation: "گروه حقوق، واحد بین‌المللی کیش، دانشگاه آزاد اسلامی، کیش، ایران" },
+    { name: "عیسی امینی", affiliation: "گروه حقوق، واحد تهران مرکزی، دانشگاه آزاد اسلامی، تهران، ایران", corresponding: true },
+    { name: "علیرضا محمدبیکی", affiliation: "گروه فقه و مبانی حقوق، واحد تهران مرکزی، دانشگاه آزاد اسلامی، تهران، ایران" },
+  ],
+  publication: { journal: "دانشنامه فقه و حقوق تطبیقی", year: "۱۴۰۴", volume: "۳", issue: "۳", pages: "۱ تا ۱۶", season: "پاییز", doi: "10.61838/jecjl.262", received: "۱۴۰۳/۱۲/۱۲", accepted: "۱۴۰۴/۰۵/۱۵" },
+  keywords: ["اقتصاد مشارکتی", "روابط قراردادی", "حقوق رقابت", "قرارداد الحاقی", "انحصار", "پلتفرم دیجیتال", "قرارداد نامعین"],
+  pdfFile: "/articles/sharing-economy-contracts.pdf",
+  republicationNote: "بازنشر غیرتجاری با انتساب به نویسندگان و نشریه، مطابق مجوز CC BY-NC 4.0 اعلام‌شده در صفحۀ نخست مقاله. متن برای وب قالب‌بندی شده و ترتیب ستون‌ها، فاصله‌گذاری و نمایش ارجاعات با نسخۀ ناشر تطبیق داده شده است. فایل PDF همان نسخۀ ناشر است.",
+  licenseUrl: "https://creativecommons.org/licenses/by-nc/4.0/",
+  institutionIds: [],
+  provisionIds: [],
+  documentIds: [],
+  topicIds: [],
+  marketIds: ["digital-markets"],
   status: "published",
 }];
 
