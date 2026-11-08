@@ -5,6 +5,7 @@ import {
   provisionIdByCommentarySlug,
 } from "./article44";
 import {
+  ARTICLE_45_ID,
   article45Commentaries,
   article45Provisions,
   article45ProvisionIdBySlug,
@@ -26,6 +27,7 @@ import { generalPolicies44ArticleProvisions } from "@/lib/laws/general-policies-
 import telecomAbstract from "@/content/articles/telecom-abstract.json";
 import energyCompetitionAbstract from "@/content/articles/energy-competition-abstract.json";
 import sharingEconomyAbstract from "@/content/articles/sharing-economy-abstract.json";
+import gatekeeperMarketplaceAbstract from "@/content/articles/gatekeeper-marketplace-contracts-abstract.json";
 
 export const institutionalDomains: InstitutionalDomain[] = [
   {
@@ -375,6 +377,28 @@ export const articles: KnowledgeArticle[] = [{
   provisionIds: [],
   documentIds: [],
   topicIds: [],
+  marketIds: ["digital-markets"],
+  status: "published",
+}, {
+  id: "article:gatekeeper-marketplace-contracts",
+  slug: "gatekeeper-marketplace-contracts",
+  title: "ارزیابی شروط خاص قراردادهای استفاده از بازارگاه‌های دروازه‌بان از منظر حقوق رقابت درون‌پلتفرمی",
+  route: "/articles/gatekeeper-marketplace-contracts",
+  contentFile: "articles/gatekeeper-marketplace-contracts.html",
+  abstract: gatekeeperMarketplaceAbstract,
+  authors: [
+    { name: "ابراهیم رهبری", affiliation: "استادیار، دانشکده حقوق، دانشگاه شهید بهشتی، تهران، ایران", corresponding: true },
+    { name: "آرین مسعودی تفرشی", affiliation: "کارشناس ارشد، دانشکده حقوق، دانشگاه شهید بهشتی، تهران، ایران" },
+  ],
+  publication: { journal: "تحقیقات حقوقی", year: "۱۴۰۳", volume: "۲۷", issue: "۲", serial: "۱۰۶", pages: "۱۳۵ تا ۱۵۴", season: "تابستان", doi: "10.48308/jlr.2024.232298.2537", received: "۱۴۰۲/۰۴/۱۶", accepted: "۱۴۰۳/۰۲/۲۳" },
+  keywords: ["بازارگاه دروازه‌بان", "حقوق رقابت", "حقوق مالکیت فکری", "رقابت درون‌پلتفرمی", "سوءاستفاده از موقعیت مسلط"],
+  pdfFile: "/articles/gatekeeper-marketplace-contracts.pdf",
+  republicationNote: "بازنشر با انتساب به نویسندگان و فصلنامه تحقیقات حقوقی دانشگاه شهید بهشتی، مطابق مجوز CC BY 4.0. متن برای مطالعه در وب قالب‌بندی شده و پانوشت‌ها به‌صورت پیوسته شماره‌گذاری شده‌اند. شماره و صفحۀ پانوشت در نسخۀ چاپی نیز درج شده است. فایل PDF همان نسخۀ ناشر است.",
+  licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+  institutionIds: ["competition-council"],
+  provisionIds: [ARTICLE_45_ID],
+  documentIds: [],
+  topicIds: ["market-access"],
   marketIds: ["digital-markets"],
   status: "published",
 }];
