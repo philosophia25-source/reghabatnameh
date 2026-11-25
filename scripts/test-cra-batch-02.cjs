@@ -50,6 +50,8 @@ assert.equal(count(frequency,'۰٫۳–۳۰'),4);
 assert.equal(count(frequency,'<msup>'),2);
 assert.equal(count(frequency,'<mn>۰.۷۵</mn>'),2);
 assert.ok(!frequency.includes('$واگذارشده'));
+assert.equal(count(frequency,'aria-label="ضریب فرکانس واگذار شده = یک"'),2);
+assert.ok(!frequency.includes('<em>و</em><em>ا</em><em>گ</em>'));
 assert.ok(frequency.includes('cra-consolidated-text'));
 assert.ok(read('112-1').includes('<bdi dir="ltr">۶۷۵۶/۱۰۱/۸۹/م</bdi>'));
 assert.ok(read('112-1').includes('۱۳۸۹/۱۱/۲۴'));

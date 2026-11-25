@@ -200,10 +200,16 @@ done(17,'Restored missing approval sentence from PDF page 1, before the title/in
 # 107-2 — Rebuild the shared frequency table from original Word merged cells,
 # original shading, with every decimal coefficient cross-checked against PDF.
 doc=Document(SOURCES/'107-2.docx');wt=doc.tables[1]
-pdf=fitz.open(SOURCES/'9.pdf');pdf_numbers=set()
+pdf=fitz.open(SOURCES/'9.pdf');pdf_numbers=set();pdf_ranges=set()
+def normalized_range(value):
+    value=value.translate(str.maketrans('۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩','01234567890123456789'))
+    parts=re.split(r'\s*[-–]\s*',value.strip())
+    if len(parts)!=2 or not all(re.fullmatch(r'[0-9/٫.]+',p) for p in parts):return None
+    return tuple(sorted(float(p.replace('/','.').replace('٫','.')) for p in parts))
 with contextlib.redirect_stdout(io.StringIO()):
     for page in list(pdf)[5:10]:
         for row in page.find_tables().tables[0].extract():
+            if row[9] and normalized_range(row[9]):pdf_ranges.add(normalized_range(row[9]))
             for value in row:
                 if value:pdf_numbers.update(re.findall(r'\d+/\d+',value))
 digit_map=str.maketrans('۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩','01234567890123456789')
@@ -211,7 +217,7 @@ def decimal(value):
     value=value.translate(digit_map)
     return re.sub(r'(\d+)\s*/\s*(\d+)',lambda m:m[2]+'٫'+m[1],value)
 
-rows=[]; active={}; checked=0; shades=0
+rows=[]; active={}; checked=0; shades=0;checked_ranges=0
 for row_index, row in enumerate(wt.rows):
     cells=[];column=0
     for tc in row._tr.tc_lst:
@@ -233,6 +239,8 @@ for row_index, row in enumerate(wt.rows):
                 if bounds:
                     parts=sorted([bounds[1],bounds[2]],key=lambda n:float(n.replace('٫','.')))
                     value='–'.join(parts)
+                    assert normalized_range(value) in pdf_ranges,(row_index,value)
+                    checked_ranges+=1
         shade=pr.find(qn('w:shd')) if pr is not None else None
         dark=shade is not None and shade.get(qn('w:fill'),'').upper()=='404040'
         if dark:shades+=1
@@ -258,12 +266,14 @@ out+='</tbody></table>'
 assert checked>100 and shades>300,(checked,shades)
 r=rec('107-2');ts=tables(source(r));assert ts[1]==ts[6]
 add(r,ts[1],out)
-done(18,f'Rebuilt shared 140-data-row table from original Word; all {checked} decimal coefficient/spacing occurrences checked against PDF pages 6–10. Report example 83.35 rejected: PDF prints 35.83. Same exact source table occurs in both original and consolidated sections.')
+done(18,f'Rebuilt shared 140-data-row table from original Word; all {checked} decimal coefficient/spacing occurrences and {checked_ranges} frequency ranges checked against PDF pages 6–10. Report example 83.35 rejected: PDF prints 35.83. Same exact source table occurs in both original and consolidated sections.')
 done(19,f'Restored {shades} original dark cells and Word horizontal/vertical merges; no invented applicability checkmarks. Original and consolidated copies share the verified table.')
 old=re.search(r'<span class="math inline">\$واگذارشده[\s\S]*?</span>',source(r)).group()
 body='<mrow>'+mt('ضریب فرکانس واگذار شده','rtl')+'<mo>=</mo><msup>'+fraction('پهنای باند اشغال شده توسط هر کانال به هرتز','حداقل فاصله کانالی به هرتز','rtl')+'<mn>0.75</mn></msup></mrow>'
 add(r,old,math(body,'ضریب فرکانس واگذار شده = (پهنای باند اشغال شده توسط هر کانال به هرتز / حداقل فاصله کانالی به هرتز) به توان ۰٫۷۵'))
-done(20,'Replaced unreadable formula markup with native MathML fraction/exponent; retained adjacent source condition about choosing one if larger.')
+alternative=re.search(r'<span class="math display"><em>و</em>[\s\S]*?</span>',source(r)).group()
+add(r,alternative,math('<mrow>'+mt('ضریب فرکانس واگذار شده','rtl')+'<mo>=</mo>'+mt('یک','rtl')+'</mrow>','ضریب فرکانس واگذار شده = یک'))
+done(20,'Replaced unreadable formula markup with native MathML fraction/exponent and restored connected Persian letters in the alternative equal-to-one expression; retained source condition about choosing whichever is larger.')
 
 m={4:labels(4,1,3),6:labels(5,1,2),7:labels(6,1,1),8:labels(6,2,4),10:labels(7,1,2),14:labels(11,1,3),17:labels(14,1,2),19:labels(16,1,8),21:labels(17,1,2),25:labels(20,1,1),26:labels(20,2,3),30:labels(23,1,4),32:labels(25,1,3),33:labels('25-1',1,5)}
 number_lists(rec('111-2'),m)

@@ -222,28 +222,36 @@
         "to": "<td><span class=\"cra-audit-math\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" dir=\"ltr\" aria-label=\"∑ Successfully Received MMSs (Sub. B is Available) / ∑ Valid MMS Attempts\"><mfrac><mtext dir=\"ltr\">∑ Successfully Received MMSs (Sub. B is Available)</mtext><mtext dir=\"ltr\">∑ Valid MMS Attempts</mtext></mfrac></math></span></td>"
       },
       {
-        "from": "<span class=\"math inline\"><strong>C</strong><strong>E</strong><strong>R</strong><sup><strong>1</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>CER</strong><sup>1</sup></bdi>"
-      },
-      {
-        "from": "<span class=\"math inline\"><strong>A</strong><strong>R</strong><sup><strong>1</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>AR</strong><sup>1</sup></bdi>"
-      },
-      {
         "from": "<span class=\"math inline\"><strong>I</strong><strong>P</strong><sup><strong>1</strong></sup></span>",
         "to": "<bdi dir=\"ltr\"><strong>IP</strong><sup>1</sup></bdi>"
+      },
+      {
+        "from": "<span class=\"math inline\"><strong>C</strong><strong>S</strong><strong>S</strong><strong>R</strong><sup><strong>2</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>CSSR</strong><sup>2</sup></bdi>"
+      },
+      {
+        "from": "<span class=\"math inline\"><strong>I</strong><strong>P</strong><sup><strong>2</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>IP</strong><sup>2</sup></bdi>"
+      },
+      {
+        "from": "<span class=\"math inline\"><strong>T</strong><strong>C</strong><strong>H</strong> <strong>A</strong><strong>S</strong><strong>R</strong><sup> <strong>4</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>TCHASR</strong><sup> 4</sup></bdi>"
       },
       {
         "from": "<span class=\"math inline\"><strong>C</strong><strong>E</strong><strong>R</strong><sup><strong>3</strong></sup></span>",
         "to": "<bdi dir=\"ltr\"><strong>CER</strong><sup>3</sup></bdi>"
       },
       {
+        "from": "<span class=\"math inline\"><strong>M</strong><strong>M</strong><strong>S</strong> <strong>S</strong><strong>S</strong><strong>R</strong><sup><strong>2</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>MMSSSR</strong><sup>2</sup></bdi>"
+      },
+      {
         "from": "<span class=\"math inline\"><strong>B</strong><strong>B</strong><strong>E</strong><strong>R</strong><sup><strong>4</strong></sup></span>",
         "to": "<bdi dir=\"ltr\"><strong>BBER</strong><sup>4</sup></bdi>"
       },
       {
-        "from": "<span class=\"math inline\"><strong>S</strong><strong>M</strong><strong>S</strong> <strong>S</strong><strong>S</strong><strong>R</strong><sup><strong>1</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>SMSSSR</strong><sup>1</sup></bdi>"
+        "from": "<span class=\"math inline\"><strong>C</strong><strong>E</strong><strong>R</strong><sup><strong>1</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>CER</strong><sup>1</sup></bdi>"
       },
       {
         "from": "<span class=\"math inline\"><strong>A</strong><strong>C</strong><strong>T</strong><sup><strong>2</strong></sup></span>",
@@ -254,60 +262,52 @@
         "to": "<bdi dir=\"ltr\"><strong>BSS</strong><sup>1</sup></bdi>"
       },
       {
-        "from": "<span class=\"math inline\"><strong>G</strong><strong>O</strong><strong>S</strong><sup><strong>2</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>GOS</strong><sup>2</sup></bdi>"
-      },
-      {
-        "from": "<span class=\"math inline\"><strong>M</strong><strong>M</strong><strong>S</strong> <strong>S</strong><strong>S</strong><strong>R</strong><sup><strong>2</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>MMSSSR</strong><sup>2</sup></bdi>"
-      },
-      {
-        "from": "<span class=\"math inline\"><strong>I</strong><strong>P</strong><sup><strong>2</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>IP</strong><sup>2</sup></bdi>"
-      },
-      {
-        "from": "<span class=\"math inline\"><strong>S</strong><strong>Q</strong><strong>I</strong><sup><strong>7</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>SQI</strong><sup>7</sup></bdi>"
-      },
-      {
-        "from": "<span class=\"math inline\"><strong>S</strong><strong>D</strong><strong>C</strong><strong>C</strong><strong>H</strong><sup><strong>3</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>SDCCH</strong><sup>3</sup></bdi>"
-      },
-      {
-        "from": "<span class=\"math inline\"><strong>T</strong><strong>C</strong><strong>H</strong> <strong>A</strong><strong>S</strong><strong>R</strong><sup> <strong>4</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>TCHASR</strong><sup> 4</sup></bdi>"
-      },
-      {
-        "from": "<span class=\"math inline\"><strong>E</strong><strong>S</strong><strong>R</strong><sup><strong>2</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>ESR</strong><sup>2</sup></bdi>"
+        "from": "<span class=\"math inline\"><strong>S</strong><strong>E</strong><strong>S</strong><strong>R</strong><sup><strong>3</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>SESR</strong><sup>3</sup></bdi>"
       },
       {
         "from": "<span class=\"math inline\"><strong>T</strong><strong>B</strong><strong>F</strong> <sup><strong>3</strong></sup></span>",
         "to": "<bdi dir=\"ltr\"><strong>TBF</strong><sup>3</sup></bdi>"
       },
       {
-        "from": "<span class=\"math inline\"><strong>O</strong><strong>H</strong><strong>S</strong><strong>R</strong><sup><strong>5</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>OHSR</strong><sup>5</sup></bdi>"
+        "from": "<span class=\"math inline\"><strong>E</strong><strong>S</strong><strong>R</strong><sup><strong>2</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>ESR</strong><sup>2</sup></bdi>"
       },
       {
-        "from": "<span class=\"math inline\"><strong>C</strong><strong>S</strong><strong>S</strong><strong>R</strong><sup><strong>2</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>CSSR</strong><sup>2</sup></bdi>"
+        "from": "<span class=\"math inline\"><strong>A</strong><strong>S</strong><strong>R</strong><sup><strong>1</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>ASR</strong><sup>1</sup></bdi>"
       },
       {
-        "from": "<span class=\"math inline\"><strong>S</strong><strong>E</strong><strong>S</strong><strong>R</strong><sup><strong>3</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>SESR</strong><sup>3</sup></bdi>"
+        "from": "<span class=\"math inline\"><strong>G</strong><strong>O</strong><strong>S</strong><sup><strong>2</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>GOS</strong><sup>2</sup></bdi>"
+      },
+      {
+        "from": "<span class=\"math inline\"><strong>A</strong><strong>R</strong><sup><strong>1</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>AR</strong><sup>1</sup></bdi>"
+      },
+      {
+        "from": "<span class=\"math inline\"><strong>S</strong><strong>M</strong><strong>S</strong> <strong>S</strong><strong>S</strong><strong>R</strong><sup><strong>1</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>SMSSSR</strong><sup>1</sup></bdi>"
       },
       {
         "from": "<span class=\"math inline\"><strong>M</strong><strong>D</strong><strong>T</strong><sup><strong>2</strong></sup></span>",
         "to": "<bdi dir=\"ltr\"><strong>MDT</strong><sup>2</sup></bdi>"
       },
       {
-        "from": "<span class=\"math inline\"><strong>C</strong><strong>D</strong><strong>R</strong><sup><strong>6</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>CDR</strong><sup>6</sup></bdi>"
+        "from": "<span class=\"math inline\"><strong>S</strong><strong>Q</strong><strong>I</strong><sup><strong>7</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>SQI</strong><sup>7</sup></bdi>"
       },
       {
-        "from": "<span class=\"math inline\"><strong>A</strong><strong>S</strong><strong>R</strong><sup><strong>1</strong></sup></span>",
-        "to": "<bdi dir=\"ltr\"><strong>ASR</strong><sup>1</sup></bdi>"
+        "from": "<span class=\"math inline\"><strong>O</strong><strong>H</strong><strong>S</strong><strong>R</strong><sup><strong>5</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>OHSR</strong><sup>5</sup></bdi>"
+      },
+      {
+        "from": "<span class=\"math inline\"><strong>S</strong><strong>D</strong><strong>C</strong><strong>C</strong><strong>H</strong><sup><strong>3</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>SDCCH</strong><sup>3</sup></bdi>"
+      },
+      {
+        "from": "<span class=\"math inline\"><strong>C</strong><strong>D</strong><strong>R</strong><sup><strong>6</strong></sup></span>",
+        "to": "<bdi dir=\"ltr\"><strong>CDR</strong><sup>6</sup></bdi>"
       },
       {
         "from": "<p><strong><span dir=\"rtl\">(ساعت پیک یک ساعته/</span> <span dir=\"rtl\">بدترین حالت</span>(</strong></p>",
@@ -322,6 +322,10 @@
       {
         "from": "<span class=\"math inline\">$واگذارشده{فرکانس\\ ضريب = \\left\\{ \\frac{پهنایبانداشغالشدهتوسطهرکانالبههرتز\\ }{حداقل\\text{فاصله}\\text{كانالي}\\text{به}\\text{هرتز}} \\right\\}}^{0.75}$</span>",
         "to": "<span class=\"cra-audit-math\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" dir=\"ltr\" aria-label=\"ضریب فرکانس واگذار شده = (پهنای باند اشغال شده توسط هر کانال به هرتز / حداقل فاصله کانالی به هرتز) به توان ۰٫۷۵\"><mrow><mtext dir=\"rtl\">ضریب فرکانس واگذار شده</mtext><mo>=</mo><msup><mfrac><mtext dir=\"rtl\">پهنای باند اشغال شده توسط هر کانال به هرتز</mtext><mtext dir=\"rtl\">حداقل فاصله کانالی به هرتز</mtext></mfrac><mn>0.75</mn></msup></mrow></math></span>"
+      },
+      {
+        "from": "<span class=\"math display\"><em>و</em><em>ا</em><em>گ</em><em>ذ</em><em>ا</em><em>ر</em><em>ش</em><em>د</em><em>ه</em> <em>ف</em><em>ر</em><em>ک</em><em>ا</em><em>ن</em><em>س</em> <em>ض</em><em>ر</em><em>ي</em><em>ب</em> = <em>ي</em><em>ک</em> </span>",
+        "to": "<span class=\"cra-audit-math\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" dir=\"ltr\" aria-label=\"ضریب فرکانس واگذار شده = یک\"><mrow><mtext dir=\"rtl\">ضریب فرکانس واگذار شده</mtext><mo>=</mo><mtext dir=\"rtl\">یک</mtext></mrow></math></span>"
       },
       {
         "from": "<p><span dir=\"rtl\">)</span>VSAT: Very Small Aperture Terminal)</p>",

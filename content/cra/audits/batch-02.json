@@ -167,7 +167,7 @@
       "source_url": "https://drive.google.com/file/d/1F7Obz5tLhX0gyioGwc2w93Z3zphz0o39/view?usp=drivesdk",
       "source_page": "صفحات ۶ تا ۱۴ PDF",
       "status": "applied",
-      "note": "Rebuilt shared 140-data-row table from original Word; all 139 decimal coefficient/spacing occurrences checked against PDF pages 6–10. Report example 83.35 rejected: PDF prints 35.83. Same exact source table occurs in both original and consolidated sections."
+      "note": "Rebuilt shared 140-data-row table from original Word; all 139 decimal coefficient/spacing occurrences and 106 frequency ranges checked against PDF pages 6–10. Report example 83.35 rejected: PDF prints 35.83. Same exact source table occurs in both original and consolidated sections."
     },
     {
       "issue_id": "B02-019",
@@ -185,7 +185,7 @@
       "source_url": "https://drive.google.com/file/d/1F7Obz5tLhX0gyioGwc2w93Z3zphz0o39/view?usp=drivesdk",
       "source_page": "صفحه ۴ PDF",
       "status": "applied",
-      "note": "Replaced unreadable formula markup with native MathML fraction/exponent; retained adjacent source condition about choosing one if larger."
+      "note": "Replaced unreadable formula markup with native MathML fraction/exponent and restored connected Persian letters in the alternative equal-to-one expression; retained source condition about choosing whichever is larger."
     },
     {
       "issue_id": "B02-021",
