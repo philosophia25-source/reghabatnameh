@@ -775,6 +775,9 @@ h1,h2,h3,.brand strong { font-family:"Estedad Variable","Vazirmatn Variable",san
 .cra-ocr-text mtext { direction:rtl; unicode-bidi:isolate; }
 .cra-consolidated-text { background:#f7f2e7; }
 .cra-source-text bdi { unicode-bidi:isolate; }
+.cra-source-text .cra-audit-math { display:inline-block; max-width:100%; overflow-x:auto; vertical-align:middle; direction:ltr; unicode-bidi:isolate; }
+.cra-source-text .cra-audit-math math { padding:.5em 0; font-size:1em; }
+.cra-source-text .cra-audit-math mtext[dir="rtl"] { direction:rtl; unicode-bidi:isolate; }
 .cra-clause-number { display:inline-block; margin-inline-end:.5em; color:#16242c; font-weight:650; white-space:nowrap; }
 .cra-reviewed-text .cra-proviso { margin-inline-start:1.2em; padding-inline-start:.9em; border-inline-start:2px solid #b6a98e; }
 .cra-reviewed-text .cra-revision-key { margin-bottom:1.8em; color:#5c5548; font-size:var(--font-small); }

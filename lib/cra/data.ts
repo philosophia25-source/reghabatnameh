@@ -41,7 +41,11 @@ const craAuditedTextReplacements = Object.entries(
 
 function applyAuditedCraTextReplacements(text: string) {
   return craAuditedTextReplacements.reduce(
-    (result, [from, to]) => result.replaceAll(from, to),
+    (result, [from, to]) => from === "دادهای"
+      // This ambiguous OCR token means داده‌ای only as a standalone word.
+      // Substring replacement corrupts correct words such as قراردادهای.
+      ? result.replace(/(?<![\p{L}\u200c])دادهای(?![\p{L}\u200c])/gu, to)
+      : result.replaceAll(from, to),
     text,
   );
 }

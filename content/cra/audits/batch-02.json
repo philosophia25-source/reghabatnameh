@@ -1,0 +1,450 @@
+{
+  "baseline_commit": "55f23ad00a0fa46ddee5f8cd0454316804f76054",
+  "audit_date": "2026-11-25",
+  "scope": "Disposition of all 37 reported issues. Does not independently certify every page reported clean, or all nine existing postal OCR tables.",
+  "summary": {
+    "already_correct": 5,
+    "applied": 32
+  },
+  "issues": [
+    {
+      "issue_id": "B02-001",
+      "audit_id": "CRA-0052",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/86-1",
+      "source_url": "https://drive.google.com/file/d/1RWCH3BQnVDwybjokflG_SGqBIWm6Cc60/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "applied",
+      "note": "All 12 tariff amounts checked visually against PDF page 1; thousand groups restored, not treated as dates."
+    },
+    {
+      "issue_id": "B02-002",
+      "audit_id": "CRA-0052",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/86-1",
+      "source_url": "https://drive.google.com/file/d/1RWCH3BQnVDwybjokflG_SGqBIWm6Cc60/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "already_correct",
+      "note": "STM-1 is already isolated by the Batch 01 mixed-script fix."
+    },
+    {
+      "issue_id": "B02-003",
+      "audit_id": "CRA-0053",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/87-1",
+      "source_url": "https://drive.google.com/file/d/1XpfwTi2AyXnKHKo-0MgaXkBoltnxrrSp/view?usp=drivesdk",
+      "source_page": "صفحات ۲ و ۳ PDF",
+      "status": "applied",
+      "note": "Rebuilt four distinct endnotes with reciprocal links. Note 2 here is Port as printed; also retained and linked the earlier, separately printed note 2 Dedicated bandwidth in place, with its own unique target."
+    },
+    {
+      "issue_id": "B02-004",
+      "audit_id": "CRA-0053",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/87-1",
+      "source_url": "https://drive.google.com/file/d/1XpfwTi2AyXnKHKo-0MgaXkBoltnxrrSp/view?usp=drivesdk",
+      "source_page": "صفحات ۳ و ۴ PDF",
+      "status": "applied",
+      "note": "Four fraction structures restored from PDF pages 3–4; numerator subtraction order preserved in both languages."
+    },
+    {
+      "issue_id": "B02-005",
+      "audit_id": "CRA-0055",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/90-1",
+      "source_url": "https://drive.google.com/file/d/1fwS9jYVgKqgUgMoNFVGbQwCV9dwng_Mb/view?usp=drivesdk",
+      "source_page": "صفحات ۲ تا ۵ PDF",
+      "status": "applied",
+      "note": "Protected whole source T2/T3/T4 equations including decimal coefficients; T1–T5 labels already correct."
+    },
+    {
+      "issue_id": "B02-006",
+      "audit_id": "CRA-0057",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/96-1",
+      "source_url": "https://drive.google.com/file/d/1sdhO4zFJtpLUNeuTvMonMklvUHefqJys/view?usp=drivesdk",
+      "source_page": "صفحات ۲ تا ۸ PDF",
+      "status": "applied",
+      "note": "Restored official multilevel labels through chapter 8, including 6-7-1..3; removed erroneous list marker on Article 2 heading."
+    },
+    {
+      "issue_id": "B02-007",
+      "audit_id": "CRA-0057",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/96-1",
+      "source_url": "https://drive.google.com/file/d/1sdhO4zFJtpLUNeuTvMonMklvUHefqJys/view?usp=drivesdk",
+      "source_page": "صفحات ۲ و ۹ PDF",
+      "status": "applied",
+      "note": "Three short-year dates expanded using the source and resolution chronology."
+    },
+    {
+      "issue_id": "B02-008",
+      "audit_id": "CRA-0058",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/97-1",
+      "source_url": "https://drive.google.com/file/d/1vwGsC6LMn1zyga45VsLjUcBPc5OF8tWk/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "applied",
+      "note": "Source reads قراردادهای. Fixed the shared substring normalization that corrupted this word, with a dedicated regression."
+    },
+    {
+      "issue_id": "B02-009",
+      "audit_id": "CRA-0058",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/97-1",
+      "source_url": "https://drive.google.com/file/d/1vwGsC6LMn1zyga45VsLjUcBPc5OF8tWk/view?usp=drivesdk",
+      "source_page": "صفحه ۳ PDF",
+      "status": "applied",
+      "note": "64 kbps kept as a complete left-to-right quantity/unit."
+    },
+    {
+      "issue_id": "B02-010",
+      "audit_id": "CRA-0059",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/101-1",
+      "source_url": "https://drive.google.com/file/d/11BrH-_q_mEUQGeAa4aI41F9jHUWnXkl9/view?usp=drivesdk",
+      "source_page": "صفحات ۱ تا ۵ PDF",
+      "status": "applied",
+      "note": "Kept the complete combined official document. Added an explicit source note and direct anchor to the matching section; no legal text removed."
+    },
+    {
+      "issue_id": "B02-011",
+      "audit_id": "CRA-0060",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/101-2",
+      "source_url": "https://drive.google.com/file/d/11BrH-_q_mEUQGeAa4aI41F9jHUWnXkl9/view?usp=drivesdk",
+      "source_page": "صفحه ۵ PDF",
+      "status": "applied",
+      "note": "Kept the complete combined official document. Added an explicit source note and direct anchor to the matching section; no legal text removed."
+    },
+    {
+      "issue_id": "B02-012",
+      "audit_id": "CRA-0061",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/101-3",
+      "source_url": "https://drive.google.com/file/d/11BrH-_q_mEUQGeAa4aI41F9jHUWnXkl9/view?usp=drivesdk",
+      "source_page": "صفحه ۵ PDF",
+      "status": "applied",
+      "note": "Kept the complete combined official document. Added an explicit source note and direct anchor to the matching section; no legal text removed."
+    },
+    {
+      "issue_id": "B02-013",
+      "audit_id": "CRA-0064",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/105-3",
+      "source_url": "https://drive.google.com/file/d/1gKceGkUfljr-fimnlndzBlxryvCklVYY/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "applied",
+      "note": "Definition labels 1-1..1-4 restored within original outer headings."
+    },
+    {
+      "issue_id": "B02-014",
+      "audit_id": "CRA-0065",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/106-1",
+      "source_url": "https://drive.google.com/file/d/1MBU7Ofs15ihCTkkBp7g2KHA2n_zWaYik/view?usp=drivesdk",
+      "source_page": "صفحات ۱ و ۲ PDF",
+      "status": "applied",
+      "note": "Definition labels 1-1..1-19 restored."
+    },
+    {
+      "issue_id": "B02-015",
+      "audit_id": "CRA-0065",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/106-1",
+      "source_url": "https://drive.google.com/file/d/1MBU7Ofs15ihCTkkBp7g2KHA2n_zWaYik/view?usp=drivesdk",
+      "source_page": "صفحات ۱ تا ۳ PDF",
+      "status": "applied",
+      "note": "Three CIDR prefixes protected intact; IPv4 was already fixed by Batch 01."
+    },
+    {
+      "issue_id": "B02-016",
+      "audit_id": "CRA-0066",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/107-1",
+      "source_url": "https://drive.google.com/file/d/1fc0orBlY-ktViLJwNqRpfZJxLrEVTQqT/view?usp=drivesdk",
+      "source_page": "صفحه ۲ PDF",
+      "status": "applied",
+      "note": "Six reported numeric errors in registered-print tariffs verified on PDF page 2; fixed OCR spaces in monetary groups in the same table. This is not a new certification of every figure in all nine OCR tables."
+    },
+    {
+      "issue_id": "B02-017",
+      "audit_id": "CRA-0066",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/107-1",
+      "source_url": "https://drive.google.com/file/d/1fc0orBlY-ktViLJwNqRpfZJxLrEVTQqT/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "applied",
+      "note": "Restored missing approval sentence from PDF page 1, before the title/introduction."
+    },
+    {
+      "issue_id": "B02-018",
+      "audit_id": "CRA-0067",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/107-2",
+      "source_url": "https://drive.google.com/file/d/1F7Obz5tLhX0gyioGwc2w93Z3zphz0o39/view?usp=drivesdk",
+      "source_page": "صفحات ۶ تا ۱۴ PDF",
+      "status": "applied",
+      "note": "Rebuilt shared 140-data-row table from original Word; all 139 decimal coefficient/spacing occurrences checked against PDF pages 6–10. Report example 83.35 rejected: PDF prints 35.83. Same exact source table occurs in both original and consolidated sections."
+    },
+    {
+      "issue_id": "B02-019",
+      "audit_id": "CRA-0067",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/107-2",
+      "source_url": "https://drive.google.com/file/d/1F7Obz5tLhX0gyioGwc2w93Z3zphz0o39/view?usp=drivesdk",
+      "source_page": "صفحات ۶ تا ۱۴ PDF",
+      "status": "applied",
+      "note": "Restored 400 original dark cells and Word horizontal/vertical merges; no invented applicability checkmarks. Original and consolidated copies share the verified table."
+    },
+    {
+      "issue_id": "B02-020",
+      "audit_id": "CRA-0067",
+      "site_url": "https://naderjafari.com/resolutions/cra/1389/107-2",
+      "source_url": "https://drive.google.com/file/d/1F7Obz5tLhX0gyioGwc2w93Z3zphz0o39/view?usp=drivesdk",
+      "source_page": "صفحه ۴ PDF",
+      "status": "applied",
+      "note": "Replaced unreadable formula markup with native MathML fraction/exponent; retained adjacent source condition about choosing one if larger."
+    },
+    {
+      "issue_id": "B02-021",
+      "audit_id": "CRA-0070",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/111-2",
+      "source_url": "https://drive.google.com/file/d/1vEoigZJpTLCU3goe-KTbW7IiHMlkDrhH/view?usp=drivesdk",
+      "source_page": "صفحات ۲ تا ۷ PDF",
+      "status": "applied",
+      "note": "Restored source chapter/child labels, including 25-1-1..5. Annex selection list restarts at 1 as printed."
+    },
+    {
+      "issue_id": "B02-022",
+      "audit_id": "CRA-0071",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/112-1",
+      "source_url": "https://drive.google.com/file/d/177GwBva8JB_qOLZzeSiOmG1KRP4uxPkw/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "already_correct",
+      "note": "E1 already isolated intact after Batch 01."
+    },
+    {
+      "issue_id": "B02-023",
+      "audit_id": "CRA-0071",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/112-1",
+      "source_url": "https://drive.google.com/file/d/177GwBva8JB_qOLZzeSiOmG1KRP4uxPkw/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "applied",
+      "note": "Protected complete letter identifier and expanded its short-year date without changing identifier order."
+    },
+    {
+      "issue_id": "B02-024",
+      "audit_id": "CRA-0072",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/113-1",
+      "source_url": "https://drive.google.com/file/d/1ELmDjGnKYiqxnTrgNUR76IzXPdBRmubW/view?usp=drivesdk",
+      "source_page": "صفحات ۲ تا ۵ و ۷ تا ۱۲ PDF",
+      "status": "already_correct",
+      "note": "x11/x12/x13/xy14/xy15 already isolated intact by Batch 01."
+    },
+    {
+      "issue_id": "B02-025",
+      "audit_id": "CRA-0072",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/113-1",
+      "source_url": "https://drive.google.com/file/d/1ELmDjGnKYiqxnTrgNUR76IzXPdBRmubW/view?usp=drivesdk",
+      "source_page": "صفحات ۱ و ۹ تا ۱۲ PDF",
+      "status": "applied",
+      "note": "Short-year dates fixed. Rejected continuous numbering proposal: PDF annex 1 page 10 deliberately restarts at 1 for each GOLD/SILVER/BRONZE category."
+    },
+    {
+      "issue_id": "B02-026",
+      "audit_id": "CRA-0077",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/119-2",
+      "source_url": "https://drive.google.com/file/d/1slwjV6AKzyvK4WUumG4zIKtK87p7hE4T/view?usp=drivesdk",
+      "source_page": "صفحات ۲ تا ۱۵ PDF",
+      "status": "applied",
+      "note": "Rendered AR and 17 textual stacked fractions with visible fraction bars. Preserved existing formula images, plain slash formulas, and form 4 quantities that have no denominator in PDF."
+    },
+    {
+      "issue_id": "B02-027",
+      "audit_id": "CRA-0077",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/119-2",
+      "source_url": "https://drive.google.com/file/d/1slwjV6AKzyvK4WUumG4zIKtK87p7hE4T/view?usp=drivesdk",
+      "source_page": "صفحات ۵ تا ۱۵ PDF",
+      "status": "applied",
+      "note": "Joined split-letter abbreviations within their source math spans and retained superscript note numbers. Definitions and existing intact abbreviations unchanged."
+    },
+    {
+      "issue_id": "B02-028",
+      "audit_id": "CRA-0078",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/120-1",
+      "source_url": "https://drive.google.com/file/d/118tjZRYjyMX9-BFpHOTi4itxDIaK_0L4/view?usp=drivesdk",
+      "source_page": "صفحات ۱ و ۲ PDF",
+      "status": "applied",
+      "note": "Protected three CIDRs and the complete original http URL; href unchanged."
+    },
+    {
+      "issue_id": "B02-029",
+      "audit_id": "CRA-0085",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/125-1",
+      "source_url": "https://drive.google.com/file/d/1spxMuYXQ0xjge5QNH-1sHueqsO_NZyaX/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "already_correct",
+      "note": "Technical code tokens already isolated intact after Batch 01."
+    },
+    {
+      "issue_id": "B02-030",
+      "audit_id": "CRA-0087",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/126-1",
+      "source_url": "https://drive.google.com/file/d/1TEifqBNBLlC0xaYLDdjyAsAHkfozOG9W/view?usp=drivesdk",
+      "source_page": "صفحات ۱ تا ۳ PDF",
+      "status": "applied",
+      "note": "Reconstructed complete source hierarchy on PDF pages 1–3, including lettered ث/ج, definitions 3-1/3-2, chapters 4–6 and main items 7–9. Report incorrectly described only six main items."
+    },
+    {
+      "issue_id": "B02-031",
+      "audit_id": "CRA-0089",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/130-1",
+      "source_url": "https://drive.google.com/file/d/15I1_9wK8p5EpD2fnzOYR0L5Sz_c3EdQW/view?usp=drivesdk",
+      "source_page": "پیوست شماره ۱ (PDF/XLSX)",
+      "status": "applied",
+      "note": "Added complete printed Annex 1: 31 provinces and 2 total rows, all 248 provincial year values checked against final workbook L:S columns. Rejected report’s 45-row count, which includes working rows/columns not published in PDF."
+    },
+    {
+      "issue_id": "B02-032",
+      "audit_id": "CRA-0089",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/130-1",
+      "source_url": "https://drive.google.com/file/d/1XTi7X21Fw7zu7OfFLfKtEdspDLet8Zih/view?usp=drivesdk",
+      "source_page": "کل سند و پیوست ۲",
+      "status": "applied",
+      "note": "Ordered original resolution, Annex 1, then Annex 2. Preserved full existing text and provincial coefficient annex."
+    },
+    {
+      "issue_id": "B02-033",
+      "audit_id": "CRA-0089",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/130-1",
+      "source_url": "https://drive.google.com/file/d/1Q5VRhu9N8hJNeX_NNXYGxM58P7LM2FG7/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "applied",
+      "note": "Restored definitions 1-1..1-4 in main resolution before composing reordered sections."
+    },
+    {
+      "issue_id": "B02-034",
+      "audit_id": "CRA-0090",
+      "site_url": "https://naderjafari.com/resolutions/cra/1390/131-1",
+      "source_url": "https://drive.google.com/file/d/15cCmBiI2FWI4jNUNbuausA614WrqA5z0/view?usp=drivesdk",
+      "source_page": "صفحات ۱ و ۲ PDF",
+      "status": "applied",
+      "note": "Restored clause labels for Articles 1–3, including 2-5..2-10 continuation."
+    },
+    {
+      "issue_id": "B02-035",
+      "audit_id": "CRA-0095",
+      "site_url": "https://naderjafari.com/resolutions/cra/1391/138-1",
+      "source_url": "https://drive.google.com/file/d/1AaxKKExLTGq4rQ3Tg980on8RI7ByPSub/view?usp=drivesdk",
+      "source_page": "صفحه ۱ PDF",
+      "status": "applied",
+      "note": "Restored letter ب and subclauses 1-1..1-3 against PDF page 1."
+    },
+    {
+      "issue_id": "B02-036",
+      "audit_id": "CRA-0095",
+      "site_url": "https://naderjafari.com/resolutions/cra/1391/138-1",
+      "source_url": "https://drive.google.com/file/d/1AaxKKExLTGq4rQ3Tg980on8RI7ByPSub/view?usp=drivesdk",
+      "source_page": "صفحه ۲ PDF",
+      "status": "already_correct",
+      "note": "The current source/display already contains no ten trailing textbox paragraphs; evaluation table retained in full."
+    },
+    {
+      "issue_id": "B02-037",
+      "audit_id": "CRA-0100",
+      "site_url": "https://naderjafari.com/resolutions/cra/1391/146-1",
+      "source_url": "https://drive.google.com/file/d/1vH54kJAuPnHhmcrFoWmas2jajnus6E7p/view?usp=drivesdk",
+      "source_page": "صفحات ۳ و ۴ PDF",
+      "status": "applied",
+      "note": "Split merged mobile/fixed tariff tables 3 and 4, reversed source cells into RTL row/countries/tariff order, preserving every country and rate."
+    }
+  ],
+  "sources": [
+    {
+      "name": "0.pdf",
+      "sha256": "e9e8c4c034134bc1554cd5c3c80a1b02d619f4f3b40abdcff5435974ab46e110"
+    },
+    {
+      "name": "1.pdf",
+      "sha256": "f0d9f88957d6f825f53ca2c045b048821b90c9b5dc685d7bf991b4c97568ad7f"
+    },
+    {
+      "name": "10.pdf",
+      "sha256": "0515f135766cd8f2a16383ba96ff5b649732f3e8844fc5e1c466b9786353ff70"
+    },
+    {
+      "name": "107-2.docx",
+      "sha256": "e007355f52bfb049ebac6db90c69ba74d922403b09c5be77d0906f89975ee60a"
+    },
+    {
+      "name": "11.pdf",
+      "sha256": "511dcde6fa538f011e279d5db35b9a323969dc355f7aa5a660965e09473dc44b"
+    },
+    {
+      "name": "12.pdf",
+      "sha256": "9fac2762886e4fe375c12e0f485a91be584c222e0b0bf39a97d2ec07ecc94473"
+    },
+    {
+      "name": "13.pdf",
+      "sha256": "e54b62bba20d64105b3f37208b47708e770ff4502dff1180d709212eda8d8ca1"
+    },
+    {
+      "name": "130-1.xlsx",
+      "sha256": "06396d13db71768142adf5c1e5d174b6dddfc1b4f43cd830653d311a8bdb737b"
+    },
+    {
+      "name": "14.pdf",
+      "sha256": "81622de81a58d6ad4a82acc022f5382dbcc06924c2b20a571a7f1f48d50a6201"
+    },
+    {
+      "name": "15.pdf",
+      "sha256": "37120892ee247779de2117231dead9d84c725d47758dc99e4a9ca07200950dd8"
+    },
+    {
+      "name": "16.pdf",
+      "sha256": "db275f3735334d6dc08c478afce801011ad7bd0bc2ef5e0a8de413a91eac4935"
+    },
+    {
+      "name": "17.pdf",
+      "sha256": "a5f0f79950efad10eba2706ed5a38572b16d3e083ef01b9f28aa7e6d38bed49c"
+    },
+    {
+      "name": "18.pdf",
+      "sha256": "29dcdc53743e83f119e36199faa5883f832d2b3dcd259339d10ab5de6762a5a6"
+    },
+    {
+      "name": "19.pdf",
+      "sha256": "94172ccd3372270a13e9fbbc0dd139cb3339f016a1ba7fac1fa712f87cb7d9f9"
+    },
+    {
+      "name": "2.pdf",
+      "sha256": "759757058d5c5a9da11a0bc1076cee94f4ffbf4d945d41c1ef65311015628fd9"
+    },
+    {
+      "name": "20.pdf",
+      "sha256": "0779614c747e5214ec4103617122ec7a569ba54ef87b42335203a2ee74ee2576"
+    },
+    {
+      "name": "21.pdf",
+      "sha256": "d95bdb232ef5f53c4c37e21ed356ee46495592898d850bd6bb34849f3ecb13e4"
+    },
+    {
+      "name": "22.pdf",
+      "sha256": "f5beed08a656329719c1fec022c4adf6ff80fdf24b70d3e9e300eae4929c6668"
+    },
+    {
+      "name": "3.pdf",
+      "sha256": "ef71ac6fbe43853cce06f35758c7d6b8bbd5a74305405e7b0dec46081807dc23"
+    },
+    {
+      "name": "4.pdf",
+      "sha256": "ce640c2e0171a9f4a956d70225c275d3fc64f11f7aeccb9d812cf6b0589e4231"
+    },
+    {
+      "name": "5.pdf",
+      "sha256": "45061b3a304c746b074bcce790f438944a2bddb4e2044fc279868e45b1c4aea6"
+    },
+    {
+      "name": "6.pdf",
+      "sha256": "21f86bd1c9ab8ab3ce28f36794233e7807b047bd862e97c457655644873b327c"
+    },
+    {
+      "name": "7.pdf",
+      "sha256": "a9eb9571b069ad3ae1438e932021cb58ef032e0d48ea8760f569f7afd3f28bba"
+    },
+    {
+      "name": "8.pdf",
+      "sha256": "d5890a46b9d777913a90458fc1d77574d8545574a0a86676ff55a6db75a34b1a"
+    },
+    {
+      "name": "9.pdf",
+      "sha256": "475620ea0efe0d8d044e565781b8d33b7a2fee1c4d58dda699c0c5e3e46454a6"
+    }
+  ],
+  "additional_original_sources": {
+    "107-2.docx": "https://docs.google.com/document/d/1Uj7kQoFVwI16o7DBTVeH2x3oYudzvWUu/edit",
+    "130-1.xlsx": "https://docs.google.com/spreadsheets/d/1UlH5lSgGcFM2iITPjuhX9V06v9RWwcuj/edit"
+  }
+}
