@@ -315,6 +315,27 @@
       "source": "content/cra/reviewed-sources/354-4.md",
       "sourceSha256": "507238d75a676446938f4b0600387f6990bad01af3e33e728394950e72483156",
       "reconstruction": "owner-reviewed-transcript"
+    },
+    "17ccb54b-f687-e511-973c-68b599781b58": {
+      "route": "/resolutions/cra/1394/212-2",
+      "contentFile": "cra/ocr-overrides/17ccb54b-f687-e511-973c-68b599781b58.html",
+      "readingMeta": {
+        "wordCount": 427,
+        "tableCount": 0,
+        "imageCount": 0,
+        "attachmentSectionCount": 1
+      },
+      "textReferences": [
+        {
+          "targetGuid": "15ccb54b-f687-e511-973c-68b599781b58",
+          "title": "ضوابط حاکم بر صدور پروانه و نحوه فعالیت دارندگان پروانه ارایه خدمات ارتباطی ثابت(Servco.)",
+          "evidence": "مصوبه شماره 1 جلسه شماره 211"
+        }
+      ],
+      "hasEditorialConsolidation": false,
+      "source": "content/cra/reviewed-sources/212-2.html",
+      "sourceSha256": "b89ad249151ed1e32fbf6b476c070bc8ace91ef089804e7a0bd8459a8c587b26",
+      "reconstruction": "owner-reviewed-transcript"
     }
   },
   "supplementalSources": [
