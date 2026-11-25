@@ -30,8 +30,11 @@ for (const value of [
   '<bdi dir="ltr">(WTTx)</bdi>',
   '<p dir="ltr">Accounting Separation</p>',
   '<a href="/abc/1401/336-1?x=12&amp;y=1">متن &amp; پیوست</a>',
-  '<p>شماره ۳۳۶ و مبلغ ۲۳/۶ درصد و بند ۴-۱-۲</p>',
 ]) assert.equal(formatCraReadingHtml(value), value);
+const numberedText = '<p>شماره ۳۳۶ و مبلغ ۲۳/۶ درصد و بند ۴-۱-۲</p>';
+assert.equal(plain(formatCraReadingHtml(numberedText)), plain(numberedText));
+assert.equal(formatCraReadingHtml(formatCraReadingHtml(numberedText)), formatCraReadingHtml(numberedText));
+assert.equal(formatCraReadingHtml('<p>POP۳ و FTP</p>'), '<p><bdi dir="ltr">POP۳</bdi> و <bdi dir="ltr">FTP</bdi></p>');
 assert.equal(formatCraReadingHtml('<p><strong>ماده ۱۲- تعرفه</strong></p>'), '<h3>ماده ۱۲- تعرفه</h3>');
 assert.equal(formatCraReadingHtml('<p><strong>مطابق ماده ۱۲- تعرفه</strong></p>'), '<p><strong>مطابق ماده ۱۲- تعرفه</strong></p>');
 const resolution = craResolutions.find((r) => r.route === '/resolutions/cra/1401/336-1');

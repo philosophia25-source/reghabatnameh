@@ -1,0 +1,40 @@
+// Run after npm run build. Reuse the existing TS loader and full CRA regressions.
+require('./test-cra-reading.cjs');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const { craResolutions, readCraResolutionHtml } = require('../lib/cra/data.ts');
+const bySession = (session) => craResolutions.find(r => r.sessionNumber === String(session));
+const read = (session) => readCraResolutionHtml(bySession(session));
+for (const [session, count] of [[22,2],[39,24],[43,21],[48,14],[53,8],[60,53],[71,23]]) {
+  const html = read(session);
+  assert.equal((html.match(/class="cra-clause-number"/g) || []).length, count, `Session ${session} clause coverage`);
+}
+assert.ok(read(39).includes('۷-۱'));
+assert.ok(!read(39).includes('<ol start="34">'));
+assert.ok(!read(71).includes('<ol start="34">'));
+assert.match(read(43), /<ol\b[^>]*start="5"/);
+assert.ok(read(14).includes('<bdi dir="ltr">POP۳</bdi>'));
+const seventeen = read(17);
+assert.ok(seventeen.indexOf('مصوبه جلسه شماره') < seventeen.indexOf('صورتجلسه شماره'));
+assert.ok(seventeen.includes('۱۱۲۰۹/۳۵'));
+assert.ok(!seventeen.includes('p</bdi>۱'));
+assert.ok(seventeen.includes('وزیر ارتباطات و برنامه ریزی و رئیس مجمع'));
+assert.ok(read(3).includes('۱۳۸۴/۰۵/۲۲'));
+assert.ok(read(8).includes('۱۳۸۴/۱۱/۱۸'));
+assert.ok(read(9).includes('۱۳۸۴/۱۱/۲۹'));
+assert.ok(read(9).includes('۱۳۸۴/۱۱/۲۳'));
+const corrected = bySession(277);
+assert.equal(corrected.resolutionNumber, '1');
+assert.equal(corrected.route, '/resolutions/cra/1397/1-277');
+const formula = read(80);
+assert.match(formula, /هزینه کدخدماتی بین‌شهری[\s\S]{0,250}<sup>۲<\/sup><\/a> =/);
+assert.ok(!formula.includes('<li><p>۱ در ارتباط'));
+assert.ok(read(62).includes('<del><u><br>'));
+assert.ok(!read(62).includes('<del>-</del>'));
+const ledger = JSON.parse(fs.readFileSync('content/cra/audits/batch-01.json','utf8'));
+assert.equal(ledger.issues.filter(x=>x.status === 'applied').length,23);
+assert.equal(ledger.issues.filter(x=>x.status === 'deferred_version_comparison').length,3);
+const sitemap = fs.readFileSync('out/sitemap.xml','utf8');
+assert.ok(sitemap.includes('https://naderjafari.com/resolutions/cra/1397/1-277'));
+assert.equal(craResolutions.length, 556);
+console.log('PASS — Batch 01 numbering, dates, metadata, attachment order, source preservation and issue dispositions.');

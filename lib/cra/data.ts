@@ -65,7 +65,14 @@ function normalizeCraRelationTarget(target: CraRelationTarget): CraRelationTarge
   return { ...target, title: normalizeCraWordArtifacts(target.title) };
 }
 
-const sourceCraResolutions = rawResolutions as CraResolution[];
+const reviewedRecordMetadata = (rawDisplayCuration as {
+  recordMetadata?: Record<string, { sessionNumber: string; resolutionNumber: string }>;
+}).recordMetadata ?? {};
+// Reviewed corrections never move an already-published URL or alter raw imports.
+const sourceCraResolutions = (rawResolutions as CraResolution[]).map((resolution) => ({
+  ...resolution,
+  ...reviewedRecordMetadata[resolution.guid],
+}));
 type CraRelationshipCuration = {
   aliases: Record<string, string>;
   duplicateRecords: Record<string, string>;
@@ -146,7 +153,11 @@ for (const [guid, replacements] of Object.entries(sourceCraDisplayCuration.htmlR
   const resolution = sourceCraResolutionByGuid.get(guid);
   if (!resolution) throw new Error(`CRA display replacement points to an unknown document: ${guid}.`);
   const contentPath = join(process.cwd(), "content", resolution.contentFile);
-  const sourceHtml = readFileSync(contentPath, "utf8");
+  const originalHtml = readFileSync(contentPath, "utf8");
+  const reviewed = (rawOcrOverrides as { items: Record<string, { contentFile: string }> }).items[guid];
+  const sourceHtml = reviewed
+    ? originalHtml + readFileSync(join(process.cwd(), "content", reviewed.contentFile), "utf8")
+    : originalHtml;
   for (const replacement of replacements) {
     if (!replacement.from || replacement.from === replacement.to || !sourceHtml.includes(replacement.from)) {
       throw new Error(`CRA display replacement is invalid or stale for ${guid}: ${replacement.from}.`);

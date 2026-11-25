@@ -1,0 +1,372 @@
+{
+  "baseline_commit": "a3cbef4752ee50eacd4dc7b01b070aac28e2ef89",
+  "audit_date": "2026-11-25",
+  "coverage_scope": "27 reported issues on 17 pages. Does not independently certify the 32 pages reported clean by the reviewer.",
+  "summary": {
+    "applied": 23,
+    "already_correct": 1,
+    "deferred_version_comparison": 3
+  },
+  "drive_277_word": "https://docs.google.com/document/d/1GXnwppGTt8mAyUzuAH1gf0IZlIFQLB6a/edit",
+  "issues": [
+    {
+      "issue_id": "B01-001",
+      "audit_id": "CRA-0002",
+      "site_url": "https://naderjafari.com/resolutions/cra/1397/1-277",
+      "source_url": "https://drive.google.com/file/d/1LSiZPnqICCE9oiZBAQ90KR9b2aV5XcaP/view?usp=drivesdk",
+      "source_page": "صفحه ۱ از ۱ (سربرگ سند رسمی)",
+      "status": "applied",
+      "note": "Corrected session/resolution metadata to 277/1. Existing published URL retained; no URL migration."
+    },
+    {
+      "issue_id": "B01-002",
+      "audit_id": "CRA-0002",
+      "site_url": "https://naderjafari.com/resolutions/cra/1397/1-277",
+      "source_url": "https://drive.google.com/file/d/1LSiZPnqICCE9oiZBAQ90KR9b2aV5XcaP/view?usp=drivesdk",
+      "source_page": "صفحه ۱ از ۱، بند اول (خط ۳)",
+      "status": "deferred_version_comparison",
+      "note": "Deferred. The imported attachment is explicitly named نسخه ابلاغ and reads 2, while the older Drive Word and PDF read 3 in the first paragraph and 2 in the second. No legal reference changed pending authoritative version comparison."
+    },
+    {
+      "issue_id": "B01-003",
+      "audit_id": "CRA-0003",
+      "site_url": "https://naderjafari.com/resolutions/cra/1384/3-1",
+      "source_url": "https://drive.google.com/file/d/1GP3pNlXFcD5tF-1chtXvNDM0VAFhABhx/view?usp=drivesdk",
+      "source_page": "صفحه ۱ از ۱",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-004",
+      "audit_id": "CRA-0007",
+      "site_url": "https://naderjafari.com/resolutions/cra/1384/8-1",
+      "source_url": "https://drive.google.com/file/d/1pGrlRmSpb0QXkSfrnmZ3kecdwRoH1aZJ/view?usp=drivesdk",
+      "source_page": "صفحه ۱ از ۲ (سربرگ)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-005",
+      "audit_id": "CRA-0008",
+      "site_url": "https://naderjafari.com/resolutions/cra/1384/9-1",
+      "source_url": "https://drive.google.com/file/d/19OWPW8K76PGuFbE4lqknlbecvlvDiEmp/view?usp=drivesdk",
+      "source_page": "صفحه ۱ از ۱ (سربرگ)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-006",
+      "audit_id": "CRA-0008",
+      "site_url": "https://naderjafari.com/resolutions/cra/1384/9-1",
+      "source_url": "https://drive.google.com/file/d/19OWPW8K76PGuFbE4lqknlbecvlvDiEmp/view?usp=drivesdk",
+      "source_page": "صفحه ۱ از ۱ (کادر دستور جلسه)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-007",
+      "audit_id": "CRA-0010",
+      "site_url": "https://naderjafari.com/resolutions/cra/1385/14-1",
+      "source_url": "https://drive.google.com/file/d/1CXKOzLst9XrBncOvbemCja4UHGhYSqxp/view?usp=drivesdk",
+      "source_page": "مصوبه اصلی (۲ صفحه) و فایل پیوست (۸ صفحه)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-008",
+      "audit_id": "CRA-0010",
+      "site_url": "https://naderjafari.com/resolutions/cra/1385/14-1",
+      "source_url": "https://drive.google.com/file/d/14LFyYQL4NiZqSuKiY-4KEIqQoi7PFV66/view?usp=drivesdk",
+      "source_page": "فایل پیوست، صفحه ۳ از ۸",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-009",
+      "audit_id": "CRA-0012",
+      "site_url": "https://naderjafari.com/resolutions/cra/1385/17-1",
+      "source_url": "https://drive.google.com/file/d/1Ow-cNeTpHLFc1rQw3tbEja75qZITcNqP/view?usp=drivesdk",
+      "source_page": "مصوبه اصلی، صفحه ۱ از ۱",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-010",
+      "audit_id": "CRA-0012",
+      "site_url": "https://naderjafari.com/resolutions/cra/1385/17-1",
+      "source_url": "https://drive.google.com/file/d/1xIOhFL2lfAEp51I4cf0H77B8PeO9DjKl/view?usp=drivesdk",
+      "source_page": "فایل پیوست (صفحه ۱) و مصوبه اصلی (صفحه ۱)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-011",
+      "audit_id": "CRA-0012",
+      "site_url": "https://naderjafari.com/resolutions/cra/1385/17-1",
+      "source_url": "https://drive.google.com/file/d/1Ow-cNeTpHLFc1rQw3tbEja75qZITcNqP/view?usp=drivesdk",
+      "source_page": "مصوبه اصلی (۱ صفحه) و پیوست تصویری (۲ صفحه)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-012",
+      "audit_id": "CRA-0012",
+      "site_url": "https://naderjafari.com/resolutions/cra/1385/17-1",
+      "source_url": "https://drive.google.com/file/d/1xIOhFL2lfAEp51I4cf0H77B8PeO9DjKl/view?usp=drivesdk",
+      "source_page": "فایل پیوست تصویری، صفحه ۲ از ۲ (بخش امضاها)",
+      "status": "applied",
+      "note": "Restored the scanned signature title exactly, including the source typo برنامه ریزی; no explanatory text inserted into the legal source."
+    },
+    {
+      "issue_id": "B01-013",
+      "audit_id": "CRA-0016",
+      "site_url": "https://naderjafari.com/resolutions/cra/1386/22-1",
+      "source_url": "https://drive.google.com/file/d/1BUoXqm1ojW1h7jYSU_ttd4sWzT-MAvWb/view?usp=drivesdk",
+      "source_page": "صفحه ۱ از ۱ (بخش مصوبات جلسه)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-014",
+      "audit_id": "CRA-0024",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/37-1",
+      "source_url": "https://drive.google.com/file/d/16yu8V6J9q5W9iYziL5V3lNrq0mNyWut_/view?usp=drivesdk",
+      "source_page": "فایل جلسه ۳۷ درایو، صفحه ۱ از ۱",
+      "status": "deferred_version_comparison",
+      "note": "Deferred. Drive session 37 no-final-resolution notice differs from the combined official attachment imported into the site. No date or document removed."
+    },
+    {
+      "issue_id": "B01-015",
+      "audit_id": "CRA-0024",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/37-1",
+      "source_url": "https://drive.google.com/file/d/1Lys1dDz-2JxfqPqxU9DSacD5CJ8STpgx/view?usp=drivesdk",
+      "source_page": "فایل جلسه ۳۹، صفحات ۲ تا ۵ و صفحه ۱۳",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-016",
+      "audit_id": "CRA-0025",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/38-1",
+      "source_url": "https://drive.google.com/file/d/19Ztu5U9xyMhgq3WlW4L1JJ6BxyBCeIYg/view?usp=drivesdk",
+      "source_page": "فایل جلسه ۳۸ درایو، صفحه ۱ از ۱",
+      "status": "deferred_version_comparison",
+      "note": "Deferred. Drive session 38 notice differs from the combined official attachment imported into the site. No date or document removed."
+    },
+    {
+      "issue_id": "B01-017",
+      "audit_id": "CRA-0025",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/38-1",
+      "source_url": "https://drive.google.com/file/d/1Lys1dDz-2JxfqPqxU9DSacD5CJ8STpgx/view?usp=drivesdk",
+      "source_page": "فایل جلسه ۳۹، صفحات ۲ تا ۵ و صفحه ۱۳",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-018",
+      "audit_id": "CRA-0026",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/39-1",
+      "source_url": "https://drive.google.com/file/d/1Lys1dDz-2JxfqPqxU9DSacD5CJ8STpgx/view?usp=drivesdk",
+      "source_page": "صفحات ۲، ۳، ۴ و ۵ از ۱۵",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-019",
+      "audit_id": "CRA-0026",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/39-1",
+      "source_url": "https://drive.google.com/file/d/1Lys1dDz-2JxfqPqxU9DSacD5CJ8STpgx/view?usp=drivesdk",
+      "source_page": "صفحه ۱۳ از ۱۵ (جدول ضمیمه شماره سه)",
+      "status": "already_correct",
+      "note": "Already correct in the supplied 2026-11-25 snapshot. Frequency table headings read باند فرکانسی; no content correction needed."
+    },
+    {
+      "issue_id": "B01-020",
+      "audit_id": "CRA-0028",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/43-1",
+      "source_url": "https://drive.google.com/file/d/1dOtp6fghFZeGd5EpZuOWVduly-EnNYZ5/view?usp=drivesdk",
+      "source_page": "صفحه ۲ از ۲",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-021",
+      "audit_id": "CRA-0031",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/48-1",
+      "source_url": "https://drive.google.com/file/d/1vs-zF1DJpGgBS56YNFpZKAiU812pNy0T/view?usp=drivesdk",
+      "source_page": "صفحات ۴ و ۵ از ۵ (و صفحه ۲-۳ برای ۵ بند اول)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-022",
+      "audit_id": "CRA-0033",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/53-1",
+      "source_url": "https://drive.google.com/file/d/1HQJjn6bh7ZrXERz9f90HGNx8oNrgTd83/view?usp=drivesdk",
+      "source_page": "صفحه ۲ از ۴ (ماده ۲) و صفحه ۳ از ۴ (مواد ۷ و ۸)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-023",
+      "audit_id": "CRA-0035",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/60-1",
+      "source_url": "https://drive.google.com/file/d/1fNU_281rm4Kw0LtPFRBGt-q_gNwbVpsa/view?usp=drivesdk",
+      "source_page": "صفحات ۳ تا ۱۰ فایل PDF (شماره چاپی صفحات ۳ تا ۹؛ فایل PDF دارای صفحه عنوان اضافه است)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-024",
+      "audit_id": "CRA-0036",
+      "site_url": "https://naderjafari.com/resolutions/cra/1387/62-1",
+      "source_url": "https://drive.google.com/file/d/1MPdfkENPFmTvOKqhHKQTY6_g7i3jgOXe/view?usp=drivesdk",
+      "source_page": "فایل Word/PDF مصوبه ۶۲ (ماده ۱۸ و پیوست ۴)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-025",
+      "audit_id": "CRA-0042",
+      "site_url": "https://naderjafari.com/resolutions/cra/1388/71-1",
+      "source_url": "https://drive.google.com/file/d/1SDVwGJLmHAFKX6nS3T2MZs1yKZ3Scxr2/view?usp=drivesdk",
+      "source_page": "صفحات ۱ تا ۴ از ۷",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    },
+    {
+      "issue_id": "B01-026",
+      "audit_id": "CRA-0049",
+      "site_url": "https://naderjafari.com/resolutions/cra/1388/80-1",
+      "source_url": "https://drive.google.com/file/d/1HT7MN4mLsOw03WjeqFcBAYCFSti7r4dE/view?usp=drivesdk",
+      "source_page": "صفحه ۹ از ۱۴ (بند ۴-۷)",
+      "status": "applied",
+      "note": "Moved the existing superscript footnote 2 to the term before the equals sign; preserved the formula and footnote target."
+    },
+    {
+      "issue_id": "B01-027",
+      "audit_id": "CRA-0049",
+      "site_url": "https://naderjafari.com/resolutions/cra/1388/80-1",
+      "source_url": "https://drive.google.com/file/d/1HT7MN4mLsOw03WjeqFcBAYCFSti7r4dE/view?usp=drivesdk",
+      "source_page": "صفحه ۱ از ۱۴ (بخش مصوبات جلسه)",
+      "status": "applied",
+      "note": "Applied the verified formatting/numbering correction without changing substantive wording."
+    }
+  ],
+  "verified_pdf_sources": [
+    {
+      "i": 0,
+      "name": "مصوبه جلسه شماره 277 کمیسیون .pdf",
+      "source": "https://drive.google.com/file/d/1LSiZPnqICCE9oiZBAQ90KR9b2aV5XcaP/view?usp=drivesdk",
+      "sha256": "6f7e60c48e76b52b7788c2c313d054faf47319421fca786a8d89651d578ad258"
+    },
+    {
+      "i": 1,
+      "name": "مصوبه جلسه شماره 3 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1GP3pNlXFcD5tF-1chtXvNDM0VAFhABhx/view?usp=drivesdk",
+      "sha256": "20e6b1d6d11fd788856adfc90e651d7677fc6212e06d703b910cf9e2c6cbe138"
+    },
+    {
+      "i": 2,
+      "name": "مصوبه جلسه شماره 8 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1pGrlRmSpb0QXkSfrnmZ3kecdwRoH1aZJ/view?usp=drivesdk",
+      "sha256": "3a3d90904fa2513b9af3eeb6be38a5ac5c773df35efe45e056aded55ad85b59b"
+    },
+    {
+      "i": 3,
+      "name": "مصوبه جلسه شماره 9 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/19OWPW8K76PGuFbE4lqknlbecvlvDiEmp/view?usp=drivesdk",
+      "sha256": "707dc58da94c435ef12d7a20cde31a2a50f1bf85124b853593b0c69a69b5008f"
+    },
+    {
+      "i": 4,
+      "name": "مصوبه جلسه شماره 14 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1CXKOzLst9XrBncOvbemCja4UHGhYSqxp/view?usp=drivesdk",
+      "sha256": "a8d7c73ef91d855adc89d8d0b71b3d2adbf21eab972fe584b1b1af761ce0a85b"
+    },
+    {
+      "i": 5,
+      "name": "پيوست مصوبه جلسه شماره 14 کميسيون.pdf",
+      "source": "https://drive.google.com/file/d/14LFyYQL4NiZqSuKiY-4KEIqQoi7PFV66/view?usp=drivesdk",
+      "sha256": "44cf62933056a48bd0ae7db13eb9451f5424b51cca3aa707c394b4cee92b409a"
+    },
+    {
+      "i": 6,
+      "name": "مصوبه جلسه شماره 17 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1Ow-cNeTpHLFc1rQw3tbEja75qZITcNqP/view?usp=drivesdk",
+      "sha256": "64d842fbf1438b69a351542f24dec5817bc85a98e22006eced9b45130cb92a40"
+    },
+    {
+      "i": 7,
+      "name": "پيوست مصوبه جلسه شماره 17 کميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1xIOhFL2lfAEp51I4cf0H77B8PeO9DjKl/view?usp=drivesdk",
+      "sha256": "ba19e2d55f9aa88864e7f9ecbd7dee5aef567fbf41dc108e6da12dad59352e21"
+    },
+    {
+      "i": 8,
+      "name": "مصوبه جلسه شماره 22 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1BUoXqm1ojW1h7jYSU_ttd4sWzT-MAvWb/view?usp=drivesdk",
+      "sha256": "5bd2b0379c49af9e88072f9b3bbf6e090d45f8693a67c2a87c86823202a6c650"
+    },
+    {
+      "i": 9,
+      "name": "مصوبه جلسه شماره 37 کميسيون.pdf",
+      "source": "https://drive.google.com/file/d/16yu8V6J9q5W9iYziL5V3lNrq0mNyWut_/view?usp=drivesdk",
+      "sha256": "b916441b82b7ef7238fe25a1d24ac047b2f9e4f4ef47c7a7311fd32d8715df00"
+    },
+    {
+      "i": 10,
+      "name": "مصوبات جلسه شماره 39 کميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1Lys1dDz-2JxfqPqxU9DSacD5CJ8STpgx/view?usp=drivesdk",
+      "sha256": "e89d9f721239c4a844b27a28a4b72faa04ee14088d5281a0265262cb0ac1d312"
+    },
+    {
+      "i": 11,
+      "name": "مصوبه جلسه شماره 38 کميسيون.pdf",
+      "source": "https://drive.google.com/file/d/19Ztu5U9xyMhgq3WlW4L1JJ6BxyBCeIYg/view?usp=drivesdk",
+      "sha256": "cbbaabf598cc21e8f3f58c87f961ab3a2a7042ea81b2925ba06f2195a259328e"
+    },
+    {
+      "i": 12,
+      "name": "مصوبه جلسه شماره 43 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1dOtp6fghFZeGd5EpZuOWVduly-EnNYZ5/view?usp=drivesdk",
+      "sha256": "e32d6d5fa3de50c67541716ca9f90d363a9071002bef7df76e6196bdc1fe6259"
+    },
+    {
+      "i": 13,
+      "name": "مصوبه جلسه شماره 48 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1vs-zF1DJpGgBS56YNFpZKAiU812pNy0T/view?usp=drivesdk",
+      "sha256": "e7bc2b30fda3845ab34bcabfcf10ec66556e71ec88353a8074f2c45ba7fc00c3"
+    },
+    {
+      "i": 14,
+      "name": "مصوبه جلسه شماره 53 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1HQJjn6bh7ZrXERz9f90HGNx8oNrgTd83/view?usp=drivesdk",
+      "sha256": "b5a8b0c9451b7107928663b110ce62e2dc83aae5cb18beea4242766f08988983"
+    },
+    {
+      "i": 15,
+      "name": "مصوبه جلسه شماره 60 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1fNU_281rm4Kw0LtPFRBGt-q_gNwbVpsa/view?usp=drivesdk",
+      "sha256": "f4ba146023d9e742b5519fb54187bd2e37ce6eb342791848879fdb196184ce97"
+    },
+    {
+      "i": 16,
+      "name": "مصوبه جلسه شماره 62 کميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1MPdfkENPFmTvOKqhHKQTY6_g7i3jgOXe/view?usp=drivesdk",
+      "sha256": "450e6e37af12685be08aae41d26c83ac738b4b6b32d4f08278dae13560e30f24"
+    },
+    {
+      "i": 17,
+      "name": "مصوبه جلسه شماره 71 كميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1SDVwGJLmHAFKX6nS3T2MZs1yKZ3Scxr2/view?usp=drivesdk",
+      "sha256": "fa7b6a9329567c281bfd44d584518e91043051091018080dc7f4e66e3f7a3e10"
+    },
+    {
+      "i": 18,
+      "name": "مصوبه جلسه شماره 80 کميسيون.pdf",
+      "source": "https://drive.google.com/file/d/1HT7MN4mLsOw03WjeqFcBAYCFSti7r4dE/view?usp=drivesdk",
+      "sha256": "46d8ebae8ea93e82439c6dde63d5d8c4c6b303cee32676158ac0a1ec0cc0a3bf"
+    }
+  ]
+}
